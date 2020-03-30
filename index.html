@@ -152,6 +152,120 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-mysql在IDEA中的配置" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/31/mysql%E5%9C%A8IDEA%E4%B8%AD%E7%9A%84%E9%85%8D%E7%BD%AE/">mysql在IDEA中的配置</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/31/mysql%E5%9C%A8IDEA%E4%B8%AD%E7%9A%84%E9%85%8D%E7%BD%AE/" class="archive-article-date">
+  	<time datetime="2020-03-30T19:21:20.985Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上篇完成了MySQL的安装以及终端的简单命令，接下来我们看看如何集成到IDEA中。</p>
+<p>#利用libs文件夹，add as library</p>
+<p>#2，打开IDEA，找到View-Tool Windows-Database</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/711728-d3e181ce57d826d6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
+<p>屏幕快照 2018-12-25 下午5.36.22.png</p>
+<p>然后界面的右侧会出现Database模块，点击+，然后选择Data Source，然后选择MySQL：</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/711728-7ca72902cfcd221e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
+<p>屏幕快照 2018-12-25 下午5.37.04.png</p>
+<p>然后进入这个界面，填写好连接的数据库名称、用户名、密码：</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/711728-d50fcaee3359ebca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
+<p>屏幕快照 2018-12-27 上午10.06.46 2.png</p>
+<p>此时“Test Connection”不可用，底部有一个warning（Download missing driver files），我们点击“Download”，然后会下载文件：</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/711728-f552684255993507.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/920/format/webp" alt="img"></p>
+<p>屏幕快照 2018-12-25 下午5.40.15.png</p>
+<p>完成后：</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/711728-bf5045d37b8c5d79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
+<p>屏幕快照 2018-12-27 上午10.06.46.png</p>
+<p>此时URL模块中“Test connection”可用了，我们点击试一下：</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/711728-68e9e7a14019fa20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
+<p>屏幕快照 2018-12-27 上午10.07.02.png</p>
+<p>此时出现绿色的提示，我们Successful了，点击OK之后：</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/711728-657e7ef6505236a5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
+<p>屏幕快照 2018-12-27 上午10.25.29.png</p>
+<p>界面的右侧出现了数据库，点击展开能看到数据库的表，以及表中的字段。</p>
+<p>接下来我们需要前往<a href="https://dev.mysql.com/downloads/connector/j/5.1.html下载一个" target="_blank" rel="noopener">https://dev.mysql.com/downloads/connector/j/5.1.html下载一个</a> mysql-connector-java文件。</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/711728-42b520bd541ce203.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
+<p>屏幕快照 2018-12-27 下午1.59.14.png</p>
+<p>下载完成后，打开下载的包：</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/711728-c39134e375b100cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/769/format/webp" alt="img"></p>
+<p>屏幕快照 2018-12-27 下午2.03.23.png</p>
+<p>把mysql-connector-java-5.1.47-bin.jar拷贝出来，放到SDK的根目录的bin目录下。至于SDK的根目录在哪里，我们打开IDEA-File-Project Structure-SDK</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/711728-ea0881188104e6be.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
+<p>屏幕快照 2018-12-27 下午2.16.26.png</p>
+<p>就是那个JDK home path。然后找到Home中的lib文件夹，放入该文件夹中：</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/711728-863326c77c23eda1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/771/format/webp" alt="img"></p>
+<p>屏幕快照 2018-12-27 下午2.07.40.png</p>
+<p>然后我们去IDEA中，打开File-Project Stucture -SDK：</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/711728-257812a952677e00.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
+<p>屏幕快照 2018-12-27 下午2.09.30.png</p>
+<p>把mysql-connector-java添加进来即可。</p>
+<h1 id="关联mysql失败-Server-returns-invalid-timezone-Go-to-‘Advanced’-tab-and-set-‘serverTimezon’"><a href="#关联mysql失败-Server-returns-invalid-timezone-Go-to-‘Advanced’-tab-and-set-‘serverTimezon’" class="headerlink" title="关联mysql失败_Server returns invalid timezone. Go to ‘Advanced’ tab and set ‘serverTimezon’"></a>关联mysql失败_Server returns invalid timezone. Go to ‘Advanced’ tab and set ‘serverTimezon’</h1><p>时区错误，MySQL默认的时区是UTC时区，比北京时间晚<code>8</code>个小时。</p>
+<p>所以要修改mysql的时长</p>
+<p>在mysql的命令模式下，输入：</p>
+<p>set global time_zone=’+8:00’;</p>
+<p>再次连接成功</p>
+<p>进入命令窗口（Win + R），连接数据库 mysql -hlocalhost -uroot -p，回车，输入密码，回车，如图：</p>
+<p>2，继续输入 show variables like’%time_zone’;    （注意不要漏掉后面的分号），回车，如图：</p>
+<p>显示 SYSTEM 就是没有设置时区啦。</p>
+<p>3，现在我们来设置时区。</p>
+<p>输入set global time_zone = ‘+8:00’;  注意不要漏掉后面的分号），回车，如图：</p>
+<p>这便是设置成功啦！</p>
+<p>这时你重新连接下数据库，也许能连接成功！</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/31/mysql%E5%9C%A8IDEA%E4%B8%AD%E7%9A%84%E9%85%8D%E7%BD%AE/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
