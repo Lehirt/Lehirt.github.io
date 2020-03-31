@@ -86,20 +86,34 @@
 
 
 
-<meta name="description" content="存储器的体系结构概述主要问题： 存储器可分为哪些类型？ 现代存储器的层次结构，为什么要分层？  对2的回答，在计算机存储体系中，就是存储速度越快，价格就会越贵。因为价格的限制，我们在存储器中，就得有个恰当的搭配，以达到价格与性能的平衡。在前面那些大神的不断努力之后，弄出了很多种材料，不同的存储器，最后，得到了下面这张图。">
+<meta name="description" content="存储器的体系结构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机组成原理之存储器">
 <meta property="og:url" content="https://lehirt.github.io/2020/03/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B9%8B%E5%AD%98%E5%82%A8%E5%99%A8/index.html">
 <meta property="og:site_name" content="Lehirt&#39;s Blog">
-<meta property="og:description" content="存储器的体系结构概述主要问题： 存储器可分为哪些类型？ 现代存储器的层次结构，为什么要分层？  对2的回答，在计算机存储体系中，就是存储速度越快，价格就会越贵。因为价格的限制，我们在存储器中，就得有个恰当的搭配，以达到价格与性能的平衡。在前面那些大神的不断努力之后，弄出了很多种材料，不同的存储器，最后，得到了下面这张图。">
-<meta property="og:image" content="https://img-blog.csdn.net/20180526173631209">
+<meta property="og:description" content="存储器的体系结构">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/31/GQrj81.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/31/GQf08e.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/31/GQ5sKJ.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/31/GQTTr4.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/31/GQOyrT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/31/GQXNy6.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/31/GlpxAK.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/31/Gle7OU.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/31/Glmm1P.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/31/Gll0HK.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/01/Gla1MD.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/01/Gld4ht.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/01/GldTc8.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/01/GldTc8.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/01/Gldvhq.png">
 <meta property="article:published_time" content="2020-03-31T11:10:37.000Z">
-<meta property="article:modified_time" content="2020-03-31T11:39:30.079Z">
+<meta property="article:modified_time" content="2020-03-31T17:09:40.860Z">
 <meta property="article:author" content="lehirt">
 <meta property="article:tag" content="计算机组成原理">
 <meta property="article:tag" content="408">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdn.net/20180526173631209">
+<meta name="twitter:image" content="https://s1.ax1x.com/2020/03/31/GQrj81.png">
 
 
 
@@ -381,13 +395,149 @@
       
 
       
-        <h2 id="存储器的体系结构"><a href="#存储器的体系结构" class="headerlink" title="存储器的体系结构"></a>存储器的体系结构</h2><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h4 id="主要问题："><a href="#主要问题：" class="headerlink" title="主要问题："></a>主要问题：</h4><ol>
+        <h1 id="存储器的体系结构"><a href="#存储器的体系结构" class="headerlink" title="存储器的体系结构"></a>存储器的体系结构</h1><hr>
+<a id="more"></a>
+
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="主要问题："><a href="#主要问题：" class="headerlink" title="主要问题："></a>主要问题：</h3><ol>
 <li>存储器可分为哪些类型？</li>
 <li>现代存储器的层次结构，为什么要分层？</li>
 </ol>
 <p>对2的回答，在计算机存储体系中，就是存储速度越快，价格就会越贵。因为价格的限制，我们在存储器中，就得有个恰当的搭配，以达到价格与性能的平衡。在前面那些大神的不断努力之后，弄出了很多种材料，不同的存储器，最后，得到了下面这张图。</p>
-<p><img src="https://img-blog.csdn.net/20180526173631209" alt="寄存器体系结构"></p>
-
+<p><img src="https://s1.ax1x.com/2020/03/31/GQrj81.png" alt="寄存器体系结构"></p>
+<p>对1的回答，存储器的分类由不同的方式分为</p>
+<ol>
+<li>按存储介质分类</li>
+</ol>
+<ul>
+<li>半导体存储器         TTL，MOS            </li>
+<li>磁表面存储器           磁头，载磁体           </li>
+<li>磁芯存储器             硬磁材料，环状元件       </li>
+<li>光盘存储器             激光，磁光材料        </li>
+</ul>
+<ol start="2">
+<li>按存取方式分类</li>
+</ol>
+<ul>
+<li>存取时间与物理地址无关（随机访问）<ul>
+<li>随机存储器    在程序的执行过程中    可读可写</li>
+<li>只读存储器    在程序的执行过程中    只读</li>
+</ul>
+</li>
+<li>存取时间与物理地址有关（串行访问）<ul>
+<li>顺序存取存储器    磁带</li>
+<li>直接存取存储器    磁盘</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li><p>按在计算机中的作用分类</p>
+<p><img src="https://s1.ax1x.com/2020/03/31/GQf08e.png" alt="存储器的作用分类"></p>
+</li>
+</ol>
+<p>注意：</p>
+<ul>
+<li><p>Flash Memory 半导体存储器，比主存慢，比磁盘快。便携式存储器（U盘），还可以作为计算机硬盘</p>
+</li>
+<li><p>Flash Memory可以作为主存与辅存之间的缓存，ssd核心材料就是Flash Memory</p>
+</li>
+<li><p>高速缓冲存储器（Cache）即静态RAM，比主存快</p>
+</li>
+</ul>
+<h2 id="存储器的层次结构"><a href="#存储器的层次结构" class="headerlink" title="存储器的层次结构"></a>存储器的层次结构</h2><h3 id="存储器三个主要特性的关系"><a href="#存储器三个主要特性的关系" class="headerlink" title="存储器三个主要特性的关系"></a>存储器三个主要特性的关系</h3><p><img src="https://s1.ax1x.com/2020/03/31/GQ5sKJ.png" alt="存储器三个主要特性的关系"></p>
+<ul>
+<li>寄存器不仅在CPU中，IO中也有；部分缓存被集成到CPU中</li>
+<li>一些寄存器对程序员是透明的，程序员无法操作；另一些是提供给程序原操作的寄存器，称为体系结构寄存器。</li>
+<li>寄存器容量最小，速度最快；越向下容量越大。单一的存储器都无法满足用户对高速度，大容量，低价格的需求；</li>
+<li>层次结构形成存储体系</li>
+<li>存储体系：把两种或两种以上的存储器用软件或硬件或软硬件结合，连接成整体。从程序员角度看，有高速度，大容量。该存储体系是透明的。由软硬件自动完成程序或数据的移动。</li>
+</ul>
+<h3 id="缓存-主存层次和主存-辅存层次"><a href="#缓存-主存层次和主存-辅存层次" class="headerlink" title="缓存-主存层次和主存-辅存层次"></a>缓存-主存层次和主存-辅存层次</h3><p><img src="https://s1.ax1x.com/2020/03/31/GQTTr4.png" alt="存储器两个重要层次"></p>
+<ul>
+<li>主存的容量有限，无法完全放下程序数据或资料，需要辅存。程序的运行在主存，需要将数据从辅存传入主存。即2个存储层次。</li>
+<li>在程序员看来，这个层次结构是透明的，即既有主存的快速度，又有辅存的大容量</li>
+<li>CPU和主存的发展速度存在“剪刀差”，引入缓存（cache）解决CPU速度快而主存速度慢的问题。缓存中保存有主存的副本，CPU可以直接从缓存中获得数据。拓展—-程序的局部性原理</li>
+<li>缓存-主存层次：硬件连接成整体。透明的。主要解决速度问题。用主存储器的地址（实地址）-&gt;物理地址</li>
+<li>主存-辅存层次：软硬件连接成整体。透明的。主要解决容量问题。虚地址（逻辑地址）-&gt;由0开始的逻辑地址，程序运行由软件转换成内存单元中的物理地址。</li>
+</ul>
+<h1 id="主存储器"><a href="#主存储器" class="headerlink" title="主存储器"></a>主存储器</h1><h2 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h2><h3 id="主存的基本组成"><a href="#主存的基本组成" class="headerlink" title="主存的基本组成"></a>主存的基本组成</h3><p><img src="https://s1.ax1x.com/2020/03/31/GQOyrT.png" alt="主存的基本组成"></p>
+<ul>
+<li><p>MAR（主存地址寄存器）保存了我们要访问的存储单元的地址。必须经过译码器的译码以后才能访问存储体中指定的存储单元。</p>
+</li>
+<li><p>MDR（主存数据寄存器）保存了我们要读出或写入的数据。通过读写控制电路控制。如果是写入，数据经过读写电路写入MAR指定的存储单元 中；如果是读出，存储单元中数据经过读写电路送到MDR。</p>
+</li>
+<li><p>控制电路控制数据方向</p>
+</li>
+</ul>
+<h3 id="主存与CPU之间的联系"><a href="#主存与CPU之间的联系" class="headerlink" title="主存与CPU之间的联系"></a>主存与CPU之间的联系</h3><p><img src="https://s1.ax1x.com/2020/03/31/GQXNy6.png" alt="主存与CPU的联系"></p>
+<ul>
+<li><p>CPU和主存之间的联系分为三类：数据总线，地址总线和控制总线。</p>
+<p>在CPU和主存之间就通过这三种类型的信号连接</p>
+</li>
+<li><p>数据总线完成了CPU和主存之间的数据传输，数据总线直接连接在MDR上，是双向的，可以读出和写入。</p>
+</li>
+<li><p>地址总线连接在MAR寄存器和主存的地址总线之间，给出了要访问的内存单元的地址，它是单向的，从CPU送到主存的。</p>
+</li>
+<li><p>控制信号也都是单向的，从CPU送到主存</p>
+</li>
+</ul>
+<h3 id="主存中存储单元地址的分配"><a href="#主存中存储单元地址的分配" class="headerlink" title="主存中存储单元地址的分配"></a>主存中存储单元地址的分配</h3><p><img src="https://s1.ax1x.com/2020/03/31/GlpxAK.png" alt="主存中存储单元地址的分配"></p>
+<ul>
+<li>24根地址线，有2^24个地址，至于每个地址代表的容量，要看数据线的要求，在题中，每个地址表示一个字节。所以数据的容量就是  2^24*1字节=16M字节。根据字对字节不同的换算，求后两题。</li>
+<li>这边的M不是MB是兆（单位M），2^20=1024*1024≈10^6，10^6为1兆。即16Mb</li>
+<li>字长16位，则1个字2个字节；字节范围是16M，则16M/2=8M每个字（8MW）；同理，字长32位，1个字4个字节；字节范围16M，则16M/4=4MW</li>
+</ul>
+<h3 id="主存的技术指标"><a href="#主存的技术指标" class="headerlink" title="主存的技术指标"></a>主存的技术指标</h3><ol>
+<li><p>存储容量       主存中存放字节的总数</p>
+</li>
+<li><p>存储速度</p>
+<ul>
+<li><p>存取时间   存储器的  访问时间</p>
+<p>​         （读出时间  写入时间） </p>
+</li>
+<li><p>存取周期   连续两次独立的存储器操作</p>
+<p>  （读或写）所需的 最小间隔时间</p>
+<p>  一般存取周期长于存取时间，因为存取周期=找地址时间加复原时间。</p>
+</li>
+</ul>
+</li>
+<li><p>存储器的带宽  位/秒    </p>
+</li>
+</ol>
+<h2 id="半导体存储芯片简介"><a href="#半导体存储芯片简介" class="headerlink" title="半导体存储芯片简介"></a>半导体存储芯片简介</h2><h3 id="半导体存储芯片的基本结构"><a href="#半导体存储芯片的基本结构" class="headerlink" title="半导体存储芯片的基本结构"></a>半导体存储芯片的基本结构</h3><p><img src="https://s1.ax1x.com/2020/03/31/Gle7OU.png" alt="半导体存储芯片的基本结构"></p>
+<p><img src="https://s1.ax1x.com/2020/03/31/Glmm1P.png" alt="片选线和读写控制线"></p>
+<p>基本结构：存储矩阵，译码驱动和读写电路。<br>还有接口，地址线，数据线，片选线，读/写控制线</p>
+<ul>
+<li><p>地址线（有多少货车）和数据线（每辆货车装多少货物）确定芯片容量（位）。芯片容量其实就是重合法中设计的<strong>存储矩阵</strong></p>
+</li>
+<li><p>片选线，芯片选择线。有两种标识方式，低电平有效</p>
+</li>
+<li><p>读写控制线，低电平写操作，高电平写操作。</p>
+<p><img src="https://s1.ax1x.com/2020/03/31/Gll0HK.png" alt="片选线"></p>
+</li>
+<li><p>16K和64K均可视为地址线，1和8视为数据线。</p>
+</li>
+<li><p>如何用1位数据线芯片制造8位数据线芯片？将8个1位芯片串成一组，每一组同时工作即可。在这8个一组的芯片中，取地址线相同表示的数据共同输出成为8位数据。再并联4个此组就满足要求了。</p>
+</li>
+<li><p>当地址为0-（16K-1）时在第一组；地址为16K-（32K-1）时在第二组；32K-（48K-1）在第3组；48K-64K-1在第4组</p>
+</li>
+</ul>
+<h3 id="半导体存储芯片的译码驱动方式"><a href="#半导体存储芯片的译码驱动方式" class="headerlink" title="半导体存储芯片的译码驱动方式"></a>半导体存储芯片的译码驱动方式</h3><p>译码驱动方式：给定存储单元地址，如何找到存储单元。方法有二：</p>
+<pre><code>线选法
+重合法</code></pre><p>线选法：K位地址码经过译码，得到2K根地址线，每根地址线对应一个存储单元。在线选法中，地址码只需进行一次译码就可选择存储单元，其地址码位数越长，译码器结构越复杂，成本越高，故该寻址方式适合在速度较快、容量较小的存储芯片中使用。</p>
+<p>重合法：将线选法中单一的地址译码器分成了行地址译码器和列地址译码器，通过两者互“与”来选中存储单元，大大简化了外部译码线路，主要用于大容量的存储器结构</p>
+<h2 id="随机存取存储器"><a href="#随机存取存储器" class="headerlink" title="随机存取存储器"></a>随机存取存储器</h2><h3 id="1-静态RAM（SRAM）"><a href="#1-静态RAM（SRAM）" class="headerlink" title="1. 静态RAM（SRAM）"></a>1. 静态RAM（SRAM）</h3><h4 id="保存0和1的原理是什么？"><a href="#保存0和1的原理是什么？" class="headerlink" title="保存0和1的原理是什么？"></a>保存0和1的原理是什么？</h4><p>利用 <strong>双稳态触发器</strong></p>
+<h4 id="基本单元电路的构成是什么？"><a href="#基本单元电路的构成是什么？" class="headerlink" title="基本单元电路的构成是什么？"></a>基本单元电路的构成是什么？</h4><h4 id="对单元电路如何读出和写入？"><a href="#对单元电路如何读出和写入？" class="headerlink" title="对单元电路如何读出和写入？"></a>对单元电路如何读出和写入？</h4><h4 id="典型芯片的结构是什么样子的？"><a href="#典型芯片的结构是什么样子的？" class="headerlink" title="典型芯片的结构是什么样子的？"></a>典型芯片的结构是什么样子的？</h4><p><img src="https://s1.ax1x.com/2020/04/01/Gla1MD.png" alt="inte 2114外特性"></p>
+<ul>
+<li>A0~A9根地址线，有2^10=1K个地址单元。I/O1-I/O4,有4个数据线，则最终有4位输出结果。则存储容量为1K*4=4K位。</li>
+</ul>
+<h4 id="静态RAM芯片是如何进行读出和写入操作？"><a href="#静态RAM芯片是如何进行读出和写入操作？" class="headerlink" title="静态RAM芯片是如何进行读出和写入操作？"></a>静态RAM芯片是如何进行读出和写入操作？</h4><p>4K=2^12=2^6<em>2^6。于是可以设计*</em>64<em>64*</em>的存储矩阵列完成译码驱动。</p>
+<p>译码驱动选择<strong>重合法</strong></p>
+<p><img src="https://s1.ax1x.com/2020/04/01/Gld4ht.png" alt="读1"></p>
+<p><img src="https://s1.ax1x.com/2020/04/01/GldTc8.png" alt="读2"></p>
+<p><img src="https://s1.ax1x.com/2020/04/01/GldTc8.png" alt="写1"></p>
+<p><img src="https://s1.ax1x.com/2020/04/01/Gldvhq.png" alt="写2"></p>
+<h3 id="2-动态RAM（DRAM）"><a href="#2-动态RAM（DRAM）" class="headerlink" title="2. 动态RAM（DRAM）"></a>2. 动态RAM（DRAM）</h3><p>保存在<strong>电容</strong>中<br><strong>以后有机会再来写这个</strong></p>
+<h3 id="3-动态RAM和静态RAM的比较"><a href="#3-动态RAM和静态RAM的比较" class="headerlink" title="3. 动态RAM和静态RAM的比较"></a>3. 动态RAM和静态RAM的比较</h3>
       
     </div>
     
@@ -586,7 +736,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#存储器的体系结构"><span class="nav-number">1.</span> <span class="nav-text">存储器的体系结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">2.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#主要问题："><span class="nav-number">2.0.1.</span> <span class="nav-text">主要问题：</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#存储器的体系结构"><span class="nav-number">1.</span> <span class="nav-text">存储器的体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要问题："><span class="nav-number">1.1.1.</span> <span class="nav-text">主要问题：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储器的层次结构"><span class="nav-number">1.2.</span> <span class="nav-text">存储器的层次结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#存储器三个主要特性的关系"><span class="nav-number">1.2.1.</span> <span class="nav-text">存储器三个主要特性的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存-主存层次和主存-辅存层次"><span class="nav-number">1.2.2.</span> <span class="nav-text">缓存-主存层次和主存-辅存层次</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主存储器"><span class="nav-number">2.</span> <span class="nav-text">主存储器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述-1"><span class="nav-number">2.1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主存的基本组成"><span class="nav-number">2.1.1.</span> <span class="nav-text">主存的基本组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主存与CPU之间的联系"><span class="nav-number">2.1.2.</span> <span class="nav-text">主存与CPU之间的联系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主存中存储单元地址的分配"><span class="nav-number">2.1.3.</span> <span class="nav-text">主存中存储单元地址的分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主存的技术指标"><span class="nav-number">2.1.4.</span> <span class="nav-text">主存的技术指标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#半导体存储芯片简介"><span class="nav-number">2.2.</span> <span class="nav-text">半导体存储芯片简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#半导体存储芯片的基本结构"><span class="nav-number">2.2.1.</span> <span class="nav-text">半导体存储芯片的基本结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#半导体存储芯片的译码驱动方式"><span class="nav-number">2.2.2.</span> <span class="nav-text">半导体存储芯片的译码驱动方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#随机存取存储器"><span class="nav-number">2.3.</span> <span class="nav-text">随机存取存储器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-静态RAM（SRAM）"><span class="nav-number">2.3.1.</span> <span class="nav-text">1. 静态RAM（SRAM）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#保存0和1的原理是什么？"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">保存0和1的原理是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本单元电路的构成是什么？"><span class="nav-number">2.3.1.2.</span> <span class="nav-text">基本单元电路的构成是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对单元电路如何读出和写入？"><span class="nav-number">2.3.1.3.</span> <span class="nav-text">对单元电路如何读出和写入？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#典型芯片的结构是什么样子的？"><span class="nav-number">2.3.1.4.</span> <span class="nav-text">典型芯片的结构是什么样子的？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#静态RAM芯片是如何进行读出和写入操作？"><span class="nav-number">2.3.1.5.</span> <span class="nav-text">静态RAM芯片是如何进行读出和写入操作？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-动态RAM（DRAM）"><span class="nav-number">2.3.2.</span> <span class="nav-text">2. 动态RAM（DRAM）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-动态RAM和静态RAM的比较"><span class="nav-number">2.3.3.</span> <span class="nav-text">3. 动态RAM和静态RAM的比较</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
