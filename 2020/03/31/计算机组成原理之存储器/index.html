@@ -107,8 +107,20 @@
 <meta property="og:image" content="https://s1.ax1x.com/2020/04/01/GldTc8.png">
 <meta property="og:image" content="https://s1.ax1x.com/2020/04/01/GldTc8.png">
 <meta property="og:image" content="https://s1.ax1x.com/2020/04/01/Gldvhq.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/01/G1M3m6.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/01/G11xun.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/01/G16IDx.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/01/G1gzAf.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/01/G15sbj.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/01/G1oGtI.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/01/G1OHdU.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/01/G33KFf.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/01/G3GyIx.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/01/G3GOSS.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/01/G3Bn7F.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/01/G3BWNQ.png">
 <meta property="article:published_time" content="2020-03-31T11:10:37.000Z">
-<meta property="article:modified_time" content="2020-03-31T17:09:40.860Z">
+<meta property="article:modified_time" content="2020-04-01T09:37:57.122Z">
 <meta property="article:author" content="lehirt">
 <meta property="article:tag" content="计算机组成原理">
 <meta property="article:tag" content="408">
@@ -505,7 +517,8 @@
 </ol>
 <h2 id="半导体存储芯片简介"><a href="#半导体存储芯片简介" class="headerlink" title="半导体存储芯片简介"></a>半导体存储芯片简介</h2><h3 id="半导体存储芯片的基本结构"><a href="#半导体存储芯片的基本结构" class="headerlink" title="半导体存储芯片的基本结构"></a>半导体存储芯片的基本结构</h3><p><img src="https://s1.ax1x.com/2020/03/31/Gle7OU.png" alt="半导体存储芯片的基本结构"></p>
 <p><img src="https://s1.ax1x.com/2020/03/31/Glmm1P.png" alt="片选线和读写控制线"></p>
-<p>基本结构：存储矩阵，译码驱动和读写电路。<br>还有接口，地址线，数据线，片选线，读/写控制线</p>
+<p>基本结构：存储矩阵，译码驱动和读写电路。</p>
+<p>还有接口，地址线，数据线，片选线，读/写控制线</p>
 <ul>
 <li><p>地址线（有多少货车）和数据线（每辆货车装多少货物）确定芯片容量（位）。芯片容量其实就是重合法中设计的<strong>存储矩阵</strong></p>
 </li>
@@ -525,7 +538,7 @@
 <pre><code>线选法
 重合法</code></pre><p>线选法：K位地址码经过译码，得到2K根地址线，每根地址线对应一个存储单元。在线选法中，地址码只需进行一次译码就可选择存储单元，其地址码位数越长，译码器结构越复杂，成本越高，故该寻址方式适合在速度较快、容量较小的存储芯片中使用。</p>
 <p>重合法：将线选法中单一的地址译码器分成了行地址译码器和列地址译码器，通过两者互“与”来选中存储单元，大大简化了外部译码线路，主要用于大容量的存储器结构</p>
-<h2 id="随机存取存储器"><a href="#随机存取存储器" class="headerlink" title="随机存取存储器"></a>随机存取存储器</h2><h3 id="1-静态RAM（SRAM）"><a href="#1-静态RAM（SRAM）" class="headerlink" title="1. 静态RAM（SRAM）"></a>1. 静态RAM（SRAM）</h3><h4 id="保存0和1的原理是什么？"><a href="#保存0和1的原理是什么？" class="headerlink" title="保存0和1的原理是什么？"></a>保存0和1的原理是什么？</h4><p>利用 <strong>双稳态触发器</strong></p>
+<h2 id="随机存取存储器（RAM）"><a href="#随机存取存储器（RAM）" class="headerlink" title="随机存取存储器（RAM）"></a>随机存取存储器（RAM）</h2><h3 id="1-静态RAM（SRAM）"><a href="#1-静态RAM（SRAM）" class="headerlink" title="1. 静态RAM（SRAM）"></a>1. 静态RAM（SRAM）</h3><h4 id="保存0和1的原理是什么？"><a href="#保存0和1的原理是什么？" class="headerlink" title="保存0和1的原理是什么？"></a>保存0和1的原理是什么？</h4><p>利用 <strong>双稳态触发器</strong></p>
 <h4 id="基本单元电路的构成是什么？"><a href="#基本单元电路的构成是什么？" class="headerlink" title="基本单元电路的构成是什么？"></a>基本单元电路的构成是什么？</h4><h4 id="对单元电路如何读出和写入？"><a href="#对单元电路如何读出和写入？" class="headerlink" title="对单元电路如何读出和写入？"></a>对单元电路如何读出和写入？</h4><h4 id="典型芯片的结构是什么样子的？"><a href="#典型芯片的结构是什么样子的？" class="headerlink" title="典型芯片的结构是什么样子的？"></a>典型芯片的结构是什么样子的？</h4><p><img src="https://s1.ax1x.com/2020/04/01/Gla1MD.png" alt="inte 2114外特性"></p>
 <ul>
 <li>A0~A9根地址线，有2^10=1K个地址单元。I/O1-I/O4,有4个数据线，则最终有4位输出结果。则存储容量为1K*4=4K位。</li>
@@ -537,7 +550,120 @@
 <p><img src="https://s1.ax1x.com/2020/04/01/GldTc8.png" alt="写1"></p>
 <p><img src="https://s1.ax1x.com/2020/04/01/Gldvhq.png" alt="写2"></p>
 <h3 id="2-动态RAM（DRAM）"><a href="#2-动态RAM（DRAM）" class="headerlink" title="2. 动态RAM（DRAM）"></a>2. 动态RAM（DRAM）</h3><p>保存在<strong>电容</strong>中<br><strong>以后有机会再来写这个</strong></p>
-<h3 id="3-动态RAM和静态RAM的比较"><a href="#3-动态RAM和静态RAM的比较" class="headerlink" title="3. 动态RAM和静态RAM的比较"></a>3. 动态RAM和静态RAM的比较</h3>
+<p><strong>动态RAM为什么要刷新，刷新方法</strong></p>
+<p>利用电容存储电荷保存信息，电容做的非常小，很容易漏电。如果一段时间不对电容刷新，那么会漏电，失去保存的信息。</p>
+<p>动态RAM刷新只与行地址有关。每次刷新是刷新一行而不是某个存储单元。在读数据线和写数据线之间加上刷新放大器，每一列都加，则每一行都能被刷新。</p>
+<p><img src="https://s1.ax1x.com/2020/04/01/G1M3m6.png" alt="集中刷新"></p>
+<p>假设每一行存取周期是0.5us，<strong>最大刷新间隔为2ms</strong>，则动态RAM需要在2ms内完成所有行的刷新。128行矩阵集中刷新，需要0.5<em>128=64us。该刷新时间段，CPU和IO只能等待，称为*</em>死区 ** 。</p>
+<p><img src="https://s1.ax1x.com/2020/04/01/G11xun.png" alt="分散刷新"></p>
+<p>每一行的存取周期为读写时间加刷新时间。每一个存取周期可以刷新一行，128行需要的刷新时间为128<em>1us=128us。刷新间隔为128us。则在2ms内可以完成对每一行15.6次刷新。**刷新时间为 （2ms / 128） \</em> (128 * 0.5μs) = 1ms**实际上是过度刷新，动态RAM不需要频繁的刷新。</p>
+<ul>
+<li>集中刷新，是直接读了所有的128行同时刷新，CPU或者IO没办法读取</li>
+<li>但是分散刷新，除了正在读取和刷新的1行，还有剩下的127行可以在0.5us的读写周期中读写数据</li>
+</ul>
+<blockquote>
+<p>概念：指对每行存储单元的刷新分散到每个存取周期内完成。</p>
+<p><img src="https://s1.ax1x.com/2020/04/01/G16IDx.png" alt="异步刷新"></p>
+</blockquote>
+<p>将2ms平分到128行中，每行有15.6us，则每行可以在15.6us内（15.6us内的任意时间）完成一次刷新，即可保证2ms内每行都刷新一次。每行单独刷新属于分散刷新，但同时不会过度刷新；在15.6us内可以进行任意的读写操作，属于集中刷新。</p>
+<h3 id="3-动态RAM和静态RAM的比较"><a href="#3-动态RAM和静态RAM的比较" class="headerlink" title="3. 动态RAM和静态RAM的比较"></a>3. 动态RAM和静态RAM的比较</h3><p><img src="https://s1.ax1x.com/2020/04/01/G1gzAf.png" alt="DRAM和SRAM比较"></p>
+<blockquote>
+<ol>
+<li>DRAM单元电路比较简单，只有一个晶体管和一个电容，集成度高；SRAM单元电路比较复杂，有6个晶体管，集成度低</li>
+<li>DRAM行地址和列地址可以分别进行传送，地址线可以减少为原来的一半，引脚少。SRAM需要发挥高速度的优势，行地址和列地址同时传送，引脚多</li>
+<li>SRAM有3个晶体管一直在导通电，功耗大</li>
+<li>DRAM电容储存，做主存（内存条）；SRAM（CPU和主存之间的缓存）</li>
+</ol>
+</blockquote>
+<h2 id="只读存储器（ROM）"><a href="#只读存储器（ROM）" class="headerlink" title="只读存储器（ROM）"></a>只读存储器（ROM）</h2><blockquote>
+<ol>
+<li>掩模ROM（MROM）</li>
+<li>PROM（一次性编程）</li>
+<li>EPROM（多次性编程）</li>
+<li>EEPROM（多次性编程）</li>
+<li>Flash Memory（闪速型存储器）</li>
+</ol>
+</blockquote>
+<h2 id="存储器与CPU的连接"><a href="#存储器与CPU的连接" class="headerlink" title="*存储器与CPU的连接"></a>*存储器与CPU的连接</h2><hr>
+<h3 id="存储器容量的扩展"><a href="#存储器容量的扩展" class="headerlink" title="存储器容量的扩展"></a>存储器容量的扩展</h3><h4 id="位扩展（增加存储字长）"><a href="#位扩展（增加存储字长）" class="headerlink" title="位扩展（增加存储字长）"></a>位扩展（增加存储字长）</h4><p><img src="https://s1.ax1x.com/2020/04/01/G15sbj.png" alt="位扩展"></p>
+<blockquote>
+<p>2片2114接相同地址线，则表示对相同的存储单元。接不同的8根数据线，每一根数据线表示1位，则完成输出8位的扩展。</p>
+<p>关键点在于<strong>把2个芯片当作1个芯片来用</strong>，<strong>同时</strong>进行相同的操作。要保证同时，就是把两个芯片的<strong>片选线用相同的信号控制</strong>。</p>
+</blockquote>
+<h4 id="字扩展（增加存储字的数量）"><a href="#字扩展（增加存储字的数量）" class="headerlink" title="字扩展（增加存储字的数量）"></a>字扩展（增加存储字的数量）</h4><p><img src="https://s1.ax1x.com/2020/04/01/G1oGtI.png" alt="字扩展"></p>
+<blockquote>
+<p>2片2114接相同地址线，但需要表示不同的存储单元。接相同的8根数据线，防止2片芯片同时对数据操作而造成8根地址线的冲突，需要A10片选线的电位来控制该操作对哪一个芯片起作用。最终结果，地址若在0<del>1K-1则选第一个芯片，若在1K</del>2K-1,则选第二个芯片。通过对地址数的扩展，最终完成对芯片存储字的数量（容量）扩展。</p>
+</blockquote>
+<h4 id="同时扩展（位，字扩展）"><a href="#同时扩展（位，字扩展）" class="headerlink" title="同时扩展（位，字扩展）"></a>同时扩展（位，字扩展）</h4><p><img src="https://s1.ax1x.com/2020/04/01/G1OHdU.png" alt="字，位扩展"></p>
+<blockquote>
+<p>计算总存储容量，8*1K*4位=4K*8位，所以总共需要<strong>8片</strong>1K*4位的存储芯片</p>
+<p>分析：</p>
+<ol>
+<li><p>先进行位扩展，将1K*4位芯片扩展为 1K*8位的芯片，则共有4组1K*8位的芯片</p>
+</li>
+<li><p>再进行字扩展，1K芯片有10根地址线，4K芯片有12根地址线，则多余的两根地址线作为片选线，决定对<strong>哪一组</strong>芯片进行操作。即A10和A11通过片选译码器控制。</p>
+</li>
+</ol>
+</blockquote>
+<p>简而言之，位扩展就是对数据线进行扩展；字扩展就是对地址线的扩展。</p>
+<h3 id="存储器与CPU的连接-1"><a href="#存储器与CPU的连接-1" class="headerlink" title="存储器与CPU的连接"></a>存储器与CPU的连接</h3><ol>
+<li>地址线的连接 </li>
+<li>数据线的连接 </li>
+<li>读/写命令线的连接 </li>
+<li>片选线的连接 </li>
+<li>合理选择存储芯片 </li>
+<li>其他       时序、负载 </li>
+</ol>
+<h2 id="存储器的校验"><a href="#存储器的校验" class="headerlink" title="存储器的校验"></a>存储器的校验</h2><p>略</p>
+<h2 id="提高访存速度的措施"><a href="#提高访存速度的措施" class="headerlink" title="提高访存速度的措施"></a>提高访存速度的措施</h2><ul>
+<li>采用高速器件</li>
+<li>采用层次结构 Caceh-主存</li>
+<li>调整主存结构<h3 id="单体多字系统"><a href="#单体多字系统" class="headerlink" title="单体多字系统"></a>单体多字系统</h3><blockquote>
+<p>调整主存结构</p>
+<p>​        由于CPU速度远远大于主存，于是调整主存结构，<strong>实现CPU一次传输可读/写多条指令。</strong>实际上增加了存储器的<strong>带宽</strong></p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2020/04/01/G33KFf.png" alt="单体多字系统"></p>
+<p>存在问题：CPU对4个W位寄存器的存取是同时且顺序进行的，导致很多问题。比如指令的跳转导致后3条指令作废；写入一条指令时会同时更改后3条指令。</p>
+<h3 id="多体并行系统"><a href="#多体并行系统" class="headerlink" title="多体并行系统"></a>多体并行系统</h3><p>改进后，有<strong>多体并行系统</strong></p>
+<ol>
+<li><strong>高位交叉</strong></li>
+</ol>
+<p><img src="https://s1.ax1x.com/2020/04/01/G3GyIx.png" alt="高位交叉"></p>
+<blockquote>
+<p>高位对存储体编号。则4个存储体可以<strong>并行</strong>工作。即在CPU访存后，存储器工作时，CPU可以<strong>再次访问其他地址单元</strong>。</p>
+<p>但是由于程序运行的原理，会造成CPU对同一个存储体的多次访问，而其他存储体空闲的情况。<strong>一核有难，多核围观</strong>的情况。高位交叉只适合对<strong>容量</strong>的扩展。</p>
+<p>于是再次改进，有了<strong>低位交叉</strong>并行系统</p>
+</blockquote>
+<ol start="2">
+<li><strong>低位交叉</strong></li>
+</ol>
+<p><img src="https://s1.ax1x.com/2020/04/01/G3GOSS.png" alt="低位交叉"></p>
+<blockquote>
+<p>特点：<strong>分离式方式</strong>。</p>
+</blockquote>
+<p>下面来了解一下低位并行系统中，CPU对存储器中数据的存取方式<strong>流水线</strong></p>
+<p><img src="https://s1.ax1x.com/2020/04/01/G3Bn7F.png" alt="低位交叉特点"></p>
+<p><img src="https://s1.ax1x.com/2020/04/01/G3BWNQ.png" alt="2"></p>
+<p>满足T=4ε时，可以形成CPU到存储器之间的线路是<strong>被充满的</strong>。</p>
+<p>CPU的指令从M0开始控制M0读数据。经过一个ε（一个总线传输周期）后开始控制从M1读数据。则可以连续读取4个字。</p>
+<p>低位交叉用于<strong>存储器带宽和访问速度的提高</strong>。</p>
+<h3 id="高性能存储芯片"><a href="#高性能存储芯片" class="headerlink" title="高性能存储芯片"></a>高性能存储芯片</h3><ul>
+<li><p>SDRAM（同步DRAM） </p>
+<blockquote>
+<p>CPU无需等待</p>
+</blockquote>
+</li>
+<li><p>RDRAM</p>
+</li>
+<li><p>带Cache的DRAM</p>
+<blockquote>
+<p>在 DRAM 的芯片内集成了一个由SRAM组成的<strong>Cache</strong>，有利于<strong>猝发式读取</strong></p>
+</blockquote>
+</li>
+</ul>
+
       
     </div>
     
@@ -591,6 +717,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/01/%E7%AE%97%E6%B3%95%E4%B9%8B%E5%9B%9E%E6%BA%AF%E6%B3%95/" rel="prev" title="算法之回溯法">
+                算法之回溯法 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -671,7 +801,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -682,7 +812,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -693,7 +823,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -736,7 +866,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#存储器的体系结构"><span class="nav-number">1.</span> <span class="nav-text">存储器的体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要问题："><span class="nav-number">1.1.1.</span> <span class="nav-text">主要问题：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储器的层次结构"><span class="nav-number">1.2.</span> <span class="nav-text">存储器的层次结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#存储器三个主要特性的关系"><span class="nav-number">1.2.1.</span> <span class="nav-text">存储器三个主要特性的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存-主存层次和主存-辅存层次"><span class="nav-number">1.2.2.</span> <span class="nav-text">缓存-主存层次和主存-辅存层次</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主存储器"><span class="nav-number">2.</span> <span class="nav-text">主存储器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述-1"><span class="nav-number">2.1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主存的基本组成"><span class="nav-number">2.1.1.</span> <span class="nav-text">主存的基本组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主存与CPU之间的联系"><span class="nav-number">2.1.2.</span> <span class="nav-text">主存与CPU之间的联系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主存中存储单元地址的分配"><span class="nav-number">2.1.3.</span> <span class="nav-text">主存中存储单元地址的分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主存的技术指标"><span class="nav-number">2.1.4.</span> <span class="nav-text">主存的技术指标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#半导体存储芯片简介"><span class="nav-number">2.2.</span> <span class="nav-text">半导体存储芯片简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#半导体存储芯片的基本结构"><span class="nav-number">2.2.1.</span> <span class="nav-text">半导体存储芯片的基本结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#半导体存储芯片的译码驱动方式"><span class="nav-number">2.2.2.</span> <span class="nav-text">半导体存储芯片的译码驱动方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#随机存取存储器"><span class="nav-number">2.3.</span> <span class="nav-text">随机存取存储器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-静态RAM（SRAM）"><span class="nav-number">2.3.1.</span> <span class="nav-text">1. 静态RAM（SRAM）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#保存0和1的原理是什么？"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">保存0和1的原理是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本单元电路的构成是什么？"><span class="nav-number">2.3.1.2.</span> <span class="nav-text">基本单元电路的构成是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对单元电路如何读出和写入？"><span class="nav-number">2.3.1.3.</span> <span class="nav-text">对单元电路如何读出和写入？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#典型芯片的结构是什么样子的？"><span class="nav-number">2.3.1.4.</span> <span class="nav-text">典型芯片的结构是什么样子的？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#静态RAM芯片是如何进行读出和写入操作？"><span class="nav-number">2.3.1.5.</span> <span class="nav-text">静态RAM芯片是如何进行读出和写入操作？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-动态RAM（DRAM）"><span class="nav-number">2.3.2.</span> <span class="nav-text">2. 动态RAM（DRAM）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-动态RAM和静态RAM的比较"><span class="nav-number">2.3.3.</span> <span class="nav-text">3. 动态RAM和静态RAM的比较</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#存储器的体系结构"><span class="nav-number">1.</span> <span class="nav-text">存储器的体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要问题："><span class="nav-number">1.1.1.</span> <span class="nav-text">主要问题：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储器的层次结构"><span class="nav-number">1.2.</span> <span class="nav-text">存储器的层次结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#存储器三个主要特性的关系"><span class="nav-number">1.2.1.</span> <span class="nav-text">存储器三个主要特性的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存-主存层次和主存-辅存层次"><span class="nav-number">1.2.2.</span> <span class="nav-text">缓存-主存层次和主存-辅存层次</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主存储器"><span class="nav-number">2.</span> <span class="nav-text">主存储器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述-1"><span class="nav-number">2.1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主存的基本组成"><span class="nav-number">2.1.1.</span> <span class="nav-text">主存的基本组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主存与CPU之间的联系"><span class="nav-number">2.1.2.</span> <span class="nav-text">主存与CPU之间的联系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主存中存储单元地址的分配"><span class="nav-number">2.1.3.</span> <span class="nav-text">主存中存储单元地址的分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主存的技术指标"><span class="nav-number">2.1.4.</span> <span class="nav-text">主存的技术指标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#半导体存储芯片简介"><span class="nav-number">2.2.</span> <span class="nav-text">半导体存储芯片简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#半导体存储芯片的基本结构"><span class="nav-number">2.2.1.</span> <span class="nav-text">半导体存储芯片的基本结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#半导体存储芯片的译码驱动方式"><span class="nav-number">2.2.2.</span> <span class="nav-text">半导体存储芯片的译码驱动方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#随机存取存储器（RAM）"><span class="nav-number">2.3.</span> <span class="nav-text">随机存取存储器（RAM）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-静态RAM（SRAM）"><span class="nav-number">2.3.1.</span> <span class="nav-text">1. 静态RAM（SRAM）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#保存0和1的原理是什么？"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">保存0和1的原理是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本单元电路的构成是什么？"><span class="nav-number">2.3.1.2.</span> <span class="nav-text">基本单元电路的构成是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对单元电路如何读出和写入？"><span class="nav-number">2.3.1.3.</span> <span class="nav-text">对单元电路如何读出和写入？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#典型芯片的结构是什么样子的？"><span class="nav-number">2.3.1.4.</span> <span class="nav-text">典型芯片的结构是什么样子的？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#静态RAM芯片是如何进行读出和写入操作？"><span class="nav-number">2.3.1.5.</span> <span class="nav-text">静态RAM芯片是如何进行读出和写入操作？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-动态RAM（DRAM）"><span class="nav-number">2.3.2.</span> <span class="nav-text">2. 动态RAM（DRAM）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-动态RAM和静态RAM的比较"><span class="nav-number">2.3.3.</span> <span class="nav-text">3. 动态RAM和静态RAM的比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#只读存储器（ROM）"><span class="nav-number">2.4.</span> <span class="nav-text">只读存储器（ROM）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储器与CPU的连接"><span class="nav-number">2.5.</span> <span class="nav-text">*存储器与CPU的连接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#存储器容量的扩展"><span class="nav-number">2.5.1.</span> <span class="nav-text">存储器容量的扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#位扩展（增加存储字长）"><span class="nav-number">2.5.1.1.</span> <span class="nav-text">位扩展（增加存储字长）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字扩展（增加存储字的数量）"><span class="nav-number">2.5.1.2.</span> <span class="nav-text">字扩展（增加存储字的数量）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同时扩展（位，字扩展）"><span class="nav-number">2.5.1.3.</span> <span class="nav-text">同时扩展（位，字扩展）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储器与CPU的连接-1"><span class="nav-number">2.5.2.</span> <span class="nav-text">存储器与CPU的连接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储器的校验"><span class="nav-number">2.6.</span> <span class="nav-text">存储器的校验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提高访存速度的措施"><span class="nav-number">2.7.</span> <span class="nav-text">提高访存速度的措施</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单体多字系统"><span class="nav-number">2.7.1.</span> <span class="nav-text">单体多字系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多体并行系统"><span class="nav-number">2.7.2.</span> <span class="nav-text">多体并行系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高性能存储芯片"><span class="nav-number">2.7.3.</span> <span class="nav-text">高性能存储芯片</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
