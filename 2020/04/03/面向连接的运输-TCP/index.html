@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="408,计算机网络," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="面向连接的运输：TCP既然我们已经学习了可靠数据传输的基本原理，我们就可以转而学习TCP 了。TCP是因特网运输层的面向连接的可靠的运输协议。我们将看到，为了提供可靠数据传输，TCP依赖于前一节所讨论的许多基本原理，其中包括差错检测、重传、累积确认、定时器以及用于序号和确认号的首部字段。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向连接的运输--TCP">
+<meta property="og:url" content="https://lehirt.github.io/2020/04/03/%E9%9D%A2%E5%90%91%E8%BF%9E%E6%8E%A5%E7%9A%84%E8%BF%90%E8%BE%93-TCP/index.html">
+<meta property="og:site_name" content="Lehirt&#39;s Blog">
+<meta property="og:description" content="面向连接的运输：TCP既然我们已经学习了可靠数据传输的基本原理，我们就可以转而学习TCP 了。TCP是因特网运输层的面向连接的可靠的运输协议。我们将看到，为了提供可靠数据传输，TCP依赖于前一节所讨论的许多基本原理，其中包括差错检测、重传、累积确认、定时器以及用于序号和确认号的首部字段。">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/03/GtIqhQ.png">
+<meta property="article:published_time" content="2020-04-02T18:15:35.000Z">
+<meta property="article:modified_time" content="2020-04-02T19:23:10.692Z">
+<meta property="article:author" content="lehirt">
+<meta property="article:tag" content="408">
+<meta property="article:tag" content="计算机网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2020/04/03/GtIqhQ.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://lehirt.github.io/2020/04/03/面向连接的运输-TCP/"/>
+
+
+
+
+
+
+<!-- 网页加载条 -->
+<script src="https://neveryu.github.io/js/src/pace.min.js"></script>
+
+
+  <title>面向连接的运输--TCP | Lehirt's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+<!-- 背景动画 -->
+<script type="text/javascript" src="/js/src/particle.js"></script>
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lehirt's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">认真的人才有资格开玩笑</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lehirt.github.io/2020/04/03/%E9%9D%A2%E5%90%91%E8%BF%9E%E6%8E%A5%E7%9A%84%E8%BF%90%E8%BE%93-TCP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lehirt">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lehirt's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">面向连接的运输--TCP</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-03T02:15:35+08:00">
+                2020-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/408/" itemprop="url" rel="index">
+                    <span itemprop="name">408</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.2k 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="面向连接的运输：TCP"><a href="#面向连接的运输：TCP" class="headerlink" title="面向连接的运输：TCP"></a>面向连接的运输：TCP</h1><p>既然我们已经学习了可靠数据传输的基本原理，我们就可以转而学习TCP 了。TCP是因特网运输层的面向连接的可靠的运输协议。我们将看到，为了提供可靠数据传输，TCP依赖于前一节所讨论的许多基本原理，其中包括差错检测、重传、累积确认、定时器以及用于序号和确认号的首部字段。</p>
+<a id="more"></a>
+<h2 id="TCP连接"><a href="#TCP连接" class="headerlink" title="TCP连接"></a>TCP连接</h2><p>TCP被称为是面向连接的（connection-oriented）,<strong>这是因为在一个应用进程可以开始向另一个应用进程发送数据之前，这两个进程必须先相互“握手”</strong>，即它们必须相互<strong>发送某些预备报文段，以建立确保数据传输的参数</strong>。作为TCP连接建立的一部分，连接的双方都将<strong>初始化与TCP连接相关的许多TCP状态变量</strong>。</p>
+<p>这种TCP “连接”不是一条像在电路交换网络中的端到端TDM或FDM电路。相反, <strong>该“连接”是一条逻辑连接，</strong>其<strong>共同状态仅保留在两个通信端系统的TCP程序中</strong>。前面 讲过，由于TCP协议只在端系统中运行，而不在中间的网络元素（路由器和链路层交换 机）中运行，所以<strong>中间的网络元素不会维持TCP连接状态</strong>。事实上，<strong>中间路由器对TCP完全视而不见，它们看到的是数据报，而不是连接。</strong></p>
+<p>TCP是<strong>全双工的</strong>，应用层数据就可在从进程B流向进程A的同时，也从进程A流向进程B。TCP连接也总是<strong>点对点（point-to-point）</strong>的，即在单个发送方与单个接收方之间的连接。所谓“<strong>多播</strong>”，即在一次发送操作中，从一个发送方将数据传送给多个接收方，这种情况对TCP来说<strong>是不可能的</strong>。对于 TCP而言，两台主机是一对，而3台主机则太多了！ </p>
+<p>我们现在来看看TCP连接是怎样建立的。假设运行在某台主机上的一个进程想与另一台主机上的一个进程建立一条连接。<strong>发起连接的这个进程被称为客户进程，而另一个进程被称为服务器进程。</strong>该客户应用进程首先要通知客户运输层，它想与服务器上的一个进程建立一条连接。客户上的TCP 开始与服务器上的TCP建立一条TCP连接。客户首先发送一个特殊的TCP报文段，服务器用另一个特殊的TCP报文段来响应，最后，客户再用第三个特殊报文段作为响应。前两个报文段不承载“有效载荷”，也就是不包含应用层数据；而第三个报文段可以承载有效载荷。 由于在这两台主机之间发送了 3个报文段，所以这种连接建立过程常被称为<strong>三次握手 (three- way handshake)</strong> 。</p>
+<p><strong>一旦建立起一条TCP连接，两个应用进程之间就可以相互发送数据了</strong>。我们考虑一下从客户进程向服务器进程发送数据的情况。</p>
+<p>客户进程通过<strong>套接字</strong>（该进程之门）传递数据流。数据一旦通过该门，<strong>它就由客户中运行的TCP控制了</strong>。</p>
+<p>TCP将这些数据引导到该连接的<strong>发送缓存</strong>里，<strong>发送缓存</strong>是发起三次握手期间设置的缓存之一。接下来TCP就会不时从发送缓存里取出一块数据，并将数据传递到网络层。“TCP应该在它方便的时候以报文段的形式发送数据”。TCP可从缓存中取出并放入报文段中的数据数量受限于<strong>最大报文段长度</strong> (Maximum Segment Size, <strong>MSS</strong>）。MSS通常根据最初确定的由本地发送主机发送的最大链路层帧长度（即所谓的<strong>最大传输单元</strong>（Maximum Transmission Unit, <strong>MTU</strong>））来设置。<strong>设置该MSS要保证一个TCP 报文段（当封装在一个IP数据报中）加上TCP/IP首部长度（通常40字节）将适合单个链路层帧。</strong>以太网和PPP链路层协议都具有1500字节的MTU,因此<strong>MSS的典型值为1460 字节。</strong>已经提出了多种发现路径MTU的方法，并基于路径MTU值设置MSS （路径MTU 是指能在从源到目的地的所有链路上发送的最大链路层帧［RFC 1191］）。注意到<strong>MSS是 指在报文段里应用层数据的最大长度，而不是指包括首部的TCP报文段的最大长度。</strong></p>
+<p>TCP为每块客户数据配上一个TCP首部，从而形成多个TCP报文段（TCP segment）。 这些报文段被下传给网络层，网络层将其分别封装在网络层IP数据报中。然后这些IP数据报被发送到网络中。当TCP在另一端接收到一个报文段后，该报文段的数据就被放入该 TCP连接的接收缓存中。应用程序从此缓存中读取数据流。该连接的 每一端都有各自的发送缓存和接收缓存。</p>
+<p><img src="https://s1.ax1x.com/2020/04/03/GtIqhQ.png" alt="TCPBUFFER"></p>
+<p>从以上讨论中我们可以看出，TCP连接的组成包括：一台主机上的缓存、变量和与进程连接的套接字，以及另一台主机上的另一组缓存、变量和与进程连接的套接字。如前面讲过的那样，在这两台主机之间的网络元素(路由器、交换机和中继器)中，没有为该连接分配任何缓存和变量。</p>
+<h2 id="TCP报文段结构"><a href="#TCP报文段结构" class="headerlink" title="TCP报文段结构"></a>TCP报文段结构</h2><p>简要地了解了 TCP连接后，我们研究一下TCP报文段结构。<strong>TCP报文段由首部字段和一个数据字段组成</strong>。数据字段包含一块应用数据。<strong>MSS限制了报文段数据字段的最大长度。</strong>当TCP发送一个大文件，例如某Web页面上的一个图像时，TCP通常是将该文件划分成长度为MSS的若干块(最后一块除外，它通常小于MSS)。然而，交互式应用通常传送长度小于MSS的数据块。与 UDP 一样，首部包括源端口号和目的端口号，它被用于多路复用/分解来自或送到上层应用的数据。另外，同UDP一样，TCP 首部也包括<strong>检验和字段</strong>(checksum field ) 。TCP报文段首部还包含下列字段：</p>
+<ul>
+<li><p>32比特的<strong>序号字段</strong>(sequence number field )和32比特的<strong>确认号字段</strong>(acknowl・ edgment number field) 。这些字段被TCP发送方和接收方用来实现可靠数据传输服务。</p>
+</li>
+<li><p>16比特的<strong>接收窗口字段</strong> (receive window field),该字段<strong>用于流量控制</strong>。该字段用于指示接收方愿意接受的字节数量。</p>
+</li>
+<li><p>4比特的<strong>首部长度字段</strong>(header length field),该字段指示了以32比特的字为单位的TCP首部长度。由于TCP选项字段的原因，TCP首部的长度是可变的。(通常, 选项字段为空，所以<strong>TCP首部的典型长度是20字节。</strong>)</p>
+</li>
+<li><p>可选与变长的<strong>选项字段</strong>(options field),该字段用于发送方与接收方协商最大报文 段长度(MSS)时，或在高速网络环境下用作窗口调节因子时使用。首部字段中 还定义了一个时间戳选项。</p>
+</li>
+<li><p>6比特的<strong><em>标志字段</em></strong>(flag field) 。<strong>ACK比特</strong>用于指示确认字段中的值是有效的，即 该报文段包括一个对已被成功接收报文段的确认。RST、SYN和FIN比特用于连 接建立和拆除。在明确拥塞通告中使用了 CWR和 ECE比特。当PSH比特被置位时，就指示接收方应立即将数据交给上层。最后，URG比特用来指示报文段里存在着被发送端的上层实体置为“紧急”的数据。紧急数据的最后一个字节由16比特的紧急数据指针字段 (urgent data pointer field)指出。当紧急数据存在并给出指向紧急数据尾指针的时候，TCP必须通知接收端的上层实体。(在实践中，PSH、URG和紧急数据指针并没有使用。为了完整性起见，我们才提到这些字段。) </p>
+</li>
+</ul>
+<h3 id="序号和确认号"><a href="#序号和确认号" class="headerlink" title="序号和确认号"></a><strong>序号和确认号</strong></h3><p>   TCP报文段首部中<strong>两个最重要的字段</strong>是序号字段和确认号字段。这两个字段是TCP<strong>可靠传输服务的关键部分</strong>。但是在讨论这两个字段是如何用于提供可靠数据传输之前，我们首先来解释一下TCP在这两个字段中究竟放置了什么。 TCP把数据看成一个<strong>无结构的、有序的字节流</strong>。我们从TCP对序号的使用上可以看出这一点，因为<strong>序号是建立在传送的字节流之上，而不是建立在传送的报文段的序列之上</strong>。 一个报文段的序号(sequence number for a segment)因此是<strong>该报文段首字节的字节流编号</strong>。 举例来说，假设主机A上的一个进程想通过一条TCP连接向主机B上的一个进程发送一 个数据流。主机A中的TCP将隐式地对数据流中的每一个字节编号。假定数据流由一个 包含500 000字节的文件组成，其MSS为1000字节，数据流的首字节编号是0。该TCP将为该数据流构建500个报文段。给第一个报文段分配序号0,第二个报文段分配序号1000,第三个报文段分配序号2000,以此类推。每一个序号被填入到相应TCP 报文段首部的序号字段中。</p>
+<p>   现在我们考虑一下确认号。确认号要比序号难处理一些。前面讲过，TCP是全双工的, 因此主机A在向主机B发送数据的同时，也许也接收来自主机B的数据(都是同一条TCP 连接的一部分)。从主机A到达主机B的每个报文段中都有一个序号用于从B流向A的数据。<strong>主机 A填充进报文段的确认号是主机A期望从主机B收到的下一字节的序号</strong>。假设主机A已收到了来自主机B的编号为0 ~535的所有字节，同时假设它打算发送一个报文段给主机B。主机A等待主机B的数据流中字节536及之后的所有字节。所以主机A就会在它发往主机B的报文段的确认号字段中填上536。 </p>
+<p>   假设主机A已收到一个来自主机B的包含字节0 ~535的报文段，以及另一个包含字节900-1000的报文段。由于某种原因，主机A还没有收到字节536 - 899的报 文段。在这个例子中，主机A为了重新构建主机B的数据流，仍在等待字节536 （和其后的字 节）。因此，<strong>A到B的下一个报文段将在确认号字段中包含536。</strong>因为<strong>TCP只确认该流中至第一个丢失字节为止的字节</strong>，所以TCP被称为提供<strong>累积确认</strong>（cumulalive acknowledgment）。 </p>
+<p>   最后一个例子也会引发一个重要而微妙的问题。主机A在收到第二个报文段（字节 536 -899）之前收到第三个报文段（字节900 ~ 1000）。因此，第三个报文段失序到达。 该微妙的问题是：<strong>当主机在一条TCP连接中收到失序报文段时该怎么办？</strong>有两个基本的选择：①接收方立即丢弃失序报文段（如前所述，这可以简化接收方的设计）；②接收方保留失序的字节，并等待缺少的字节以填补该间隔。显然，后一种选择对网络带宽而言更为有效，是实践中采用的方法。</p>
+<p>   我们假设初始序号为0。事实上，一条TCP连接的双方均可随机地选择初始序号。这样做可以减少将那些仍在网络中存在的来自两台主机之间先前已终止的连接的报文段，误认为是后来这两台主机之间新建连接所产生的有效报文段的可能性。</p>
+<h3 id="Telnet-序号和确认号的一个学习案例"><a href="#Telnet-序号和确认号的一个学习案例" class="headerlink" title="Telnet:序号和确认号的一个学习案例"></a>Telnet:序号和确认号的一个学习案例</h3><p>   假设客户和服务器的起始序号分别是42和79，因此，客户发送的第一个报文段的序号为42,服务器发送的第一个报文段的序号为79。前面讲过，确认号就是主机正在等待的数据的下一个字节序 号。在TCP连接建立后但没有发送任何数据之前，该客户等待字节79,而该服务器等待字节42。 </p>
+<p>   在客户最后一份报文发送时，即使没有数据，也有序号存在。</p>
+<h2 id="往返时间的估计与超时"><a href="#往返时间的估计与超时" class="headerlink" title="往返时间的估计与超时"></a>往返时间的估计与超时</h2><p>TCP如同前面3. 4节所讲的rdt协议一样，它采用超时重传机制来处理报文段的丢失问题。尽管这在概念上简单，但是当在如TCP这样的实际协议中实现超时/重传机制时还是会产生许多微妙的问题。<strong>也许最明显的一个问题就是超时间隔长度的设置</strong>。显然，超时间隔<strong>必须大于该连接的往返时间（RTT）</strong>,即从一个报文段发出到它被确认的时间。否则会造成不必要的重传。但是这个时间间隔到底应该是多大呢？刚开始时应如何估计往返时间呢？是否应该为所有未确认的报文段各设一个定时器？问题竟然如此之多！</p>
+<h3 id="估计往返时间"><a href="#估计往返时间" class="headerlink" title="估计往返时间"></a>估计往返时间</h3><p>考虑一下TCP是如何估计发送方与接收方 之间往返时间的。<strong>报文段的样本RTT （表示为SampleRTT）就是从某报文段被发岀（即交给IP）到对该报文段的确认被收到之间的时间量</strong>。大多数TCP 的实现仅在某个时刻做一次SampleRTT测量，而不是为每个发送的报文段测量一个Samp- leRTT。这就是说，在任意时刻，仅为一个已发送的但目前尚未被确认的报文段估计Samp- leRTT,从而产生一个接近每个RTT的新SampleRTT值。另外，TCP决不为已被重传的报文段计算SampleRTT；它仅为传输一次的报文段测量SampleRTT 。</p>
+<p>显然，由于路由器的拥塞和端系统负载的变化，这些报文段的SampleRTT值会随之波动。由于这种波动，任何给定的SampleRTT值也许都是非典型的。因此，为了估计一个典型的RTT,自然要采取某种对SampleRTT取平均的办法。TCP维持一个SampleRTT均值 （称为EstimatedRTT）。一旦获得一个新SampleRTT时，TCP就会根据下列公式来更新Esti- mated RTT:</p>
+<p> EstimatedRTT = （1 - a） • EstimatedRTT + a • SampleRTT</p>
+<p>除 了估算RTT外，测量RTT的变化也是有价值的。定义了 RTT 偏差 DevRTT,用于估算SampleRTT 一般会偏离EstimatedRTT的程度：</p>
+<p> DevRTT = （1 -β • DevRTT +β • | SampleRTT - EstimatedRTT | </p>
+<h3 id="设置和管理重传超时间隔"><a href="#设置和管理重传超时间隔" class="headerlink" title="设置和管理重传超时间隔"></a>设置和管理重传超时间隔</h3><p>假设已经给出了 EstimatedRTT值和DevRTT值，那么TCP超时间隔应该用什么值呢? 很明显，<strong>超时间隔应该大于等于EstimatedRTT,</strong>否则，将造成不必要的重传。但是超时间隔也不应该比EstimatedRTT大太多,否则当报文段丢失时，TCP不能很快地重传该报文段，导致数据传输时延大。因此要求将超时间隔设为EstimatedRTT加上一定余量。当 SampleRTT值波动较大时，这个余量应该大些；当波动较小时，这个余量应该小些。因此，DevRTT值应该在这里发挥作用了。在TCP的确定重传超时间隔的方法中，所有这些因素都考虑到了：</p>
+<p> Timeoutlnterval = EstimatedRTT +4 • DevRTT </p>
+<p>推荐的初始Timeoutinterval值为1秒。同时，当出现超时后，Timeoutlnt- erval值将加倍，以免即将被确认的后继报文段过早出现超时。然而，只要收到报文段并更新EstimatedRTT,就使用上述公式再次计算Timeoutinterval 。</p>
+<h2 id="可靠数据传输"><a href="#可靠数据传输" class="headerlink" title="可靠数据传输"></a>可靠数据传输</h2><h2 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h2><h2 id="TCP连接管理"><a href="#TCP连接管理" class="headerlink" title="TCP连接管理"></a>TCP连接管理</h2><h1 id="拥塞控制原理"><a href="#拥塞控制原理" class="headerlink" title="拥塞控制原理"></a>拥塞控制原理</h1><h2 id="拥塞原因与代价"><a href="#拥塞原因与代价" class="headerlink" title="拥塞原因与代价"></a>拥塞原因与代价</h2><h2 id="拥塞控制方法"><a href="#拥塞控制方法" class="headerlink" title="拥塞控制方法"></a>拥塞控制方法</h2><h1 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h1><h2 id="公平性"><a href="#公平性" class="headerlink" title="公平性"></a>公平性</h2><h2 id="明确拥塞通告：网络辅助拥塞控制"><a href="#明确拥塞通告：网络辅助拥塞控制" class="headerlink" title="明确拥塞通告：网络辅助拥塞控制"></a>明确拥塞通告：网络辅助拥塞控制</h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+  
+</div>
+
+
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/408/" rel="tag"># 408</a>
+          
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag"># 计算机网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/02/%E8%BF%90%E8%BE%93%E5%B1%82%E5%8F%AF%E9%9D%A0%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8E%9F%E7%90%86/" rel="next" title="运输层可靠数据传输原理">
+                <i class="fa fa-chevron-left"></i> 运输层可靠数据传输原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="lehirt" />
+            
+              <p class="site-author-name" itemprop="name">lehirt</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Lehirt" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#面向连接的运输：TCP"><span class="nav-number">1.</span> <span class="nav-text">面向连接的运输：TCP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP连接"><span class="nav-number">1.1.</span> <span class="nav-text">TCP连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP报文段结构"><span class="nav-number">1.2.</span> <span class="nav-text">TCP报文段结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#序号和确认号"><span class="nav-number">1.2.1.</span> <span class="nav-text">序号和确认号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Telnet-序号和确认号的一个学习案例"><span class="nav-number">1.2.2.</span> <span class="nav-text">Telnet:序号和确认号的一个学习案例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#往返时间的估计与超时"><span class="nav-number">1.3.</span> <span class="nav-text">往返时间的估计与超时</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#估计往返时间"><span class="nav-number">1.3.1.</span> <span class="nav-text">估计往返时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置和管理重传超时间隔"><span class="nav-number">1.3.2.</span> <span class="nav-text">设置和管理重传超时间隔</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可靠数据传输"><span class="nav-number">1.4.</span> <span class="nav-text">可靠数据传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流量控制"><span class="nav-number">1.5.</span> <span class="nav-text">流量控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP连接管理"><span class="nav-number">1.6.</span> <span class="nav-text">TCP连接管理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拥塞控制原理"><span class="nav-number">2.</span> <span class="nav-text">拥塞控制原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#拥塞原因与代价"><span class="nav-number">2.1.</span> <span class="nav-text">拥塞原因与代价</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拥塞控制方法"><span class="nav-number">2.2.</span> <span class="nav-text">拥塞控制方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP拥塞控制"><span class="nav-number">3.</span> <span class="nav-text">TCP拥塞控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#公平性"><span class="nav-number">3.1.</span> <span class="nav-text">公平性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#明确拥塞通告：网络辅助拥塞控制"><span class="nav-number">3.2.</span> <span class="nav-text">明确拥塞通告：网络辅助拥塞控制</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lehirt</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点字数总计&#58;</span>
+    
+    <span title="站点字数总计">14.3k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+</body>
+</html>
