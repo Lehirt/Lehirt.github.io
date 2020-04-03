@@ -93,8 +93,17 @@
 <meta property="og:site_name" content="Lehirt&#39;s Blog">
 <meta property="og:description" content="面向连接的运输：TCP既然我们已经学习了可靠数据传输的基本原理，我们就可以转而学习TCP 了。TCP是因特网运输层的面向连接的可靠的运输协议。我们将看到，为了提供可靠数据传输，TCP依赖于前一节所讨论的许多基本原理，其中包括差错检测、重传、累积确认、定时器以及用于序号和确认号的首部字段。">
 <meta property="og:image" content="https://s1.ax1x.com/2020/04/03/GtIqhQ.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/03/GN1VzV.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/03/GN1DJI.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/03/GNdpp4.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/03/GNvXb4.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/03/GUPeIg.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/03/GUFe3j.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/03/GUFBVK.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/03/GUkbFO.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/03/GUjLIs.png">
 <meta property="article:published_time" content="2020-04-02T18:15:35.000Z">
-<meta property="article:modified_time" content="2020-04-02T19:23:10.692Z">
+<meta property="article:modified_time" content="2020-04-03T09:05:54.176Z">
 <meta property="article:author" content="lehirt">
 <meta property="article:tag" content="408">
 <meta property="article:tag" content="计算机网络">
@@ -375,7 +384,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  4.2k 字
+                  15.5k 字
                 </span>
               
 
@@ -441,7 +450,175 @@
 <h3 id="设置和管理重传超时间隔"><a href="#设置和管理重传超时间隔" class="headerlink" title="设置和管理重传超时间隔"></a>设置和管理重传超时间隔</h3><p>假设已经给出了 EstimatedRTT值和DevRTT值，那么TCP超时间隔应该用什么值呢? 很明显，<strong>超时间隔应该大于等于EstimatedRTT,</strong>否则，将造成不必要的重传。但是超时间隔也不应该比EstimatedRTT大太多,否则当报文段丢失时，TCP不能很快地重传该报文段，导致数据传输时延大。因此要求将超时间隔设为EstimatedRTT加上一定余量。当 SampleRTT值波动较大时，这个余量应该大些；当波动较小时，这个余量应该小些。因此，DevRTT值应该在这里发挥作用了。在TCP的确定重传超时间隔的方法中，所有这些因素都考虑到了：</p>
 <p> Timeoutlnterval = EstimatedRTT +4 • DevRTT </p>
 <p>推荐的初始Timeoutinterval值为1秒。同时，当出现超时后，Timeoutlnt- erval值将加倍，以免即将被确认的后继报文段过早出现超时。然而，只要收到报文段并更新EstimatedRTT,就使用上述公式再次计算Timeoutinterval 。</p>
-<h2 id="可靠数据传输"><a href="#可靠数据传输" class="headerlink" title="可靠数据传输"></a>可靠数据传输</h2><h2 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h2><h2 id="TCP连接管理"><a href="#TCP连接管理" class="headerlink" title="TCP连接管理"></a>TCP连接管理</h2><h1 id="拥塞控制原理"><a href="#拥塞控制原理" class="headerlink" title="拥塞控制原理"></a>拥塞控制原理</h1><h2 id="拥塞原因与代价"><a href="#拥塞原因与代价" class="headerlink" title="拥塞原因与代价"></a>拥塞原因与代价</h2><h2 id="拥塞控制方法"><a href="#拥塞控制方法" class="headerlink" title="拥塞控制方法"></a>拥塞控制方法</h2><h1 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h1><h2 id="公平性"><a href="#公平性" class="headerlink" title="公平性"></a>公平性</h2><h2 id="明确拥塞通告：网络辅助拥塞控制"><a href="#明确拥塞通告：网络辅助拥塞控制" class="headerlink" title="明确拥塞通告：网络辅助拥塞控制"></a>明确拥塞通告：网络辅助拥塞控制</h2>
+<h3 id="TCP实践原则"><a href="#TCP实践原则" class="headerlink" title="TCP实践原则"></a>TCP实践原则</h3><p>TCP通过使用<strong>肯定确认与定时器来提供可靠数据传输</strong>。TCP确认正确接收到的数据，而当认为报文段或其确认报文丢失或受损时， TCP会重传这些报文段。</p>
+<p>有些版本的TCP还有一个<strong>隐式NAK机制</strong>（在TCP的快速重传机制下，<strong>收到对一个特定报文段的3个冗余ACK就可作为对后面报文段的一个隐式 NAK,从而在超时之前触发对该报文段的重传</strong>）。</p>
+<p>TCP<strong>使用序号以使接收方能识别丢失或重复的报文段</strong>。像可靠数据传输协议rdt3.0的情况一样，TCP自己也无法明确地分辨一个报文段或其ACK是丢失了还是受损了，或是时延过长了。在发送方，TCP的响应是相同的：<strong><u><em>重传有疑问的报文段</em></u></strong>。</p>
+<p> TCP也<strong>使用流水线</strong>，使得发送方在任意时刻都可以有多个已发出但还未被确认的报 文段存在。我们在前面已经看到，当报文段长度与往返时延之比很小时，流水线可显著地增加一个会话的吞吐量。一个发送方能够具有的未被确认报文段的具体数量是由TCP 的流量控制和拥塞控制机制决定的。</p>
+<h2 id="可靠数据传输"><a href="#可靠数据传输" class="headerlink" title="可靠数据传输"></a>可靠数据传输</h2><p>前面讲过，<strong>因特网的网络层服务（IP服务）是不可靠的</strong>。1P不保证数据报的交付， 不保证数据报的按序交付，也不保证数据报中数据的完整性。对于IP服务，数据报能够溢出路由器缓存而永远不能到达目的地，数据报也可能是乱序到达，而且数据报中的比特可能损坏（由0变为1或者相反）。由于运输层报文段是被IP数据报携带着在网络中传输的，所以运输层的报文段也会遇到这些问题。 </p>
+<p><strong>TCP在IP不可靠的尽力而为服务之上创建了一种可靠数据传输服务</strong>（reliable data transfer service）。 TCP的可靠数据传输服务<strong>确保</strong>一个进程从其接收缓存中读出的数据流是无损坏、无间隙、非冗余和按序的数据流；即<strong>该字节流与连接的另一方端系统发送出的字节流是完全相同</strong>。TCP提供可靠数据传输的方法涉及我们所学的许多原理。</p>
+<p>在我们前面研发可靠数据传输技术时，曾假定每一个已发送但未被确认的报文段都与一个定时器相关联，这在概念上是最简单的。虽然这在理论上很好，但定时器的管理却需要相当大的开销。因此，推荐的定时器管理过程<strong>仅使用单一的重传定时器</strong>，即使有多个已发送但还未被确认的报文段。在本节中描述的<strong>TCP协议遵循了这种单一定时器的推荐。</strong> </p>
+<p>我们将以两个递增的步骤来讨论TCP是如何提供可靠数据传输的。我们先给出一个TCP 发送方的高度简化的描述，该发送方<strong>只用超时来恢复报文段的丢失</strong>；然后再给出一个更全面的描述，该描述中<strong>除了使用超时机制外，还使用冗余确认技术</strong>。在接下来的讨论中，我们假定数据仅向一个方向发送，即从主机A到主机B,且主机A在发送一个大文件。 </p>
+<hr>
+<p>给出一个TCP发送方<strong>高度简化的描述</strong>。我们看到在TCP发送方有3个与发送和重传有关的主要事件：<strong>从上层应用程序接收数据；定时器超时和收到ACK</strong>。</p>
+<ol>
+<li><p>一旦<strong>第一个主要事件</strong>发生，TCP从应用程序接收数据，将数据封装在一个报文段中，并把该报文段交给IP。注意到每一个报文段都包含一个序号，这个序号就是该报文段第一个数据字节的字节流编号。还要注意到如果定时器还没有为某些其他报文段而运行，则当报文段被传给IP时，TCP就启动该定时器。（将定时器想象为与最早的未被确认的报文段相关联是有帮助的。）该定时器的过期间隔是Timeoutinterval,它是由EstimatedRTT和DevRTT计算得出的。</p>
+</li>
+<li><p><strong>第二个主要事件是超时</strong>。TCP通过重传引起超时的报文段来响应超时事件。然后TCP 重启定时器。</p>
+</li>
+<li><p>TCP发送方必须处理的<strong>第三个主要事件是，到达一个来自接收方的确认报文段（ACK）</strong> （更确切地说，是一个包含了有效ACK字段值的报文段）。当该事件发生时，TCP将ACK的值y与它的变量SendBase进行比较。TCP状态变量<strong>SendBase是最早未被确认的字节的序号。</strong> （因此SendBase - 1是指接收方已正确按序接收到的数据的最后一个字节的序号。）如前面指出的那样，<strong>TCP采用累积确认</strong>，所以y确认了字节编号在y之前的所有字节都已经收到。如果y &gt; SendBase,则<strong>该ACK是在确认一个或多个先前未被确认的报文段</strong>。因此发送方更新它的SendBase变量；如果当前有未被确认的报文段，TCP还要重新启动定时器。</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;*假设发送方不受TCP流量和拥塞控制的限制，来自上层数据的长度小于MSS,</span><br><span class="line">且数据传送只在一个方向进行。*&#x2F;</span><br><span class="line"></span><br><span class="line">NextSeqNum&#x3D;InitialSeqNumber </span><br><span class="line">SendBase&#x3D;InitialSeqNumber</span><br><span class="line"></span><br><span class="line">loop （永远） &#123; </span><br><span class="line">	switch （事件）</span><br><span class="line">    	事件：从上面应用程序接收到数据e </span><br><span class="line">			生成具有序号NextSeqNum的TCP报文段 </span><br><span class="line">			if （定时器当前没有运行） </span><br><span class="line">			启动定时器 </span><br><span class="line">		向IP传递报文段 </span><br><span class="line">		NextSeqNum&#x3D;NextSeqNum4-length （data）</span><br><span class="line">         break; </span><br><span class="line">		事件：定时器超时 </span><br><span class="line">			重传具有最小序号但仍未应答的报文段</span><br><span class="line">			启动定时器</span><br><span class="line">			break; </span><br><span class="line">		事件：收到ACK,具有ACK字段值y </span><br><span class="line">			if （y &gt; SendBase） &#123; </span><br><span class="line">				SendBase&#x3D;y </span><br><span class="line">				if （当前仍无任何应答报文段）</span><br><span class="line">					启动定时器</span><br><span class="line">				&#125;</span><br><span class="line">				break; </span><br><span class="line">			&#125;&#x2F;*结束永远循环*&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h3 id="一些微妙的情况"><a href="#一些微妙的情况" class="headerlink" title="一些微妙的情况"></a>一些微妙的情况</h3><p>从以上的描述，我们得到了一个简化的TCP模型。这种高度简化的版本，仍然存在着许多微妙之处。为了较好地感受该协议的工作过程，我们来看几种简单情况。</p>
+<p><img src="https://s1.ax1x.com/2020/04/03/GN1VzV.png" alt="TCP重传"></p>
+<p><img src="https://s1.ax1x.com/2020/04/03/GN1DJI.png" alt="累积确认"></p>
+<ol>
+<li>第一种情况中，超时事件发生，主机A会重传相同的报文段。当然，当主机B收到该重传的报文段时，它将通过序号发现该报文段包含了早已收到的数据。因此，<strong>主机B中的TCP将丢弃该重传的报文段中的这些字节</strong>。 </li>
+<li>现在假设在超时之前这两个报文段中<strong>没有一个确认报文到达主机A</strong>。当超时事件发生时，主机A重传序号92的第一个报文段，并重启定时器。只要第二个报文段的ACK在<strong>新的超时发生以前到达，则第二个报文段将不会被重传</strong>。</li>
+<li>第一个报文段的确认报文在网络丢失，<strong>但在超时事件发生之前主机A收到一个确认号为120的确认报文</strong>。主机A因而知道主机B已经收到了序号为119及之前的所有字节; <strong>所以主机A不会重传这两个报文段中的任何一个</strong>。</li>
+</ol>
+<h3 id="超时间隔加倍"><a href="#超时间隔加倍" class="headerlink" title="超时间隔加倍"></a>超时间隔加倍</h3><p>我们现在讨论一下在大多数TCP实现中比简化版本所做的一些修改。<strong>下面我们考虑TCP对超时重传时间的选择</strong>。在这种修改中, 每当超时事件发生时，如前所述，TCP重传具有最小序号的还未被确认的报文段。只是每次TCP重传时都会将下一次的<strong>超时间隔设为先前值的两倍</strong>，而不是用从EstimatedRTT和DevRTT推算出的值。</p>
+<p>这种修改提供了一个<strong>形式受限的拥塞控制</strong>。定时器过期很可能是由网络拥塞引起的，即<strong>太多的分组到达源与目的地之间路径上的一台（或多台）路由器的队列中，造成分组丢失或长时间的排队时延</strong>。在拥塞的时候，如果源持续重传分组，会使拥塞更加严重。相反，TCP使用更文雅的方式，每个发送方的重传都是经过越来越长的时间间隔后进行的。<strong>学习CSMA/CD时，将看到以太网采用了类似的思路</strong>。 </p>
+<h3 id="快速重传"><a href="#快速重传" class="headerlink" title="快速重传"></a>快速重传</h3><p>下面考虑为什么引入<strong>冗余ACK机制</strong>。</p>
+<p><strong>超时触发重传存在的问题之一是超时周期可能相对较长。</strong>当一个报文段丢失时， 这种长超时周期迫使发送方延迟重传丢失的分组，因而增加了端到端时延。发送方通常可在超时事件发生之前通过注意所谓冗余ACK来较好地检测到丢包情况。再利<strong>用快速重传从而避免过长超时周期的等待</strong>。</p>
+<p><strong>冗余ACK 就是再次确认某个报文段的ACK,而发送方先前已经收到对该报文段的确认</strong>。要理解发送方对冗余ACK的响应，我们<strong>必须首先看一下接收方为什么会发送冗余ACK</strong>。</p>
+<p>当TCP接收方收到一个具有这样序号的报文段时，即其序号大于下一个所期望的、按序的报文段，它检测到了数据流中的一个间隔，这就是说有报文段丢失。这个间隔可能是由于在网络中报文段丢失或重新排序造成的。因为TCP不使用否定确认，所以接收方不能向发送方发回一个显式的否定确认。相反，它只是对已经接收到的<strong>最后一个按序字节数据</strong>进行<strong>重复确认（即产生一个冗余ACK）</strong>即可。</p>
+<p><img src="https://s1.ax1x.com/2020/04/03/GNdpp4.png" alt="ACK产生机制"></p>
+<p>因为发送方经常一个接一个地发送大量的报文段，如果一个报文段丢失，就很可能引起许多一个接一个的冗余ACK。如果TCP发送方接收到对相同数据的3个冗余ACK,它把这当作一种指示，说明<strong>跟在这个已被确认过3次的报文段之后的报文段已经丢失。</strong>（考虑为什么发送方等待3个冗余ACK,而不是仅仅等待一个冗余 ACK。）一旦收到3个冗余ACK, TCP就执行<strong>快速重传</strong>（fast retransmit）,即<strong>在该报文段的定时器过期之前重传丢失的报文段。</strong>对于采用快速重传的TCP,可用下列代码片段代替ACK收到事件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">事件：收到ACK,具有ACK字段值y </span><br><span class="line">	if （y &gt; SendBase） &#123; </span><br><span class="line">	SendBase&#x3D;y </span><br><span class="line">	if （当前仍无任何应答报文段） </span><br><span class="line">	启动定时器 </span><br><span class="line">	&#125; </span><br><span class="line">	else &#123;&#x2F;*对已经确认的报文段的一个冗余ACK*&#x2F; </span><br><span class="line">		对y收到的冗余ACK数加1 </span><br><span class="line">		if （对y&#x3D;&#x3D;3收到的冗余ACK数）</span><br><span class="line">		&#x2F;* TCP快速重传*&#x2F; </span><br><span class="line">		重新发送具有序号y的报文段 </span><br><span class="line">	&#125;</span><br><span class="line">	break;</span><br></pre></td></tr></table></figure>
+
+<h3 id="是回退N步还是选择重传"><a href="#是回退N步还是选择重传" class="headerlink" title="是回退N步还是选择重传"></a>是回退N步还是选择重传</h3><p>考虑下面这个问题来结束有关TCP差错恢复机制的学习：<strong>TCP是一个GBN协议还是一个SR协议？</strong>前面讲过，<strong>TCP确认是累积式的，正确接收但失序的报文段是不会被接收方逐个确认的</strong>。因此， TCP发送方仅需维持已发送过但未被确认的字节的最小序号（SendBase ）和下一个要发送的字节的序号 （NextSeqNum）。在这种意义下，<strong>TCP看起来更像一个GBN风格的协议</strong>。但是TCP和GBN 协议之间有着一些显著的区别。<strong>许多TCP实现会将正确接收但失序的报文段缓存起来</strong>。</p>
+<p>另外考虑一下，当发送方发送的一组报文段1 , 2,…，N,并且所有的报文段都按序无差错地到达接收方时会发生的情况。进一步假设对分组n&lt;N的确认报文丢失，但是其余N-1个确认报文在分别超时以前到达发送端，这时又会发生的情n况。n在该例中，<strong>GBN不仅会重传分组n，还会重传n所有后继的分组</strong>n，n，n + 1， n+2，…，N。 在另一方面,<strong>TCP将重传至多一个报文段，即报文段n</strong>。此外，<strong>如果对报文段n+ 1的确认报文在报文段n超时之前到达, TCP甚至不会重传报文段n</strong>。 </p>
+<p>除了累积确认，对TCP提岀的一种修改意见是所谓的<strong>选择确认</strong>(selective acknowledgment),它允许TCP接收方有选择地确认失序报文段，而不是累积地确认最后一个正确接收的有序报文段。当将该机制与选择重传机制结合起来使用时(即跳过重传那些已被接收方选择性地确认过的报文段)，TCP看起来就很像我们通常的SR协议。因此，<strong>TCP的差错恢复机制也许最好被分类为GBN协议与SR协议的混合体。</strong></p>
+<h2 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h2><p>前面讲过，<strong>一条TCP连接的每一侧主机都为该连接设置了接收缓存</strong>。当该TCP 连接收到正确、按序的字节后，<strong>它就将数据放入接收缓存</strong>。相关联的应用进程会从该缓存中读取数据，但不必是数据刚一到达就立即读取。事实上，接收方应用也许正忙于其他任务，甚至要过很长时间后才去读取该数据。<strong>如果某应用程序读取数据时相对缓慢，而发送方发送得太多、太快，发送的数据就会很容易地使该连接的接收缓存溢出。</strong> </p>
+<p>TCP为它的应用程序提供了<strong>流量控制服务</strong>(flowcontrol service)<strong>以消除发送方使接收 方缓存溢出的可能性。</strong>流量控制因此是一个速度匹配服务，<strong>即发送方的发送速率与接收方应用程序的读取速率相匹配。</strong>前面提到过，TCP发送方也可能因为IP网络的拥塞而被遏制；这种形式的发送方的控制被称为<strong>拥塞控制</strong>(congestion control)。即使流量控制和拥塞控制采取的动作非常相似(对发送方的遏制)，但是它们显然是针对完全不同的原因而采取的措施。现在我们来讨论TCP如何提供流量控制服务的。为了能从整体上看问题，我们在本节都假设TCP是这样实现的，即TCP 接收方丢弃失序的报文段（虽然实际情况并不是）。 </p>
+<p>TCP通过让发送方维护一个称为<strong>接收窗口</strong>( receive window)<strong>的变量来提供流量控制</strong>。 通俗地说，<strong>接收窗口用于给发送方一个指示——该接收方还有多少可用的缓存空间</strong>。因为TCP是全双工通信，在连接两端的发送方都各自维护一个接收窗口。我们在文件传输的情况下研究接收窗口。假设主机A通过一条TCP连接向主机B发送一个大文件。主机B为该连接分配了一个接收缓存，并用RcvBuffer来表示其大小。主机B上的应用进程不时地从该缓存中读取数据。我们定义以下变量：</p>
+<p> • LastByteRead：主机B上的应用进程从缓存读出的数据流的最后一个字节的编号。 </p>
+<p>• LastByteRcvd:从网络中到达的并且已放入主机B接收缓存中的数据流的最后一个 字节的编号。</p>
+<p> 由于TCP不允许已分配的缓存溢岀，下式必须成立：</p>
+<p> LastByteRcvd - LastByteRead≤RcvBuffer </p>
+<p>接收窗口用rwnd表示，根据缓存可用空间的数量来设置: </p>
+<p>rwnd = RcvBuffer - [ LastByteRcvd - LastByteRead ] </p>
+<p>由于该空间是随着时间变化的，所以rwnd是动态的。</p>
+<p><img src="https://s1.ax1x.com/2020/04/03/GNvXb4.png" alt="rwd"></p>
+<p>连接是如何使用变量rwnd来提供流量控制服务的呢？主机B通过<strong>把当前的rwnd值</strong>放入它发给主机A的<strong>报文段接收窗口字段</strong>中，<strong>通知主机A它在该连接的缓存中还有多少可用空间</strong>。开始时，主机B设定rwnd = RevBuffer。</p>
+<p>主机A轮流跟踪两个变量，LastByteSent和LastByteAcked,。 注意到这两个变量之间的差LastByteSent - LastByteAcked,就是主机A发送到连接中但未被确认的数据量。通过将未确认的数据量控制在值rwnd以内，就可以保证主机A不会使主机B的接收缓存溢出。因此，主机A在该连接的整个生命周期须保证: </p>
+<p>LastByteSent - LastByteAcked≤rwnd </p>
+<p>对于这个方案还存在一个小小的技术问题。假设<strong>主机B的接收缓存已经存满</strong>，使得rwnd=0。在将rwnd= 0通告给主机A之后，还要假设主机B没有任何数据要发给主机A。此时，考虑会发生什么情况。因为主机B上的应用进程将缓存清空，TCP并不向主机A发送带有rwnd新值的新报文段。（事实上，TCP仅当在它有数据或有确认要发时才会发送报文段给主机A。)这样，<strong>主机A不可能知道主机B的接收缓存已经有新的空间了</strong>，即主机A被阻塞而不能再发送数据！为了解决这个问题，TCP规范中要求：<strong>当主机B的接收窗口为0时，主机A继续发送只有一个字节数据的报文段。这些报文段将会被接收方确认。</strong>最终缓存将开始清空，并且确认报文里将包含一个非0的rwnd值。</p>
+<p>描述了 TCP的流量控制服务以后，在此要简要地提一下<strong>UDP并不提供流量控制, 报文段由于缓存溢出可能在接收方丢失</strong>。</p>
+<h2 id="TCP连接管理"><a href="#TCP连接管理" class="headerlink" title="TCP连接管理"></a>TCP连接管理</h2><p>我们更为仔细地观察<strong>如何建立和拆除一条TCP连接</strong>。它很重要，<strong>因为TCP连接的建立会显著地增加人们感受到的时延</strong> （如在Web上冲浪时）。此外，许多常见的网络攻击（包括极为流行的<strong>SYN洪泛攻击</strong>）利用了 TCP连接管理中的弱点。假设运行在一台主机（客户）上的一个进程想与另一台主机（服务器）上的一个进程建立一条连接。客户应用进程首先通知客户TCP,它想建立一个与服务器上某个进程之间的连接。客户中的TCP会用以下方式与服务器中的TCP建立一条TCP连接：</p>
+<ol>
+<li><p>第一步：<strong>客户端的TCP首先向服务器端的TCP发送一个特殊的TCP报文段。</strong>该报文段中<strong>不包含应用层数据</strong>。但是<strong>在报文段的首部中的一个标志位 （即SYN比特）被置为1</strong>。因此，这个特殊报文段被称为<strong>SYN报文段</strong>。另外，客户会随机地选择一个初始序号（client_isn）,并将此编号放置于该起始的TCP SYN 报文段的序号字段中。该报文段会被封装在一个IP数据报中，并发送给服务器。 </p>
+</li>
+<li><p>第二步：<strong>一旦包含TCP SYN报文段的IP数据报到达服务器主机（假定它的确到达了！）,服务器会从该数据报中提取出TCP SYN报文段，为该TCP连接分配TCP缓存和变量，并向该客户TCP发送允许连接的报文段。</strong>（在完成三次握手的第三步之前分配这些缓存和变量，使得TCP易于受到称为SYN洪泛的拒绝服务攻击。）<strong>这个允许连接的报文段也不包含应用层数据</strong>。但是，在报文段的首部却包含<strong>3个重要的信息</strong>。</p>
+<ul>
+<li>首先，<strong>SYN比特被置为1</strong>。</li>
+</ul>
+<ul>
+<li><p>其次，<strong>该TCP报文段 首部的确认号字段被置为client_isn + 1</strong> 。</p>
+</li>
+<li><p>最后，<strong>服务器选择自己的初始序号 （server_isn）,并将其放置到TCP报文段首部的序号字段中</strong>。</p>
+</li>
+</ul>
+<p>这个允许连接的报文段实际上表明了：“我收到了你发起建立连接的SYN分组，该分组带有初始序号 client_isn。我同意建立该连接。我自己的初始序号是server_isn。该允许连接的报文段被称为<strong>SYNACK报文段</strong>（SYNACK segment）。</p>
+</li>
+<li><p>第三步：<strong>在收到SYNACK报文段后，客户也要给该连接分配缓存和变量。客户主机则向服务器发送另外一个报文段；这最后一个报文段对服务器的允许连接的报文段进行了确认</strong>（该客户通过将值server_isn + 1放置到TCP报文段首部的确认字段中来完成此项工作）。因为连接已经建立了，所以<strong>该SYN比特被置为0</strong>。该三次握手的<strong>第三个阶段可以在报文段负载中携带客户到服务器的数据</strong>。一旦完成这3个步骤，客户和服务器主机就可以相互发送包括数据的报文段了。在<strong>以后每一个报文段中，SYN比特都将被置为0</strong>。注意到为了创建该连接，在两台主机之间发送了 3个分组，由于这个原因，<strong>这种连接创建过程通常被称为3 次握手</strong>（three-way handshake）。</p>
+</li>
+</ol>
+<p><img src="https://s1.ax1x.com/2020/04/03/GUPeIg.png" alt="三次握手"></p>
+<p>天下没有不散的宴席，对于TCP连接也是如此。参与一条TCP连接的<strong>两个进程中的任何一个都能终止该连接。</strong>当连接结束后，主机中的“资源”（即缓存和变量）将被释放。假设某客户打算关闭连接，客户应用进程发出一个关闭连接命令。这会引起客户TCP向服务器进程发送一个特殊的TCP报文段。这个特殊的报文段让其首部中的一个标志位即<strong>FIN比特被设置为1</strong>。当服务器接收到该报文段后，就向发送方回送一个确认报文段。然后，<strong>服务器发送它自己的终止报文段，其FIN比特被置为1</strong>。最后，该客户对这个服务器的终止报文段进行确认。此时，在两台主机上用于该连接的所有资源都被释放了。 注意到为了释放该连接，在两台主机之间发送了4个分组，由于这个原因，<strong>这种连接创建过程通常被称为4次挥手</strong>。</p>
+<p><img src="https://s1.ax1x.com/2020/04/03/GUFe3j.png" alt="四次挥手"></p>
+<p>下面是一个客户的TCP典型状态</p>
+<p><img src="https://s1.ax1x.com/2020/04/03/GUFBVK.png" alt="客户TCP"></p>
+<p>假设客户应用程序决定要关闭该连接。（注意到服务器也能选择关闭该连接。）这引起客户TCP发送一个带有FIN比特被置为1的TCP报文段，并进入<strong>FIN_WAIT_1状态</strong>。当处在FIN_WAIT_1状态时，客户TCP等待一个来自服务器的带有确认的TCP报文段。当它收到该报文段时，客户TCP进入<strong>FIN_WAIT_2状态</strong>。当处在FIN_WAIT_2状态时，客户等待来自服务器的FIN比特被置为1的另一个报文段；当收到该报文段后，客户TCP对服务器的报文段进行确认，并<strong>进入TIME_WAIT状态</strong>。假定ACK丢失，TIME_WAIT状态使TCP 客户重传最后的确认报文。在TIME_WAIT状态中所消耗的时间是与具体实现有关的，而典型的值是30秒、1分钟或2分钟。经过等待后，连接就正式关闭，客户端所有资源（包 括端口号）将被释放。</p>
+<p><img src="https://s1.ax1x.com/2020/04/03/GUkbFO.png" alt="服务器TCP"></p>
+<p>我们上面的讨论假定了客户和服务器都准备通信，即服务器正在监听客户发送其SYN 报文段的端口。我们来考虑当一台主机接收到一个TCP报文段，其端口号或源IP地址与该主机上进行中的套接字都不匹配的情况。例如，假如一台主机接收了具有目的端口 80 的一个TCP SYN分组，但该主机在端口 80不接受连接（即它不在端口 80上运行Web服务器）。<strong>则该主机将向源发送一个特殊重置报文段。该TCP报文段将RST标志位置为1。</strong>因此，当主机发送一个重置报文段时，它告诉该源“我没有那个报文段的套接字。请不要再发送该报文段了”。当一台主机接收一个UDP分组，它的目的端口与进行中的UDP套接字不匹配，该主机发送一个特殊的ICMP数据报。</p>
+<hr>
+<h1 id="拥塞控制原理"><a href="#拥塞控制原理" class="headerlink" title="拥塞控制原理"></a>拥塞控制原理</h1><p>我们已经分析了面临分组丢失时用于提供可靠数据传输服务的基本原理及特定的TCP机制。在实践中，这种<strong>丢包一般是当网络变得拥塞时由于路由器缓存溢出引起的</strong>。分组重传因此作为网络拥塞的征兆（某个特定的运输层报文段的丢失）来对待，但是却<strong>无法处理导致网络拥塞的原因</strong>，因为有太多的源想以过高的速率发送数据。<strong>为了处理网络拥塞原因，需要一些机制以在面临网络拥塞时遏制发送方</strong>。 我们考虑一般情况下的拥塞控制问题，试图理解为什么网络拥塞是一件坏事情，网络拥塞是如何在上层应用得到的服务性能中明确地显露出来的？如何可用各种方法来避免网络拥塞或对它做出反应？这种对拥塞控制的更一般研究是恰当的，就像可靠数据传输一样。之后详细研究TCP的拥塞控制算法。</p>
+<h2 id="拥塞原因与代价"><a href="#拥塞原因与代价" class="headerlink" title="拥塞原因与代价"></a>拥塞原因与代价</h2><p>我们通过分析3个复杂性越来越高的发生拥塞的情况，开始对拥塞控制的一般性研 究。在每种情况下，我们<strong>首先将看看出现拥塞的原因以及拥塞的代价</strong>（根据资源未被充分利用以及端系统得到的低劣服务性能来评价）。我们暂不关注如何对拥塞做出反应或避免拥塞，而是重点理解一个较为简单的问题，即<strong>随着主机增加其发送速率并使网络变得拥塞，这时会发生的情况</strong>。</p>
+<ol>
+<li><p><strong>情况1：两个发送方和一台具有无穷大缓存的路由器</strong></p>
+<p>假设有一段容量为R的共享式输出链路。链路上一个路由器有无限大的缓存空间。当主机A发送速率在0~R之间时，接收方的吞吐量等于发送方的发送速率，即发送方发送的所有数据经有限时延后到达接收方。然而当发送速率超过R时，它的吞吐量只能达到R。这个吞吐量上限是由两条连接之间共享链路容量造成的。看起来取得R的吞吐量可能是一件好事，因为在将分组交付到目的地的过程中链路被充分利用了。但是，以接近链路容量的速率运行时的后果，就是当发送速率接近R时，平均时延就会越来越大，当发送速率超过R时，路由器中的平均排队分组数就会无限增长。<strong>甚至在这种（极端）理想化的情况中，我们已经发现了拥塞网络的一种代价，即当分组的到达速率接近链路容量时，分组经历巨大的排队时延。</strong> </p>
+</li>
+<li><p><strong>情况2：两个发送方和一台具有有限缓存的路由器</strong> </p>
+<p>结论：</p>
+<ul>
+<li><p>一种代价，即发送方必须执行重传以补偿因为缓存溢出而丢弃（丢失）的分组。 </p>
+</li>
+<li><p>另一种代价，即发送方在遇到大时延时所进行的不必要重传会引起路由器利用其链路带宽来转发不必要的分组副本。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>情况3：4个发送方和具有有限缓存的多台路由器及多跳路径</strong></p>
+<p>每当有一个分组在第二跳路由器上被丢弃时，第一跳路由器所做的将分组转发到第二跳路由器的工作就是“劳而无功”的。而第一跳路由器所使用的将分组转发到第二跳路由器的传输容量用来传送不同的分组可能更有效。例如，当选择一个分组发送时，路由器最好优先考虑那些已经历过一定数量的上游路由器的分组</p>
+<p>于是代价很明显：<strong>当一个分组沿一条路径被丢弃时，每个上游路由器用于转发该分组到丢弃该分组而使用的传输容量最终被浪费掉了。</strong></p>
+</li>
+</ol>
+<h2 id="拥塞控制方法"><a href="#拥塞控制方法" class="headerlink" title="拥塞控制方法"></a>拥塞控制方法</h2><p>这里，我们指出在实践中所采用的<strong>两种主要拥塞控制方法</strong>，讨论特定的网络体系结构和具体使用这些方法的拥塞控制协议。 在最为宽泛的级别上，我们可<strong>根据网络层是否为运输层拥塞控制提供了显式帮助</strong>，来区分拥塞控制方法。 </p>
+<ul>
+<li><strong>端到端拥塞控制</strong>。在端到端拥塞控制方法中，<strong>网络层没有为运输层拥塞控制提供显式支持</strong>。即使网络中存在拥塞，端系统也必须通过对网络行为的观察（如分组丢失与时延）来推断之。<strong>TCP采用端到端的方法解决拥塞控制，因为IP层不会向端系统提供有关网络拥塞的反馈信息。</strong>TCP报文段的丢失（通过超时或3次冗余确认而得知）被认为是网络拥塞的一个迹象，TCP 会相应地减小其窗口长度。</li>
+<li><strong>网络辅助的拥塞控制。</strong>在网络辅助的拥塞控制中，路由器向发送方提供关于网络中拥塞状态的显式反馈信息。这种反馈可以简单地用一个比特来指示链路中的拥塞情况。更复杂的网络反馈也是可能的。例如，在ATM可用比特率（Available Bite Rate, ABR）拥塞控制中，路由器显式地通知发送方它（路由器）能在输出链路上支持的最大主机发送速率。如上面所提到的，默认因特网版本的IP和TCP采用端到端拥塞控制方法。然而，最近IP和TCP也能够选择性地实现网络辅助拥塞控制。</li>
+</ul>
+<hr>
+<h1 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h1><p>TCP为运行在不同主机上的 两个进程之间提供了可靠传输服务。<strong>TCP的另一个关键部分就是其拥塞控制机制</strong>。TCP必须使用端到端拥塞控制而不是使网络辅助的拥塞控制，<strong>因为IP层不向端系统提供显式的网络拥塞反馈</strong>。</p>
+<p><strong>TCP所采用的方法是让每一个发送方根据所感知到的网络拥塞程度来限制其能向 连接发送流量的速率。</strong>如果一个TCP发送方感知从它到目的地之间的路径上没什么拥 塞，则TCP发送方增加其发送速率；如果发送方感知沿着该路径有拥塞，则发送方就 会降低其发送速率。但是这种方法提出了三个问题。</p>
+<blockquote>
+<p>第一，一个TCP发送方<strong>如何限制</strong>它向其连接发送流量的速率呢？</p>
+<p>第二，一个TCP发送方<strong>如何感知</strong>从它到目的地之间的路径上存在拥塞呢？</p>
+<p>第三，当发送方感知到端到端的拥塞时，采用<strong>何种算法</strong>来改变其发送速率呢? </p>
+</blockquote>
+<ol>
+<li><p>运行在发送方的TCP拥塞控制机制跟踪一个额外的变量，即<strong>拥塞窗口</strong> （congestion window） 。拥塞窗口表示为cwnd,它对一个TCP发送方能向网络中发送流量的速率进行了限制。<strong>通过调节cwnd的值，发送方因此能调整它向连接发送数据的速率。</strong>在一个发送方中未被确认的数据量不会超过cwnd与nvnd中的最小值，即</p>
+<p> <strong>LastByteSent -LastByteAcked ≤min { cwnd, rwnd}</strong> </p>
+</li>
+<li><p>我们接下来考虑TCP发送方是如何感知在它与目的地之间的路径上出现了拥塞的。<strong>我们将一个TCP发送方的“丢包事件”定义为：要么出现超时，要么收到来自接收方的3 个冗余ACK</strong>）当出现过度的拥塞时，在沿着这条路径上的一台（或多台）路由器的缓存会溢岀，引起一个数据报（包含一个TCP报文段）被丢弃。丢弃的数据报接着会引起发送方的丢包事件（<strong>要么超时或收到3个冗余ACK</strong>），发送方就认为在发送方到接收方的路径上出现了拥塞的指示。 </p>
+</li>
+<li><p>TCP<strong>使用确认来触发（或计时）增大它的拥塞窗口长度</strong>,TCP被说成是<strong>自计时</strong>的。</p>
+</li>
+</ol>
+<p><strong>给定调节cwnd值以控制发送速率的机制</strong>，关键的问题依然存在：TCP发送方怎样确定它应当发送的速率呢？如果众多TCP发送方总体上发送太快，它们能够拥塞网络，导致我们看到的拥塞崩溃。如果TCP 发送方过于谨慎，发送太慢，它们不能充分利用网络的带宽；这就是说，TCP发送方能够以更高的速率发送而不会使网络拥塞。那么TCP发送方如何确定它们的发送速率，<strong>既使得网络不会拥塞，与此同时又能充分利用所有可用的带宽？</strong> TCP发送方是显式地协作，或存在一种分布式方法使TCP发送方能够仅基于本地信息设置它们的发送速率？ TCP使用下列<strong>原则</strong>回答这些问题：</p>
+<ul>
+<li>一个丢失的报文段表意味着拥塞，因此当丢失报文段时应当降低TCP发送方的 速率。一个超时事件或四个确认 （一个初始ACK和其后的三个冗余ACK）出现，TCP发送方应当减小它的拥塞窗口长度，即减小其发送速率，以应对这种推测的丢包事件。</li>
+<li>一个确认报文段指示该网络正在向接收方交付发送方的报文段，因此，当对先前未确认报文段的<strong>确认到达</strong>时，能够<strong>增加发送方的速率</strong>。</li>
+<li>带宽探测。<strong>TCP调节其传输速率的策略是增加其速率以响应到达的ACK,除非岀现丢包事件，此时才减小传输速率</strong>。因此，为探测拥塞开始出现的速率，TCP 发送方增加它的传输速率，从该速率后退，进而再次开始探测，看看拥塞开始的速率是否发生了变化。</li>
+</ul>
+<h2 id="TCP拥塞控制算法"><a href="#TCP拥塞控制算法" class="headerlink" title="TCP拥塞控制算法"></a>TCP拥塞控制算法</h2><p>概述了 TCP拥塞控制后，现在是我们考虑广受赞誉的<strong>TCP拥塞控制算法</strong>细节的时候了，该算法包括3个主要部分：<strong>①慢启动；②拥塞避免; ③快速恢复。</strong>慢启动和拥塞避免是TCP的强制部分，两者的差异在于对收到的ACK 做出反应时增加cwnd长度的方式。我们很快将会看到慢启动比拥塞避免能更快地增加cdwnd的长度。快速恢复是推荐部分，对TCP发送方并非是必需的。</p>
+<h3 id="慢启动"><a href="#慢启动" class="headerlink" title="慢启动"></a>慢启动</h3><p>当一条TCP连接开始时，cwnd的值通常<strong>初始置为一个MSS</strong>的较小值, 这就使得初始发送速率大约为MSS/RTT。例如，如果MSS = 500字节且RIT = 200ms,则得到的初始发送速率大约只有20kbps。由于对TCP发送方而言，<strong>可用带宽可能比MSS/RTT大得多，TCP发送方希望迅速找到可用带宽的数量</strong>。因此，在慢启动（slow-start）状态，<strong>*<u>cwnd的值以1个MSS开始并且每当传输的报文段首次被确认就增加1个MSS。</u>*</strong> TCP向网络发送第一个报文段并等待一个确认。当该确认到达时，TCP发送方将拥塞窗口增加一个 MSS,并发送出两个最大长度的报文段。这两个报文段被确认，则发送方对每个确认报文段将拥塞窗口增加一个MSS,使得拥塞窗口变为4个MSS,并这样下去。这一过程每过一个RTT,发送速率就翻番。因此，<strong>TCP发送速率起始慢，但在慢启动阶段以指数增长</strong>。 </p>
+<p>但是，何时结束这种指数增长呢？</p>
+<blockquote>
+<p>第一种，如果存在一个由<strong>超时指示</strong>的丢包事件（即拥塞），TCP发送方将cwnd设置为1并重新开始慢启动过程。它还将第二个状态变量的值ssthresh （”慢启动阈值”的速记）设置为cwnd/2,即当检测到拥塞时将ssthresh置为拥塞窗口值的一半。</p>
+<p>慢启动结束的第二种方式是直接与ssthresh的值相关联。因为当检测到拥塞时ssthresh设为cwnd的值一半，当到达或超过ssthresh的值时，继续使cwnd翻番可能有些鲁莽。因此，<strong>当cwnd的值等于ssthresh时，结束慢启动并且TCP转移到拥塞避免模式</strong>。我们将会看到，<strong>当进入拥塞避免模式时，TCP更为谨慎地增加cwnd</strong>。</p>
+<p>最后一种结束慢启动的方式是,如果<strong>检测到3个冗余ACK</strong>,这时<strong>TCP执行一种快速重传并进入快速恢复状态</strong>。</p>
+</blockquote>
+<h3 id="拥塞避免"><a href="#拥塞避免" class="headerlink" title="拥塞避免"></a>拥塞避免</h3><p>一旦进入拥塞避免状态，<strong>cwnd的值大约是上次遇到拥塞时的值的一半</strong>，<strong>即距离拥塞可能并不遥远</strong>！因此，TCP无法每过一个RTT再将cwnd的值翻番，而是采用了一种较为保守的方法，<strong>每个*<u>RTT</u>*只将cwnd的值增加一个MSS</strong>。这能够以几种方式完成。</p>
+<p>一种通用的方法是对于TCP发送方无论何时到达一个新的确认，就将cwnd增加一个 MSS （ MSS/cwnd）字节。例如，如果MSS是1460字节并且cwnd是14 600字节，则在一 个R1T内发送10个报文段。每个到达ACK （假定每个报文段一个ACK）增加1/10MSS 的拥塞窗口长度，<strong>因此在收到对所有10个报文段的确认后，拥塞窗口的值将增加了一个 MSS。</strong> </p>
+<p>但是何时应当结束拥塞避免的线性增长（每RTT 1MSS）呢？</p>
+<blockquote>
+<p>当<strong>出现超时时</strong>，TCP的拥塞避免算法行为相同。与慢启动的情况一样，cwnd的值被设置为1个MSS,当丢包事件出现时，ssthresh的值被更新为cwnd值的一半。<strong>进入慢启动状态。</strong></p>
+<p>然而，前面讲过丢包事件也能由一个<strong>三个冗余ACK事件触发</strong>。在这种情况下，网络继续从发送方向接收方交付报文段（就像由收到冗余ACK所指示的那样）。因此TCP对这种丢包事件的行为，相比于超时指示的丢包,应当不那么剧烈：TCP将cwnd的值减半（为使测量结果更好，计及已收到的3个冗余的 ACK要加上3个MSS）,并且当收到3个冗余的ACK,将ssthresh的值记录为cwnd的值的一半。<strong>接下来进入快速恢复状态。</strong></p>
+</blockquote>
+<h3 id="快速恢复"><a href="#快速恢复" class="headerlink" title="快速恢复"></a>快速恢复</h3><p>慢启动和拥塞避免状态中，<strong>当且仅当接收3个冗余ACK时，才会进入快速恢复状态</strong></p>
+<blockquote>
+<p>在快速恢复中，<strong>对于引起TCP进入快速恢复状态的缺失报文段</strong>，对收到的每个冗余的ACK, cwnd的值增加一个MSS。最终，<strong>当对丢失报文段的一个ACK到达时，TCP在降低cwnd后进入拥塞避免状态</strong>。</p>
+<p><strong>如果出现超时事件</strong>，快速恢复在执行如同在慢启动和拥塞避免中相同的动作后，<strong>迁移到慢启动状态</strong>：当丢包事件出现时，cwnd的值被设置为1个 MSS,并且ssthresh的值设置为cwnd值的一半。</p>
+</blockquote>
+<p> 快速恢复是TCP推荐的而非必需的构件。一种称为TCP Tahoe的TCP早期版本，不管是发生超时指示的丢包事件，还是发生3个冗余ACK指示的丢包事件，都无条件地将其拥塞窗口减至1个MSS,并进入慢启动阶段。TCP的较新版本TCP Reno,则综合了快速恢复。</p>
+<p><img src="https://s1.ax1x.com/2020/04/03/GUjLIs.png" alt="TCP拥塞控制"></p>
+<p>TCP拥塞控制常常被称为加性增、乘性减 (Additive-1ncrease, Multiplicative- Decrease, AIMD）拥塞控制方式。AIMD控制引发了锯齿行为。</p>
+<h2 id="公平性"><a href="#公平性" class="headerlink" title="公平性"></a>公平性</h2><p>考虑K条TCP连接，每条都有不同的端到端路径，但是都经过一段传输速率为R bps 的瓶颈链路。如果每条连接的平均传输速率接近R/K,即每条连接都得到相同份额的链路带宽，则认为该拥塞控制机制是公平的。</p>
+<p>TCP的AIMD算法公平吗？尤其是假定可在不同时间启动并因此在某个给定的时间点可能具有不同的窗口长度情况下，对这些不同的TCP连接还是公平的吗？<strong>TCP趋于在竞争的多条TCP连接之间提供对一段瓶颈链路带宽的平等分享</strong> 。</p>
+<p>实践中，这些条件通常是得不到满足的，客户-服务器应用因此能获得非常不平等的链路带宽份额。已经表明当多条连接共享一个共同的瓶颈链路时，那些具有较小RTT的连接能够在链路空闲时更快地抢到可用带宽（即较快地打开其拥塞窗口），因而将比那些具有较大RTT的连接享用更高的吞吐量。</p>
+<ol>
+<li><p><strong>公平性和UDP</strong></p>
+<p>我们刚才已经看到，TCP拥塞控制是如何通过拥塞窗口机制来调节一个应用程序的传输速率的。许多多媒体应用如因特网电话和视频会议，经常就因为这种特定原因而不在TCP上运行，因为<strong>它们不想其传输速率被扼制</strong>，即使在网络非常拥塞的情况下。相反，这些应用宁可在UDP上运行，UDP是没有内置的拥塞控制的。当运行在UDP上时，这些应用能够以恒定的速率将其音频和视频数据注入网络之中并且偶尔会丢失分组，而不愿在拥塞时将其发送速率降至“公平”级别并且不丢失任何分组。<strong>从TCP的观点来看，运行在 UDP上的多媒体应用是不公平的，因为它们不与其他连接合作，也不适时地调整其传输速率。</strong>因为TCP拥塞控制在面临拥塞增加（丢包）时，将降低其传输速率，而UDP源则不 必这样做，<strong>UDP源有可能压制TCP流量</strong>。当今的一个主要研究领域就是开发一种因特网中的拥塞控制机制，用于阻止UDP流量不断压制直至中断因特网吞吐量的情况。</p>
+</li>
+<li><p><strong>公平性和并行TCP连接</strong></p>
+<p>即使我们能够迫使UDP流量具有公平的行为，但公平性问题仍然没有完全解决。这是因为<strong>我们没有什么办法阻止基于TCP的应用使用多个并行连接</strong>。例如，Web浏览器通常使用多个并行TCP连接来传送一个Web页中的多个对象。（多条连接的确切数目可以在多数浏览器中进行配置。）当一个应用使用多条并行连接时，它占用了一条拥塞链路中较大比例的带宽。举例来说，考虑一段速率为尺且支持9个在线客户-服务器应用的链路，每个应用使用一条TCP连接。如果一个新的应用加入进来，也使用一条TCP连接，则每个应用得到差不多相同的传输速率R/10。但是如果这个新的应用这次使用了 11个并行TCP 连接，则这个新应用就不公平地分到超过R/2的带宽。<strong>Web流量在因特网中是非常普遍 的，所以多条并行连接并非不常见。</strong></p>
+</li>
+</ol>
+<h2 id="明确拥塞通告：网络辅助拥塞控制"><a href="#明确拥塞通告：网络辅助拥塞控制" class="headerlink" title="明确拥塞通告：网络辅助拥塞控制"></a>明确拥塞通告：网络辅助拥塞控制</h2><p>不做具体阐述。</p>
+
       
     </div>
     
@@ -640,7 +817,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#面向连接的运输：TCP"><span class="nav-number">1.</span> <span class="nav-text">面向连接的运输：TCP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP连接"><span class="nav-number">1.1.</span> <span class="nav-text">TCP连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP报文段结构"><span class="nav-number">1.2.</span> <span class="nav-text">TCP报文段结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#序号和确认号"><span class="nav-number">1.2.1.</span> <span class="nav-text">序号和确认号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Telnet-序号和确认号的一个学习案例"><span class="nav-number">1.2.2.</span> <span class="nav-text">Telnet:序号和确认号的一个学习案例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#往返时间的估计与超时"><span class="nav-number">1.3.</span> <span class="nav-text">往返时间的估计与超时</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#估计往返时间"><span class="nav-number">1.3.1.</span> <span class="nav-text">估计往返时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置和管理重传超时间隔"><span class="nav-number">1.3.2.</span> <span class="nav-text">设置和管理重传超时间隔</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可靠数据传输"><span class="nav-number">1.4.</span> <span class="nav-text">可靠数据传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流量控制"><span class="nav-number">1.5.</span> <span class="nav-text">流量控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP连接管理"><span class="nav-number">1.6.</span> <span class="nav-text">TCP连接管理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拥塞控制原理"><span class="nav-number">2.</span> <span class="nav-text">拥塞控制原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#拥塞原因与代价"><span class="nav-number">2.1.</span> <span class="nav-text">拥塞原因与代价</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拥塞控制方法"><span class="nav-number">2.2.</span> <span class="nav-text">拥塞控制方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP拥塞控制"><span class="nav-number">3.</span> <span class="nav-text">TCP拥塞控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#公平性"><span class="nav-number">3.1.</span> <span class="nav-text">公平性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#明确拥塞通告：网络辅助拥塞控制"><span class="nav-number">3.2.</span> <span class="nav-text">明确拥塞通告：网络辅助拥塞控制</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#面向连接的运输：TCP"><span class="nav-number">1.</span> <span class="nav-text">面向连接的运输：TCP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP连接"><span class="nav-number">1.1.</span> <span class="nav-text">TCP连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP报文段结构"><span class="nav-number">1.2.</span> <span class="nav-text">TCP报文段结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#序号和确认号"><span class="nav-number">1.2.1.</span> <span class="nav-text">序号和确认号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Telnet-序号和确认号的一个学习案例"><span class="nav-number">1.2.2.</span> <span class="nav-text">Telnet:序号和确认号的一个学习案例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#往返时间的估计与超时"><span class="nav-number">1.3.</span> <span class="nav-text">往返时间的估计与超时</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#估计往返时间"><span class="nav-number">1.3.1.</span> <span class="nav-text">估计往返时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置和管理重传超时间隔"><span class="nav-number">1.3.2.</span> <span class="nav-text">设置和管理重传超时间隔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP实践原则"><span class="nav-number">1.3.3.</span> <span class="nav-text">TCP实践原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可靠数据传输"><span class="nav-number">1.4.</span> <span class="nav-text">可靠数据传输</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一些微妙的情况"><span class="nav-number">1.4.1.</span> <span class="nav-text">一些微妙的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超时间隔加倍"><span class="nav-number">1.4.2.</span> <span class="nav-text">超时间隔加倍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速重传"><span class="nav-number">1.4.3.</span> <span class="nav-text">快速重传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#是回退N步还是选择重传"><span class="nav-number">1.4.4.</span> <span class="nav-text">是回退N步还是选择重传</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流量控制"><span class="nav-number">1.5.</span> <span class="nav-text">流量控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP连接管理"><span class="nav-number">1.6.</span> <span class="nav-text">TCP连接管理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拥塞控制原理"><span class="nav-number">2.</span> <span class="nav-text">拥塞控制原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#拥塞原因与代价"><span class="nav-number">2.1.</span> <span class="nav-text">拥塞原因与代价</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拥塞控制方法"><span class="nav-number">2.2.</span> <span class="nav-text">拥塞控制方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP拥塞控制"><span class="nav-number">3.</span> <span class="nav-text">TCP拥塞控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP拥塞控制算法"><span class="nav-number">3.1.</span> <span class="nav-text">TCP拥塞控制算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#慢启动"><span class="nav-number">3.1.1.</span> <span class="nav-text">慢启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拥塞避免"><span class="nav-number">3.1.2.</span> <span class="nav-text">拥塞避免</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速恢复"><span class="nav-number">3.1.3.</span> <span class="nav-text">快速恢复</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公平性"><span class="nav-number">3.2.</span> <span class="nav-text">公平性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#明确拥塞通告：网络辅助拥塞控制"><span class="nav-number">3.3.</span> <span class="nav-text">明确拥塞通告：网络辅助拥塞控制</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -676,7 +853,7 @@
     
       <span class="post-meta-item-text">站点字数总计&#58;</span>
     
-    <span title="站点字数总计">14.3k</span>
+    <span title="站点字数总计">25.5k</span>
   
 </div>
 
