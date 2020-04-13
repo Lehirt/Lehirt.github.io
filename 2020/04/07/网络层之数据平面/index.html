@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<html class="theme-next gemini use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -86,14 +86,14 @@
 
 
 
-<meta name="description" content="简单来说，控制平面控制路由器如何转发，那么数据平面就是每台路由器的功能。数据平面功能决定到达路由器输入链路之一的数据报（即网络层的分组）如何转发到该路由器的输出链路之一。每台路由器的数据平面的主要作用是从其输入链路向其输出链路转发数据报。 主要有以下方面：  传统的IP转发（基于数据报的目的地址） 通用的转发 IPv4和IPv6协议及其寻址  网络层之数据平面">
+<meta name="description" content="简单来说，控制平面控制路由器如何转发，那么数据平面就是每台路由器的功能。数据平面功能决定到达路由器输入链路之一的数据报（即网络层的分组）如何转发到该路由器的输出链路之一。每台路由器的数据平面的主要作用是从其输入链路向其输出链路转发数据报。 主要有以下方面：  传统的IP转发（基于数据报的目的地址） 通用的转发 IPv4和IPv6协议及其寻址">
 <meta property="og:type" content="article">
 <meta property="og:title" content="网络层之数据平面">
 <meta property="og:url" content="https://lehirt.github.io/2020/04/07/%E7%BD%91%E7%BB%9C%E5%B1%82%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/index.html">
 <meta property="og:site_name" content="Lehirt&#39;s Blog">
-<meta property="og:description" content="简单来说，控制平面控制路由器如何转发，那么数据平面就是每台路由器的功能。数据平面功能决定到达路由器输入链路之一的数据报（即网络层的分组）如何转发到该路由器的输出链路之一。每台路由器的数据平面的主要作用是从其输入链路向其输出链路转发数据报。 主要有以下方面：  传统的IP转发（基于数据报的目的地址） 通用的转发 IPv4和IPv6协议及其寻址  网络层之数据平面">
+<meta property="og:description" content="简单来说，控制平面控制路由器如何转发，那么数据平面就是每台路由器的功能。数据平面功能决定到达路由器输入链路之一的数据报（即网络层的分组）如何转发到该路由器的输出链路之一。每台路由器的数据平面的主要作用是从其输入链路向其输出链路转发数据报。 主要有以下方面：  传统的IP转发（基于数据报的目的地址） 通用的转发 IPv4和IPv6协议及其寻址">
 <meta property="article:published_time" content="2020-04-07T02:17:50.000Z">
-<meta property="article:modified_time" content="2020-04-07T02:30:45.557Z">
+<meta property="article:modified_time" content="2020-04-13T15:12:24.771Z">
 <meta property="article:author" content="lehirt">
 <meta property="article:tag" content="计算机网络">
 <meta property="article:tag" content="网络层">
@@ -105,11 +105,11 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
+    scheme: 'Gemini',
     version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
     fancybox: true,
-    tabs: true,
+    tabs: false,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
@@ -134,8 +134,6 @@
 
 
 
-<!-- 网页加载条 -->
-<script src="https://neveryu.github.io/js/src/pace.min.js"></script>
 
 
   <title>网络层之数据平面 | Lehirt's Blog</title>
@@ -354,12 +352,19 @@
 
           
           
-
+             <span id="/2020/04/07/%E7%BD%91%E7%BB%9C%E5%B1%82%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/" class="leancloud_visitors" data-flag-title="网络层之数据平面">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">访问人数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+             </span>
           
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv"><i class="fa fa-file-o"></i>
-            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
-            </span>
+
           
 
           
@@ -378,7 +383,19 @@
               
 
               
+                <span class="post-meta-divider">|</span>
+              
 
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
               
             </div>
           
@@ -405,12 +422,17 @@
 <li>通用的转发</li>
 <li>IPv4和IPv6协议及其寻址</li>
 </ul>
+<a id="more"></a>
+
 <h1 id="网络层之数据平面"><a href="#网络层之数据平面" class="headerlink" title="网络层之数据平面"></a>网络层之数据平面</h1>
       
     </div>
     
     
     
+
+
+
 
     
 
@@ -420,11 +442,9 @@
 
 <div>
   
-    <div>
+    <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
     
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
-    
-</div>
+
   
 </div>
 
@@ -435,9 +455,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag"># 计算机网络</a>
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag"><i class="fa fa-tag"></i>计算机网络</a>
           
-            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%B1%82/" rel="tag"># 网络层</a>
+            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%B1%82/" rel="tag"><i class="fa fa-tag"></i>网络层</a>
           
         </div>
       
@@ -543,7 +563,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -554,7 +574,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -565,7 +585,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -617,6 +637,13 @@
       
 
       
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
 
     </div>
   </aside>
@@ -632,7 +659,7 @@
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-adjust"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">lehirt</span>
 
@@ -644,20 +671,16 @@
     
       <span class="post-meta-item-text">站点字数总计&#58;</span>
     
-    <span title="站点字数总计">33.1k</span>
+    <span title="站点字数总计">33.9k</span>
   
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
 
 
-  <span class="post-meta-divider">|</span>
 
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
 
 
 
@@ -694,11 +717,6 @@
       </div>
     </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
     
 
     
@@ -844,6 +862,113 @@
 
 
   
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("", "");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
 
   
 

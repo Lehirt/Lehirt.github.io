@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="计算机网络,网络层," />
+  <meta name="keywords" content="SSM," />
 
 
 
@@ -86,17 +86,16 @@
 
 
 
-<meta name="description" content="运输层依赖于网络层的主机到主机的通信服务。然而运输层工作时不具备任何有关网络层实际实现这种服务。由于在网络中的每一台主机和路由器中都有一个网络层部分，网络层协议是协议栈中最复杂，最难实现的部分。将网络层分解为两个相互作用的部分—数据平面和控制平面，便于整体把握网络层的功能。">
+<meta name="description" content="学习了3天的mybatis的基础，现在做一个总结，并且记录自己不太清楚的地方。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="网络层之控制平面">
-<meta property="og:url" content="https://lehirt.github.io/2020/04/06/%E7%BD%91%E7%BB%9C%E5%B1%82%E4%B9%8B%E6%8E%A7%E5%88%B6%E5%B9%B3%E9%9D%A2/index.html">
+<meta property="og:title" content="mybatis基础学习">
+<meta property="og:url" content="https://lehirt.github.io/2020/04/13/mybatis%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="Lehirt&#39;s Blog">
-<meta property="og:description" content="运输层依赖于网络层的主机到主机的通信服务。然而运输层工作时不具备任何有关网络层实际实现这种服务。由于在网络中的每一台主机和路由器中都有一个网络层部分，网络层协议是协议栈中最复杂，最难实现的部分。将网络层分解为两个相互作用的部分—数据平面和控制平面，便于整体把握网络层的功能。">
-<meta property="article:published_time" content="2020-04-06T09:43:17.000Z">
-<meta property="article:modified_time" content="2020-04-06T13:34:32.766Z">
+<meta property="og:description" content="学习了3天的mybatis的基础，现在做一个总结，并且记录自己不太清楚的地方。">
+<meta property="article:published_time" content="2020-04-13T07:55:03.000Z">
+<meta property="article:modified_time" content="2020-04-13T15:23:23.910Z">
 <meta property="article:author" content="lehirt">
-<meta property="article:tag" content="计算机网络">
-<meta property="article:tag" content="网络层">
+<meta property="article:tag" content="SSM">
 <meta name="twitter:card" content="summary">
 
 
@@ -127,7 +126,7 @@
 
 
 
-  <link rel="canonical" href="https://lehirt.github.io/2020/04/06/网络层之控制平面/"/>
+  <link rel="canonical" href="https://lehirt.github.io/2020/04/13/mybatis基础学习/"/>
 
 
 
@@ -136,7 +135,7 @@
 
 
 
-  <title>网络层之控制平面 | Lehirt's Blog</title>
+  <title>mybatis基础学习 | Lehirt's Blog</title>
   
 
 
@@ -283,7 +282,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://lehirt.github.io/2020/04/06/%E7%BD%91%E7%BB%9C%E5%B1%82%E4%B9%8B%E6%8E%A7%E5%88%B6%E5%B9%B3%E9%9D%A2/">
+    <link itemprop="mainEntityOfPage" href="https://lehirt.github.io/2020/04/13/mybatis%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="lehirt">
@@ -300,7 +299,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">网络层之控制平面</h1>
+          <h1 class="post-title" itemprop="name headline">mybatis基础学习</h1>
         
 
         <div class="post-meta">
@@ -312,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-06T17:43:17+08:00">
-                2020-04-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-13T15:55:03+08:00">
+                2020-04-13
               </time>
             
 
@@ -335,8 +334,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/408/" itemprop="url" rel="index">
-                    <span itemprop="name">408</span>
+                  <a href="/categories/SSM/" itemprop="url" rel="index">
+                    <span itemprop="name">SSM</span>
                   </a>
                 </span>
 
@@ -352,7 +351,7 @@
 
           
           
-             <span id="/2020/04/06/%E7%BD%91%E7%BB%9C%E5%B1%82%E4%B9%8B%E6%8E%A7%E5%88%B6%E5%B9%B3%E9%9D%A2/" class="leancloud_visitors" data-flag-title="网络层之控制平面">
+             <span id="/2020/04/13/mybatis%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" class="leancloud_visitors" data-flag-title="mybatis基础学习">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -378,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.5k 字
+                  769 字
                 </span>
               
 
@@ -394,7 +393,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  8 分钟
+                  3 分钟
                 </span>
               
             </div>
@@ -415,103 +414,36 @@
       
 
       
-        <p>运输层依赖于网络层的主机到主机的通信服务。然而运输层工作时不具备任何有关网络层实际实现这种服务。由于在网络中的每一台主机和路由器中都有一个网络层部分，网络层协议是协议栈中最复杂，最难实现的部分。将网络层分解为两个相互作用的部分—数据平面和控制平面，便于整体把握网络层的功能。</p>
+        <blockquote class="blockquote-center"><p>学习了3天的mybatis的基础，现在做一个总结，并且记录自己不太清楚的地方。</p>
+</blockquote>
+
 <a id="more"></a>
-<hr>
-<h1 id="网络层：控制平面"><a href="#网络层：控制平面" class="headerlink" title="网络层：控制平面"></a>网络层：控制平面</h1><p>控制平面功能<strong>控制数据报沿着从源主机到目的主机的端到端路径中路由器之间的路由方式，而且控制网络层组件和服务如何配置和管理</strong>。<br>主要有以下方面：</p>
-<ul>
-<li>路由选择算法</li>
-<li>OSPF和BGP路由选择协议</li>
-<li>软件定义网络—SDN控制器</li>
-</ul>
-<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><ul>
-<li>路由选择算法是路由选择协议OSPF和BGP的基础；</li>
-<li>OSPF是运行于单一ISP的网络中的路由选择协议；</li>
-<li>BGP是一种在因特网中用于互联所有网络（ISP）的路由选择算法，即因特网的粘合剂；<br>另外，我们看到了转发表和流表是链接网络层的数据平面和控制平面的首要元素。那么转发表和流表是如何计算、维护和安装的？</li>
-</ul>
-<ol>
-<li>每路由器控制。</li>
-<li>逻辑集中式控制。</li>
-</ol>
-<h2 id="路由选择算法"><a href="#路由选择算法" class="headerlink" title="路由选择算法"></a>路由选择算法</h2><h3 id="链路状态路由选择算法"><a href="#链路状态路由选择算法" class="headerlink" title="链路状态路由选择算法"></a>链路状态路由选择算法</h3><p>该算法必须知道网络中每条链路的开销，以所有节点之间的连通性及所有链路的开销为输入。像这种具有全局状态信息的算法常被称作<strong>链路状态（Link State，LS）算法</strong></p>
-<p>实践中的具体实现即是<strong>Dijkstra算法</strong>—计算从某节点（源节点u）到网络中<strong>所有</strong>其他节点的最低开销路径（最短路径）。</p>
-<p>存在的问题：若网络拓扑比较复杂（更接近现实），那么<strong>链路开销是非对称的</strong>，即同一条链路来去开销不同，于是拥塞敏感的路由选择会产生<strong>“震荡”</strong>。<br>解决方法：</p>
-<ul>
-<li>强制链路开销不依赖于所承载的流量，该方法不可接受因为违背路由选择的初衷。</li>
-<li>另一种就是确保并非所有的路由器都同时运行LS算法，由于路由器之间存在“自同步”现象，则用随机时间发送通告的方法完成时间随机化。</li>
-</ul>
-<h3 id="距离向量路由选择算法"><a href="#距离向量路由选择算法" class="headerlink" title="距离向量路由选择算法"></a>距离向量路由选择算法</h3><p>距离向量（Distance-Vector, DV）算法是一种迭代的、异步的和分布式的算法，而LS算法是一种使用全局信息的算法。节点具有的唯一信息是它到<strong>直接相连邻居的链路开销</strong>和它<strong>从这些邻居接收到的信息</strong>。</p>
-<p>简单描述节点执行DV算法过程—从邻居接受更新距离向量、重新计算路由选择表项和通知邻居到目的地的最低开销路径的开销已经变化，一直重复直到无更新报文发送，算法进入静止状态。算法停留在静止状态，直到一条链路开销发生改变。</p>
-<p>实践中许多类似DV的算法被用于多种路由选择协议中，包括<strong>因特网的RIP和BGP</strong>。</p>
-<p>下面看该算法存在的问题：</p>
-<ol>
-<li>链路开销改变与链路故障<ul>
-<li>当一个链路开销发生变化，那么相邻节点根据算法更新距离向量并通知邻居节点。那么开销减少的“好消息”通过网络会迅速传播，“坏消息”却传播的很慢（路由环路的出现）。下面是解决方法：</li>
-</ul>
-</li>
-<li>增加毒性逆转<ul>
-<li>毒性逆转思想：欺骗经过的节点，然而只能解决直接相邻（涉及3个或更多则不行）的邻居节点的环路问题。</li>
-</ul>
-</li>
-</ol>
-<h3 id="LS与DV路由算法的比较"><a href="#LS与DV路由算法的比较" class="headerlink" title="LS与DV路由算法的比较"></a>LS与DV路由算法的比较</h3><ul>
-<li>报文复杂度<ul>
-<li>由LS和DV算法特点，LS每次改变链路开销就必须向<strong>所有节点</strong>发送新的链路开销，而DV算法仅在两个<strong>直接相邻的节点</strong>之间发生交换报文。</li>
-</ul>
-</li>
-<li>收敛速度<ul>
-<li>DV算法收敛较慢，且在收敛时候会遇到路由选择环路，遭遇无穷计数问题。</li>
-<li>健壮性</li>
-<li>LS算法下，每个节点是分离开来的—自己算自己，提供了一定程度的健壮性。而DV算法中一个不正确的节点计算值会<strong>扩散到整个网络！</strong> </li>
-</ul>
-</li>
-<li>总之，两个算法都得到了应用，也各有缺点和优点。</li>
-</ul>
-<h2 id="因特网中自治系统内部的路由选择：OSPF"><a href="#因特网中自治系统内部的路由选择：OSPF" class="headerlink" title="因特网中自治系统内部的路由选择：OSPF"></a>因特网中自治系统内部的路由选择：OSPF</h2><p>讨论实践时，必须考虑实际问题中的模型处理不能简单化处理。<br>实践中有两个问题不得不考虑：</p>
-<ul>
-<li><strong>规模</strong><ul>
-<li>互联网规模巨大，LS算法和DV算法都无法完成如此庞大的任务。必须采取措施减少规模的复杂性。</li>
-</ul>
-</li>
-<li><strong>管理自洽</strong><ul>
-<li>每个ISP（组织）应当按照自己的愿望运行和管理网络，同时与外部网络连接起来。</li>
-</ul>
-</li>
-</ul>
-<p>以上两个问题，通过<strong>将路由器组织进自洽系统（AS）</strong>来解决。</p>
-<ul>
-<li>其中每个AS由一组通常处在相同管理控制下的路由器组成。</li>
-<li>一个ISP中的路由器以及互联它们的链路构成一个AS。某些ISP将它们的网络划分为多个AS。</li>
-<li>一个自治系统由其全局唯一的AS号（ASN）所标识。就像IP地址那样。</li>
-</ul>
-<p>在相同AS中的路由器都<strong>运行相同的路由选择算法</strong>并且有彼此的信息。在一个自治系统内运行的路由选择算法叫作<strong>自治系统内部路由选择协议</strong>。</p>
-<p><strong>开放最短路优先（OSPF）</strong> </p>
-<p>OSPF是一种<strong>链路状态协议</strong>，它使用洪泛链路状态信息和Dijkstra最低开销路径算法。 路由器向自治系统内<strong>所有其他路由器</strong>广播路由选择信息，且是<strong>周期性</strong>的。广泛用于AS内部路由选择。</p>
-<h2 id="ISP之间的路由选择：BGP"><a href="#ISP之间的路由选择：BGP" class="headerlink" title="ISP之间的路由选择：BGP"></a>ISP之间的路由选择：BGP</h2><p>现在思考一个问题，AS内部用OSPF协议，那么AS之间如何进行路由？我们需要一个<strong>自治系统间路由选择协议</strong>。所有的AS运行相同的AS间路由选择协议，称为<strong>边界网关协议</strong>（BGP）。BGP可能是最重要的因特网协议（唯一的竞争者是IP协议）—正是这个协议将因特网中数以千计的ISP粘合起来。BGP是一种分布式和异步的协议—与距离向量路由选择协议一脉相承。</p>
-<h3 id="BGP的作用"><a href="#BGP的作用" class="headerlink" title="BGP的作用"></a>BGP的作用</h3><p>在BGP中，分组并不是路由到一个特定的目的地址，相反是路由到CIDR化的前缀, 其中每个前缀表示一个子网或一个子网的集合。</p>
-<p>作为一种AS间的路由选择协议，BGP为每台路由器提供了一种完成以下任务的手段: </p>
-<ol>
-<li>从邻居AS获得前缀的可达性信息。</li>
-<li>确定到该前缀的“最好的”路由。</li>
-</ol>
-<h3 id="通告BGP路由信息"><a href="#通告BGP路由信息" class="headerlink" title="通告BGP路由信息"></a>通告BGP路由信息</h3><p>概念：网关路由器和内部路由器，BGP连接，eBGP连接和iBGP连接。</p>
-<p>为了传播可达性信息，使用了 iBGP和eBGP会话。简单来说，一个eBGP会话向相邻AS系统报告自己知道某个前缀x。接收到该报文的AS系统通过iBGP会话向自己的AS系统中所有路由器报告前缀x的信息。即边界用eBGP，内部用iBGP。</p>
-<p>下面讨论多条不同的路径问题，每条通过了不同的AS序列。</p>
-<h3 id="确定最好的路由"><a href="#确定最好的路由" class="headerlink" title="确定最好的路由"></a>确定最好的路由</h3><p>用BGP术语来说，前缀及其属性称为路由。BGP属性：AS-PATH和NEXT-HOP。</p>
-<p> BGP路由器使用AS-PATH属性来检测和防止通告环路。NEXT-HOP是AS-PATH起始的路由器接口的IP地址。每条BGP路由包含3个组件：NEXT- HOP； ASPATH；目的前缀。NEXT-HOP有一个重要特质：NEXT- HOP属性不属于ASN的某路由器的IP地址；然而，包含该IP地址的子网直接连接到ASN。</p>
-<p>下面讨论具体的<strong>BGP路由选择算法</strong>：</p>
-<ol>
-<li><p>热土豆路由选择。</p>
-<p>使用热土豆路由选择，（从所有可能的路由中）选择的路由<strong>到开始该路由的</strong>NEXT-HOP路由器具有最小开销。</p>
-<p>对于路由器,尽可能快地将分组送出其AS （更明确地说，用<strong>可能的最低开销</strong>），而<strong>不担心其AS外部到目的地的余下部分的开销</strong>。就“热土豆路由选择”名称而言，分组被类比为烫手的热土豆。<strong>因为它烫手，你要尽可能快地将它传给另一个人（另一个AS）。</strong>热土豆路由选择因而是<strong>自私的算法，即它试图减小在它自己AS中的开销，而忽略在其AS之外的端到端开销的其他部分。</strong></p>
-</li>
-<li><p>路由器<strong>选择</strong>算法。</p>
-<p>在实践中，BGP使用了一种比热土豆路由选择更为复杂但却结合了其特点的算法。如果到相同的前缀有两条或多条路由，则顺序地调用消除规则直到余下一条路由。</p>
-<p>我们看到使用路由选择算法，BGP不再是一种自私的算法，即它先查找具有短AS路径的路由（因而很可能减小端到端时延）。</p>
-</li>
-</ol>
-<h3 id="IP任播"><a href="#IP任播" class="headerlink" title="IP任播"></a>IP任播</h3><p>BGP还常被用于实现<strong>IP任播（anycast）服务</strong>，该服务通常用于DNS中。IP任播被DNS系统广泛用于将DNS请求指向最近的根DNS服务器。 </p>
-<h2 id="SDN控制平面"><a href="#SDN控制平面" class="headerlink" title="SDN控制平面"></a>SDN控制平面</h2><h2 id="网络管理和SNMP"><a href="#网络管理和SNMP" class="headerlink" title="网络管理和SNMP"></a>网络管理和SNMP</h2>
+
+
+
+
+
+<h1 id="Mybatis入门"><a href="#Mybatis入门" class="headerlink" title="Mybatis入门"></a>Mybatis入门</h1><blockquote>
+<p>Mybatis是⼀个基于Java的持久层框架。⽆论是Mybatis、Hibernate都是<strong>ORM</strong>的⼀种实现框架，都是对JDBC的⼀种封装。</p>
+<p>对象关系映射ORM（Object Relational Mapping）是通过使用描述对象和数据库之间<strong>映射的</strong>元数据，将面向对象语言程序中的<strong>对象</strong>自动持久化到<strong>关系数据库</strong>中。本质上就是<strong>将数据从一种形式转换到另外一种形式。</strong></p>
+</blockquote>
+<h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><p>创建普通工程，使用Maven，引入依赖。</p>
+<h3 id="创建Mybatis配置文件"><a href="#创建Mybatis配置文件" class="headerlink" title="创建Mybatis配置文件"></a>创建Mybatis配置文件</h3><p>Mybatis核心在于.xml文件的配置（另有注解开发）。</p>
+<p>配置resources目录下的SqlMapConfig.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">configuration</span></span></span><br><span class="line"><span class="meta">        <span class="meta-keyword">PUBLIC</span> <span class="meta-string">"-//mybatis.org//DTD Config 3.0//EN"</span></span></span><br><span class="line"><span class="meta">        <span class="meta-string">"http://mybatis.org/dtd/mybatis-3-config.dtd"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 设置⼀个默认的连接环境信息 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">"mysql"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 连接环境信息，取⼀个任意唯⼀的名字 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">"mysql"</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- mybatis使⽤jdbc事务管理⽅式 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">transactionManager</span> <span class="attr">type</span>=<span class="string">"JDBC"</span>/&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- mybatis使⽤连接池⽅式来获取连接 </span></span><br><span class="line"><span class="comment">				POOLED/UNPOOLED/JUNIT		--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">"POOLED"</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 配置与数据库交互的4个必要属性</span></span><br><span class="line"><span class="comment"> 				   可以直接填写，也可以引用resources下的资源文件jdbc.properties</span></span><br><span class="line"><span class="comment">				   value=$&#123;jdbc.driver/url/username/password&#125;</span></span><br><span class="line"><span class="comment">  				--&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driver"</span> <span class="attr">value</span>=<span class="string">"com.mysql.jdbc.Driver"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"jdbc:mysql:///mybatis"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"root"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"root"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">environments</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">    <span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">"com/lehirt/dao/UserDao.xml"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="创建实体与映射关系文件"><a href="#创建实体与映射关系文件" class="headerlink" title="创建实体与映射关系文件"></a>创建实体与映射关系文件</h3><p>配置实体与表的映射关系</p>
+<p>配置resources.com.lehirt.dao.UserDao.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">mapper</span></span></span><br><span class="line"><span class="meta">        <span class="meta-keyword">PUBLIC</span> <span class="meta-string">"-//mybatis.org//DTD Mapper 3.0//EN"</span></span></span><br><span class="line"><span class="meta">        <span class="meta-string">"http://mybatis.org/dtd/mybatis-3-mapper.dtd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- namespace属性是名称空间，必须唯⼀,使SqlMapConfig.xml能够找到--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"com.lehirt.dao.UserDao"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--namespace+id 标识了唯一的dao层接口和接口中的唯一方法 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--几个重要属性：resultType,resultMap,parameterType --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findAll"</span> <span class="attr">resultType</span>=<span class="string">"com.lehirt.domain.User"</span>&gt;</span></span><br><span class="line">        select * from user ;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"insertUser"</span> <span class="attr">parameterType</span>=<span class="string">"com.lehirt.domain.User"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">selectKey</span> <span class="attr">keyProperty</span>=<span class="string">"id"</span><span class="attr">keyColumn</span>=<span class="string">"id"</span><span class="attr">order</span>=<span class="string">"AFTER"</span> <span class="attr">resultType</span>=<span class="string">"java.lang.Integer"</span>&gt;</span></span><br><span class="line">        select last_insert_id();</span><br><span class="line">        <span class="tag">&lt;/<span class="name">selectKey</span>&gt;</span></span><br><span class="line">        insert into user (username, birthday, sex, address) values (#&#123;username&#125;,#&#123;birthday&#125;,#&#123;sex&#125;,#&#123;address&#125;);</span><br><span class="line">    <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">"updateUser"</span> <span class="attr">parameterType</span>=<span class="string">"com.lehirt.domain.User"</span>&gt;</span></span><br><span class="line">        update user set username = #&#123;username&#125; , birthday = #&#123;birthday&#125; where id = #&#123;id&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br><span class="line">   </span><br><span class="line">    <span class="tag">&lt;<span class="name">delete</span> <span class="attr">id</span>=<span class="string">"deleteUser"</span> <span class="attr">parameterType</span>=<span class="string">"com.lehirt.domain.User"</span>&gt;</span></span><br><span class="line">        delete from user where id=#&#123;id&#125;;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">delete</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="将配置文件和映射文件关联起来"><a href="#将配置文件和映射文件关联起来" class="headerlink" title="将配置文件和映射文件关联起来"></a>将配置文件和映射文件关联起来</h3><p>在SqlMapConfig.xml中，添加</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--resource属性必须写映射文件的全限定类名 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--与之区别的是package属性 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">"com/lehirt/dao/UserDao.xml"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="编写dao层接口"><a href="#编写dao层接口" class="headerlink" title="编写dao层接口"></a>编写dao层接口</h3><p>主要是定义方法。</p>
+<h3 id="几个知识点"><a href="#几个知识点" class="headerlink" title="几个知识点"></a>几个知识点</h3><blockquote>
+<p>#{}实际上就是调用了实体属性的get方法，且作为占位符，即JDBC中的‘？’，防止sql注入。与之对应的是${}表示引用，</p>
+</blockquote>
+
       
     </div>
     
@@ -542,9 +474,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag"><i class="fa fa-tag"></i>计算机网络</a>
-          
-            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%B1%82/" rel="tag"><i class="fa fa-tag"></i>网络层</a>
+            <a href="/tags/SSM/" rel="tag"><i class="fa fa-tag"></i>SSM</a>
           
         </div>
       
@@ -557,8 +487,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/04/%E4%BB%8Ewireshark%E6%8A%93%E5%8C%85%E5%88%86%E6%9E%90TCP/" rel="next" title="从wireshark抓包分析TCP">
-                <i class="fa fa-chevron-left"></i> 从wireshark抓包分析TCP
+              <a href="/2020/04/10/maven%E5%9C%A8IDEA%E7%9A%84%E9%85%8D%E7%BD%AE%E4%B8%8E%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%88%9B%E5%BB%BA/" rel="next" title="maven在IDEA的配置与项目的创建">
+                <i class="fa fa-chevron-left"></i> maven在IDEA的配置与项目的创建
               </a>
             
           </div>
@@ -566,10 +496,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/04/07/%E7%BD%91%E7%BB%9C%E5%B1%82%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/" rel="prev" title="网络层之数据平面">
-                网络层之数据平面 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -715,7 +641,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#网络层：控制平面"><span class="nav-number">1.</span> <span class="nav-text">网络层：控制平面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路由选择算法"><span class="nav-number">1.2.</span> <span class="nav-text">路由选择算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#链路状态路由选择算法"><span class="nav-number">1.2.1.</span> <span class="nav-text">链路状态路由选择算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#距离向量路由选择算法"><span class="nav-number">1.2.2.</span> <span class="nav-text">距离向量路由选择算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LS与DV路由算法的比较"><span class="nav-number">1.2.3.</span> <span class="nav-text">LS与DV路由算法的比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#因特网中自治系统内部的路由选择：OSPF"><span class="nav-number">1.3.</span> <span class="nav-text">因特网中自治系统内部的路由选择：OSPF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ISP之间的路由选择：BGP"><span class="nav-number">1.4.</span> <span class="nav-text">ISP之间的路由选择：BGP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BGP的作用"><span class="nav-number">1.4.1.</span> <span class="nav-text">BGP的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通告BGP路由信息"><span class="nav-number">1.4.2.</span> <span class="nav-text">通告BGP路由信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确定最好的路由"><span class="nav-number">1.4.3.</span> <span class="nav-text">确定最好的路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP任播"><span class="nav-number">1.4.4.</span> <span class="nav-text">IP任播</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SDN控制平面"><span class="nav-number">1.5.</span> <span class="nav-text">SDN控制平面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络管理和SNMP"><span class="nav-number">1.6.</span> <span class="nav-text">网络管理和SNMP</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Mybatis入门"><span class="nav-number">1.</span> <span class="nav-text">Mybatis入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#快速入门"><span class="nav-number">1.1.</span> <span class="nav-text">快速入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建Mybatis配置文件"><span class="nav-number">1.1.1.</span> <span class="nav-text">创建Mybatis配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建实体与映射关系文件"><span class="nav-number">1.1.2.</span> <span class="nav-text">创建实体与映射关系文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将配置文件和映射文件关联起来"><span class="nav-number">1.1.3.</span> <span class="nav-text">将配置文件和映射文件关联起来</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写dao层接口"><span class="nav-number">1.1.4.</span> <span class="nav-text">编写dao层接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个知识点"><span class="nav-number">1.1.5.</span> <span class="nav-text">几个知识点</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
