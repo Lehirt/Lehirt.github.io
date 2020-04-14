@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="Lehirt&#39;s Blog">
 <meta property="og:description" content="从JDBC中的Resultset对象看集合对对象的封装。">
 <meta property="article:published_time" content="2020-04-03T16:05:21.000Z">
-<meta property="article:modified_time" content="2020-04-03T18:21:12.321Z">
+<meta property="article:modified_time" content="2020-04-14T07:57:13.254Z">
 <meta property="article:author" content="lehirt">
 <meta property="article:tag" content="javaSE">
 <meta name="twitter:card" content="summary">
@@ -377,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.3k 字
+                  2.7k 字
                 </span>
               
 
@@ -393,7 +393,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  8 分钟
+                  9 分钟
                 </span>
               
             </div>
@@ -487,6 +487,21 @@
 <li>如果要保证map中存放的key和取出的顺序一致，可以使用<code>java.util.LinkedHashMap</code>集合来存放。</li>
 </ul>
 <h2 id="LinkedHashMap"><a href="#LinkedHashMap" class="headerlink" title="LinkedHashMap"></a>LinkedHashMap</h2><p>成对元素存放进去是没有顺序的，那么我们要保证有序，在HashMap下面有一个子类LinkedHashMap，它是链表和哈希表组合的一个数据存储结构。</p>
+<h1 id="属性集Properties"><a href="#属性集Properties" class="headerlink" title="属性集Properties"></a>属性集Properties</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><code>java.util.Properties</code> 继承于<code>Hashtable</code> ，来表示一个<strong>持久的属性集</strong>。<code>Properties</code> 类表示了一个持久的属性集。<code>Properties</code>  可保存在流中或从流中加载。属性列表中每个键及其对应值都是一个字符串。 它使用键值结构存储数据，每个键及其对应值都是一个字符串。<code>Hashtable</code>已经不再使用，而因为<code>Properties</code>是唯一与流相关的集合，所以在读取配置文件时使用。</p>
+<h2 id="与流相关的方法"><a href="#与流相关的方法" class="headerlink" title="与流相关的方法"></a>与流相关的方法</h2><p>除了通用的方法，<code>Properties</code>最典型的方法和流相关。</p>
+<ul>
+<li><p><code>public void load(InputStream inStream)</code>： 从字节输入流中读取(加载)键值对。</p>
+</li>
+<li><p><code>public void store(OutputStream out, String comments)</code>：以适合使用<code>load(InputStream)</code> 方法加载到 <code>Properties</code>表中的格式，将此<code>Properties</code>表中的属性列表（键和元素对）写入输出流。</p>
+</li>
+</ul>
+<p>参数中使用了字节输入流，通过流对象，可以关联到某文件上，这样就能够加载文本中的数据了。文本数据格式:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">filename&#x3D;a.txt</span><br><span class="line">length&#x3D;209385038</span><br><span class="line">location&#x3D;D:\a.txt</span><br></pre></td></tr></table></figure>
+
+<p>加载演示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProDemo2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> FileNotFoundException </span>&#123;</span><br><span class="line">        <span class="comment">// 创建属性集对象</span></span><br><span class="line">        Properties pro = <span class="keyword">new</span> Properties();</span><br><span class="line">        <span class="comment">// 加载文本中信息到属性集</span></span><br><span class="line">        pro.load(<span class="keyword">new</span> FileInputStream(<span class="string">"read.txt"</span>));</span><br><span class="line">        <span class="comment">// 遍历集合并打印</span></span><br><span class="line">        Set&lt;String&gt; strings = pro.stringPropertyNames();</span><br><span class="line">        <span class="keyword">for</span> (String key : strings ) &#123;</span><br><span class="line">          	System.out.println(key+<span class="string">" -- "</span>+pro.getProperty(key));</span><br><span class="line">        &#125;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br><span class="line">输出结果：</span><br><span class="line">filename -- a.txt</span><br><span class="line">length -- <span class="number">209385038</span></span><br><span class="line">location -- D:\a.txt</span><br></pre></td></tr></table></figure>
+
+
 
       
     </div>
@@ -685,7 +700,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#集合"><span class="nav-number">1.</span> <span class="nav-text">集合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#单列Collection集合"><span class="nav-number">2.</span> <span class="nav-text">单列Collection集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#增强for的原理—迭代器"><span class="nav-number">2.0.1.</span> <span class="nav-text">增强for的原理—迭代器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泛型"><span class="nav-number">2.1.</span> <span class="nav-text">泛型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#List接口的集合"><span class="nav-number">2.2.</span> <span class="nav-text">List接口的集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#List接口介绍"><span class="nav-number">2.2.1.</span> <span class="nav-text">List接口介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List接口中常用方法"><span class="nav-number">2.2.2.</span> <span class="nav-text">List接口中常用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#List的子类"><span class="nav-number">2.3.</span> <span class="nav-text">List的子类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayList集合"><span class="nav-number">2.3.1.</span> <span class="nav-text">ArrayList集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedList集合"><span class="nav-number">2.3.2.</span> <span class="nav-text">LinkedList集合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set接口"><span class="nav-number">2.4.</span> <span class="nav-text">Set接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HashSet集合介绍"><span class="nav-number">2.4.1.</span> <span class="nav-text">HashSet集合介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashSet集合存储数据的结构（哈希表）"><span class="nav-number">2.4.2.</span> <span class="nav-text">HashSet集合存储数据的结构（哈希表）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedHashSet"><span class="nav-number">2.4.3.</span> <span class="nav-text">LinkedHashSet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Collections"><span class="nav-number">2.5.</span> <span class="nav-text">Collections</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#双列Map集合"><span class="nav-number">3.</span> <span class="nav-text">双列Map集合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Map常用子类"><span class="nav-number">3.1.</span> <span class="nav-text">Map常用子类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map接口中常用方法"><span class="nav-number">3.2.</span> <span class="nav-text">Map接口中常用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map集合遍历键找值方式"><span class="nav-number">3.3.</span> <span class="nav-text">Map集合遍历键找值方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map集合遍历键值对方式"><span class="nav-number">3.4.</span> <span class="nav-text">Map集合遍历键值对方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap存储自定义类型键值"><span class="nav-number">3.5.</span> <span class="nav-text">HashMap存储自定义类型键值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LinkedHashMap"><span class="nav-number">3.6.</span> <span class="nav-text">LinkedHashMap</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#集合"><span class="nav-number">1.</span> <span class="nav-text">集合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#单列Collection集合"><span class="nav-number">2.</span> <span class="nav-text">单列Collection集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#增强for的原理—迭代器"><span class="nav-number">2.0.1.</span> <span class="nav-text">增强for的原理—迭代器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泛型"><span class="nav-number">2.1.</span> <span class="nav-text">泛型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#List接口的集合"><span class="nav-number">2.2.</span> <span class="nav-text">List接口的集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#List接口介绍"><span class="nav-number">2.2.1.</span> <span class="nav-text">List接口介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List接口中常用方法"><span class="nav-number">2.2.2.</span> <span class="nav-text">List接口中常用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#List的子类"><span class="nav-number">2.3.</span> <span class="nav-text">List的子类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayList集合"><span class="nav-number">2.3.1.</span> <span class="nav-text">ArrayList集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedList集合"><span class="nav-number">2.3.2.</span> <span class="nav-text">LinkedList集合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set接口"><span class="nav-number">2.4.</span> <span class="nav-text">Set接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HashSet集合介绍"><span class="nav-number">2.4.1.</span> <span class="nav-text">HashSet集合介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashSet集合存储数据的结构（哈希表）"><span class="nav-number">2.4.2.</span> <span class="nav-text">HashSet集合存储数据的结构（哈希表）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedHashSet"><span class="nav-number">2.4.3.</span> <span class="nav-text">LinkedHashSet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Collections"><span class="nav-number">2.5.</span> <span class="nav-text">Collections</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#双列Map集合"><span class="nav-number">3.</span> <span class="nav-text">双列Map集合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Map常用子类"><span class="nav-number">3.1.</span> <span class="nav-text">Map常用子类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map接口中常用方法"><span class="nav-number">3.2.</span> <span class="nav-text">Map接口中常用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map集合遍历键找值方式"><span class="nav-number">3.3.</span> <span class="nav-text">Map集合遍历键找值方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map集合遍历键值对方式"><span class="nav-number">3.4.</span> <span class="nav-text">Map集合遍历键值对方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap存储自定义类型键值"><span class="nav-number">3.5.</span> <span class="nav-text">HashMap存储自定义类型键值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LinkedHashMap"><span class="nav-number">3.6.</span> <span class="nav-text">LinkedHashMap</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#属性集Properties"><span class="nav-number">4.</span> <span class="nav-text">属性集Properties</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">4.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与流相关的方法"><span class="nav-number">4.2.</span> <span class="nav-text">与流相关的方法</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -728,7 +743,7 @@
     
       <span class="post-meta-item-text">站点字数总计&#58;</span>
     
-    <span title="站点字数总计">35.2k</span>
+    <span title="站点字数总计">35.5k</span>
   
 </div>
 
