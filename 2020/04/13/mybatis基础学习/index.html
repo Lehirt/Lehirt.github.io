@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="Lehirt&#39;s Blog">
 <meta property="og:description" content="学习了3天的mybatis的基础，现在做一个总结，并且记录自己不太清楚的地方。">
 <meta property="article:published_time" content="2020-04-13T07:55:03.000Z">
-<meta property="article:modified_time" content="2020-04-13T18:02:49.064Z">
+<meta property="article:modified_time" content="2020-04-14T08:47:26.450Z">
 <meta property="article:author" content="lehirt">
 <meta property="article:tag" content="SSM">
 <meta name="twitter:card" content="summary">
@@ -341,17 +341,6 @@
 
                 
                 
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SSM/%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
-                    <span itemprop="name">框架学习</span>
-                  </a>
-                </span>
-
-                
-                
               
             </span>
           
@@ -388,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.1k 字
+                  2.2k 字
                 </span>
               
 
@@ -475,34 +464,12 @@
 </li>
 <li><p>关于映射文件.xml的配置，几个标签</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- resultMap标签：映射实体与表，将实体变量与表字段一一对应</span></span><br><span class="line"><span class="comment">	type属性：表示实体全限定类名（除了有package标签）</span></span><br><span class="line"><span class="comment">	id属性：为实体和表的映射取一个唯一且任意的名字标识--&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--id标签：映射主键属性 </span></span><br><span class="line"><span class="comment">        result标签：映射非主键属性 </span></span><br><span class="line"><span class="comment">        property属性：实体的属性名</span></span><br><span class="line"><span class="comment">        column属性：表的字段名</span></span><br><span class="line"><span class="comment">	--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--查询语句select的执行，若有resultMap则使用</span></span><br><span class="line"><span class="comment"> 	属性resultMap="#&#123;id&#125;"代替resultType</span></span><br><span class="line"><span class="comment">	resultMap可以解决别名问题。</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">   </span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">## Mybatis的分页</span><br><span class="line"></span><br><span class="line">分页需要方法接收多个参数。**使用Map集合来装载**多个参数。那么UserDao中方法传递参数类型为Map（其它集合也可以），即&#96;parameterType&#x3D;&quot;Map&quot;&#96;。返回类型为&#96;List&lt;E&gt;&#96;，可以实现分页。</span><br><span class="line"></span><br><span class="line">## 动态SQL</span><br><span class="line"></span><br><span class="line">动态SQL就是自动拼接SQL语句。在我们的多条件组合查询中经常会碰到。</span><br><span class="line"></span><br><span class="line">这里有几个动态SQL的标签即&#96;if&#96;，&#96;foreach&#96;，&#96;where&#96;。</span><br><span class="line"></span><br><span class="line">- \&lt;if&gt;标签的test属性中写的是对象的属性名，如果是包种类的对象要使用**OGNL表达式**的写法。</span><br><span class="line">- \&lt;为了简化where 1&#x3D;1的条件拼装，采用\&lt;where&gt;标签简化开发&gt;</span><br><span class="line">- \&lt;foreach&gt;标签，传入多个参数，需要遍历参数。属性：</span><br><span class="line">  - collection:代表要遍历的集合，注意编写时不要写#&#123;&#125;  </span><br><span class="line">  - open:代表语句的开始部分  </span><br><span class="line">  - close:代表结束部分</span><br><span class="line"></span><br><span class="line">重点，自己查看实现的demo。</span><br><span class="line"></span><br><span class="line">## Mybatis多表查询（表的连接查询）</span><br><span class="line"></span><br><span class="line">### 一对一查询</span><br><span class="line"></span><br><span class="line">一条记录只能对应另一张表中另一条记录，即一对一。如Account对User。</span><br><span class="line"></span><br><span class="line">#### 方式一</span><br><span class="line"></span><br><span class="line">创建一个新的POPJ类，将查询后的结果（两表连接的新表）直接放入POPJ中。</span><br><span class="line"></span><br><span class="line">dao方法中的sql语句都在初始的两张表中，POPJ仅承担封装任务。此方法较为简单，企业中使用普遍。 </span><br><span class="line"></span><br><span class="line">#### 方式二</span><br><span class="line"></span><br><span class="line">在Account 类中加入User类的对象作为Account类的一个属性。 则满足一对一查询的条件：一个Account只能对应一个User。编写Account的dao方法，结果封装在Account中即可。</span><br><span class="line"></span><br><span class="line">重新定义AccountDao.xml文件。</span><br><span class="line"></span><br><span class="line">​&#96;&#96;&#96;xml</span><br><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt; &lt;!DOCTYPE mapper     PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Mapper 3.0&#x2F;&#x2F;EN&quot;     &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-mapper.dtd&quot;&gt; </span><br><span class="line">&lt;mapper namespace&#x3D;&quot;com.itheima.dao.IAccountDao&quot;&gt;   </span><br><span class="line"></span><br><span class="line">    &lt;!-- 建立对应关系 --&gt;  </span><br><span class="line">    &lt;resultMap type&#x3D;&quot;account&quot; id&#x3D;&quot;accountMap&quot;&gt;   </span><br><span class="line">        &lt;id column&#x3D;&quot;aid&quot; property&#x3D;&quot;id&quot;&#x2F;&gt;   </span><br><span class="line">        &lt;result column&#x3D;&quot;uid&quot; property&#x3D;&quot;uid&quot;&#x2F;&gt;   </span><br><span class="line">        &lt;result column&#x3D;&quot;money&quot; property&#x3D;&quot;money&quot;&#x2F;&gt;   </span><br><span class="line">        &lt;!-- 它是用于指定从表方的引用实体属性的 --&gt;   </span><br><span class="line">        &lt;association property&#x3D;&quot;user&quot; javaType&#x3D;&quot;user&quot;&gt;    </span><br><span class="line">            &lt;id column&#x3D;&quot;id&quot; property&#x3D;&quot;id&quot;&#x2F;&gt;    </span><br><span class="line">            &lt;result column&#x3D;&quot;username&quot; property&#x3D;&quot;username&quot;&#x2F;&gt;    </span><br><span class="line">            &lt;result column&#x3D;&quot;sex&quot; property&#x3D;&quot;sex&quot;&#x2F;&gt;    </span><br><span class="line">            &lt;result column&#x3D;&quot;birthday&quot; property&#x3D;&quot;birthday&quot;&#x2F;&gt;    </span><br><span class="line">            &lt;result column&#x3D;&quot;address&quot; property&#x3D;&quot;address&quot;&#x2F;&gt;   &lt;&#x2F;association&gt;  </span><br><span class="line">    &lt;&#x2F;resultMap&gt;   </span><br><span class="line"> 	&lt;select id&#x3D;&quot;findAll&quot; resultMap&#x3D;&quot;accountMap&quot;&gt;   </span><br><span class="line">     select u.*,a.id as aid,a.uid,a.money from account a,user u where a.uid &#x3D;u.id;  </span><br><span class="line">    &lt;&#x2F;select&gt; </span><br><span class="line">&lt;&#x2F;mapper&gt;</span><br></pre></td></tr></table></figure>
 
 
 
 </li>
 </ol>
-<h2 id="Mybatis的分页"><a href="#Mybatis的分页" class="headerlink" title="Mybatis的分页"></a>Mybatis的分页</h2><p>分页需要方法接收多个参数。<strong>使用Map集合来装载</strong>多个参数。那么UserDao中方法传递参数类型为Map（其它集合也可以），即<code>parameterType=&quot;Map&quot;</code>。返回类型为<code>List&lt;E&gt;</code>，可以实现分页。</p>
-<h2 id="动态SQL"><a href="#动态SQL" class="headerlink" title="动态SQL"></a>动态SQL</h2><p>动态SQL就是自动拼接SQL语句。在我们的多条件组合查询中经常会碰到。</p>
-<p>这里有几个动态SQL的标签即<code>if</code>，<code>foreach</code>，<code>where</code>。</p>
-<ul>
-<li>&lt;if&gt;标签的test属性中写的是对象的属性名，如果是包种类的对象要使用<strong>OGNL表达式</strong>的写法。</li>
-<li>&lt;为了简化where 1=1的条件拼装，采用&lt;where&gt;标签简化开发&gt;</li>
-<li>&lt;foreach&gt;标签，传入多个参数，需要遍历参数。属性：<ul>
-<li>collection:代表要遍历的集合，注意编写时不要写#{}  </li>
-<li>open:代表语句的开始部分  </li>
-<li>close:代表结束部分</li>
-</ul>
-</li>
-</ul>
-<p>重点，自己查看实现的demo。</p>
-<h2 id="Mybatis多表查询（表的连接查询）"><a href="#Mybatis多表查询（表的连接查询）" class="headerlink" title="Mybatis多表查询（表的连接查询）"></a>Mybatis多表查询（表的连接查询）</h2><h3 id="一对一查询"><a href="#一对一查询" class="headerlink" title="一对一查询"></a>一对一查询</h3><p>一条记录只能对应另一张表中另一条记录，即一对一。如Account对User。</p>
-<h4 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h4><p>创建一个新的POPJ类，将查询后的结果（两表连接的新表）直接放入POPJ中。</p>
-<p>dao方法中的sql语句都在初始的两张表中，POPJ仅承担封装任务。此方法较为简单，企业中使用普遍。 </p>
-<h4 id="方式二"><a href="#方式二" class="headerlink" title="方式二"></a>方式二</h4><p>在Account 类中加入User类的对象作为Account类的一个属性。 则满足一对一查询的条件：一个Account只能对应一个User。编写Account的dao方法，结果封装在Account中即可。</p>
-<p>重新定义AccountDao.xml文件。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span> <span class="meta">&lt;!DOCTYPE <span class="meta-keyword">mapper</span>     <span class="meta-keyword">PUBLIC</span> <span class="meta-string">"-//mybatis.org//DTD Mapper 3.0//EN"</span>     <span class="meta-string">"http://mybatis.org/dtd/mybatis-3-mapper.dtd"</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"com.itheima.dao.IAccountDao"</span>&gt;</span>   </span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 建立对应关系 --&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"account"</span> <span class="attr">id</span>=<span class="string">"accountMap"</span>&gt;</span>   </span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">"aid"</span> <span class="attr">property</span>=<span class="string">"id"</span>/&gt;</span>   </span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"uid"</span> <span class="attr">property</span>=<span class="string">"uid"</span>/&gt;</span>   </span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"money"</span> <span class="attr">property</span>=<span class="string">"money"</span>/&gt;</span>   </span><br><span class="line">        <span class="comment">&lt;!-- 它是用于指定从表方的引用实体属性的 --&gt;</span>   </span><br><span class="line">        <span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">"user"</span> <span class="attr">javaType</span>=<span class="string">"user"</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">"id"</span> <span class="attr">property</span>=<span class="string">"id"</span>/&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"username"</span> <span class="attr">property</span>=<span class="string">"username"</span>/&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"sex"</span> <span class="attr">property</span>=<span class="string">"sex"</span>/&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"birthday"</span> <span class="attr">property</span>=<span class="string">"birthday"</span>/&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"address"</span> <span class="attr">property</span>=<span class="string">"address"</span>/&gt;</span>   <span class="tag">&lt;/<span class="name">association</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span>   </span><br><span class="line"> 	<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findAll"</span> <span class="attr">resultMap</span>=<span class="string">"accountMap"</span>&gt;</span>   </span><br><span class="line">     select u.*,a.id as aid,a.uid,a.money from account a,user u where a.uid =u.id;  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
 <h3 id="一对多查询"><a href="#一对多查询" class="headerlink" title="一对多查询"></a>一对多查询</h3><p>一条记录对应另一张表中多条记录，即一对多。每个User可以拥有很多Account。查询过程中如果用户没有账户信息，此时也要将用户信息查询出来。</p>
 <p>一般SQL语句使用左/右外连接。</p>
 <p>在User类中加入<code>List&lt;Account&gt;</code>作User类的一个属性。 则满足一对多查询的条件：一个User可以对应多个Account。编写User的dao方法，结果封装在User中即可。</p>
@@ -557,6 +524,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/14/Spring%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E4%B8%80-%EF%BC%9ASpring%E6%A6%82%E8%BF%B0/" rel="prev" title="Spring基础学习(一)">
+                Spring基础学习(一) <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -637,7 +608,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -659,7 +630,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -702,7 +673,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Mybatis入门"><span class="nav-number">1.</span> <span class="nav-text">Mybatis入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#快速入门"><span class="nav-number">1.1.</span> <span class="nav-text">快速入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建Mybatis配置文件"><span class="nav-number">1.1.1.</span> <span class="nav-text">创建Mybatis配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建实体与映射关系文件"><span class="nav-number">1.1.2.</span> <span class="nav-text">创建实体与映射关系文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将配置文件和映射文件关联起来"><span class="nav-number">1.1.3.</span> <span class="nav-text">将配置文件和映射文件关联起来</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写dao层接口"><span class="nav-number">1.1.4.</span> <span class="nav-text">编写dao层接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个知识点"><span class="nav-number">1.1.5.</span> <span class="nav-text">几个知识点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mybatis的分页"><span class="nav-number">1.2.</span> <span class="nav-text">Mybatis的分页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态SQL"><span class="nav-number">1.3.</span> <span class="nav-text">动态SQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mybatis多表查询（表的连接查询）"><span class="nav-number">1.4.</span> <span class="nav-text">Mybatis多表查询（表的连接查询）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一对一查询"><span class="nav-number">1.4.1.</span> <span class="nav-text">一对一查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方式一"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">方式一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方式二"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">方式二</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一对多查询"><span class="nav-number">1.4.2.</span> <span class="nav-text">一对多查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mybatis-多表查询之多对多"><span class="nav-number">1.4.3.</span> <span class="nav-text">Mybatis 多表查询之多对多</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Mybatis入门"><span class="nav-number">1.</span> <span class="nav-text">Mybatis入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#快速入门"><span class="nav-number">1.1.</span> <span class="nav-text">快速入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建Mybatis配置文件"><span class="nav-number">1.1.1.</span> <span class="nav-text">创建Mybatis配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建实体与映射关系文件"><span class="nav-number">1.1.2.</span> <span class="nav-text">创建实体与映射关系文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将配置文件和映射文件关联起来"><span class="nav-number">1.1.3.</span> <span class="nav-text">将配置文件和映射文件关联起来</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写dao层接口"><span class="nav-number">1.1.4.</span> <span class="nav-text">编写dao层接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个知识点"><span class="nav-number">1.1.5.</span> <span class="nav-text">几个知识点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一对多查询"><span class="nav-number">1.1.6.</span> <span class="nav-text">一对多查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mybatis-多表查询之多对多"><span class="nav-number">1.1.7.</span> <span class="nav-text">Mybatis 多表查询之多对多</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -745,7 +716,7 @@
     
       <span class="post-meta-item-text">站点字数总计&#58;</span>
     
-    <span title="站点字数总计">35.5k</span>
+    <span title="站点字数总计">39.7k</span>
   
 </div>
 
