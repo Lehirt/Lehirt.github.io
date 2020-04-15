@@ -94,7 +94,7 @@
 <meta property="og:description" content="讨论基于xml的IOC配置的细节问题">
 <meta property="og:image" content="https://s1.ax1x.com/2020/04/15/Jpva4K.png">
 <meta property="article:published_time" content="2020-04-14T18:40:14.000Z">
-<meta property="article:modified_time" content="2020-04-14T19:02:04.890Z">
+<meta property="article:modified_time" content="2020-04-15T10:31:21.850Z">
 <meta property="article:author" content="lehirt">
 <meta property="article:tag" content="SSM">
 <meta name="twitter:card" content="summary">
@@ -379,7 +379,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  294 字
+                  2.4k 字
                 </span>
               
 
@@ -395,7 +395,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  8 分钟
                 </span>
               
             </div>
@@ -422,7 +422,85 @@
 <a id="more"></a>
 
 <h1 id="Spring中工厂类的结构图"><a href="#Spring中工厂类的结构图" class="headerlink" title="Spring中工厂类的结构图"></a>Spring中工厂类的结构图</h1><p><img src="https://s1.ax1x.com/2020/04/15/Jpva4K.png" alt="1"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  *client层中利用Spring工厂获取需要的对象</span></span><br><span class="line"><span class="comment">  * 获取spring的Ioc核心容器，并根据id获取对象</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * ApplicationContext的三个常用实现类：</span></span><br><span class="line"><span class="comment">  *      ClassPathXmlApplicationContext:它可以加载类路径下的配置文件，要求配置文件必须在类路径下。不在的话无法加载</span></span><br><span class="line"><span class="comment">  *      FileSystemXmlApplicationContext:它可以加载磁盘任意路径下的配置文件（必须有访问权限）</span></span><br><span class="line"><span class="comment">  *      AnnotationConfigApplicationContext：它用于读取注解创建容器的。</span></span><br><span class="line"><span class="comment">  *	</span></span><br><span class="line"><span class="comment">  * BeanFactory 才是 Spring 容器中的顶层接口。 ApplicationContext 是它的子接口。 </span></span><br><span class="line"><span class="comment">  * 核心容器的两个接口引发的问题：</span></span><br><span class="line"><span class="comment">  *      ApplicationContext：         单例对象适用</span></span><br><span class="line"><span class="comment">  *          它在构建核心容器时，创建对象采取的策略是采用立即加载的方式。也就是说，</span></span><br><span class="line"><span class="comment">  *            只要一读完配置文件马上就创建配置文件中配置的对象</span></span><br><span class="line"><span class="comment">  *      BeanFactory：               多例对象使用</span></span><br><span class="line"><span class="comment">  *          它在构建核心容器时，创建对象采取的策略是采用延迟加载的方式。也就是说，</span></span><br><span class="line"><span class="comment">  *            什么适合根据id获取对象了，什么时候才真正创建对象。</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  */</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">  *client层中利用Spring工厂获取需要的对象</span><br><span class="line">  * 获取spring的Ioc核心容器，并根据id获取对象</span><br><span class="line">  *</span><br><span class="line">  * ApplicationContext的三个常用实现类：</span><br><span class="line">  *      ClassPathXmlApplicationContext:它可以加载类路径下的配置文件，要求配置文件必须在类路径下。不在的话无法加载</span><br><span class="line">  *      FileSystemXmlApplicationContext:它可以加载磁盘任意路径下的配置文件（必须有访问权限）</span><br><span class="line">  *      AnnotationConfigApplicationContext：它用于读取注解创建容器的。</span><br><span class="line">  *	</span><br><span class="line">  * BeanFactory 才是 Spring 容器中的顶层接口。 ApplicationContext 是它的子接口。 </span><br><span class="line">  * 核心容器的两个接口引发的问题：</span><br><span class="line">  *      ApplicationContext：         单例对象适用</span><br><span class="line">  *          它在构建核心容器时，创建对象采取的策略是采用立即加载的方式。也就是说，</span><br><span class="line">  *            只要一读完配置文件马上就创建配置文件中配置的对象</span><br><span class="line">  *      BeanFactory：               多例对象使用</span><br><span class="line">  *          它在构建核心容器时，创建对象采取的策略是采用延迟加载的方式。也就是说，</span><br><span class="line">  *            什么适合根据id获取对象了，什么时候才真正创建对象。</span><br><span class="line">  *</span><br><span class="line">  *</span><br><span class="line">  */</span><br></pre></td></tr></table></figure>
+
+<h1 id="实例化-Bean-的三种方式"><a href="#实例化-Bean-的三种方式" class="headerlink" title="实例化 Bean 的三种方式"></a>实例化 Bean 的三种方式</h1><h2 id="第一种方式：使用默认无参构造函数"><a href="#第一种方式：使用默认无参构造函数" class="headerlink" title="第一种方式：使用默认无参构造函数"></a>第一种方式：使用默认无参构造函数</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--在默认情况下：   </span></span><br><span class="line"><span class="comment">它会根据默认无参构造函数来创建类对象。如果 bean 中没有默认无参构造函数，将会创建失败。</span></span><br><span class="line"><span class="comment">&lt;bean id="accountService"</span></span><br><span class="line"><span class="comment">class="com.itheima.service.impl.AccountServiceImpl"/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="第二种方式：spring管理实例工厂-使用实例工厂的方法创建对象"><a href="#第二种方式：spring管理实例工厂-使用实例工厂的方法创建对象" class="headerlink" title="第二种方式：spring管理实例工厂-使用实例工厂的方法创建对象"></a>第二种方式：spring管理实例工厂-使用实例工厂的方法创建对象</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment"> * 模拟一个实例工厂，创建业务层实现类 </span></span><br><span class="line"><span class="comment"> * 此工厂创建对象，必须现有工厂实例对象，再调用方法  */</span> </span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InstanceFactory</span> </span></span><br><span class="line"><span class="class"> </span>&#123;   <span class="function"><span class="keyword">public</span> IAccountService <span class="title">createAccountService</span><span class="params">()</span></span>&#123;   </span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">new</span> AccountServiceImpl(); </span><br><span class="line">	 &#125; </span><br><span class="line"> &#125; </span><br><span class="line"> </span><br><span class="line">&lt;!-- 此种方式是：    先把工厂的创建交给 spring 来管理。  </span><br><span class="line">     然后在使用工厂的 bean 来调用里面的方法  </span><br><span class="line">     factory-bean 属性：用于指定实例工厂 bean 的 id。  </span><br><span class="line">     factory-method 属性：用于指定实例工厂中创建对象的方法。  --&gt; </span><br><span class="line"> &lt;bean id="instancFactory"     class="com.itheima.factory.InstanceFactory"&gt;&lt;/bean&gt; </span><br><span class="line">     &lt;bean id=<span class="string">"accountService"</span>     </span><br><span class="line">     factory-bean=<span class="string">"instancFactory"</span> </span><br><span class="line">     factorymethod=<span class="string">"createAccountService"</span>&gt;</span><br><span class="line"> &lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p>该方法通常用于类没有默认构造函数，且在<code>jar</code>包中，我们无法改变其字节流文件。</p>
+<h2 id="第三种方式：spring管理静态工厂-使用静态工厂的方法创建对象"><a href="#第三种方式：spring管理静态工厂-使用静态工厂的方法创建对象" class="headerlink" title="第三种方式：spring管理静态工厂-使用静态工厂的方法创建对象"></a>第三种方式：spring管理静态工厂-使用静态工厂的方法创建对象</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment"> * 模拟一个静态工厂，创建业务层实现类  */</span> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StaticFactory</span> </span>&#123;   </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IAccountService <span class="title">createAccountService</span><span class="params">()</span></span>&#123;   </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> AccountServiceImpl();  </span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line">&lt;!-- 此种方式是:   使用 StaticFactory 类中的静态方法 createAccountService 创建对象，并存入 spring 容器   </span><br><span class="line">    id 属性：指定 bean 的 id，用于从容器中获取  </span><br><span class="line">    <span class="class"><span class="keyword">class</span> 属性：指定静态工厂的全限定类名   </span></span><br><span class="line"><span class="class">    <span class="title">factory</span>-<span class="title">method</span> 属性：指定生产对象的静态方法  --&gt; </span></span><br><span class="line"><span class="class">     &lt;<span class="title">bean</span> <span class="title">id</span></span>=<span class="string">"accountService"</span>  </span><br><span class="line"> 	 <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.itheima.factory.StaticFactory"</span>     </span><br><span class="line">     factory-method="createAccountService"&gt;&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p>该方法同第二种，但是可以直接通过工厂静态方法创建需要的<code>bean</code>对象。</p>
+<h1 id="IOC-中-bean-标签和管理对象细节"><a href="#IOC-中-bean-标签和管理对象细节" class="headerlink" title="IOC 中 bean 标签和管理对象细节"></a>IOC 中 bean 标签和管理对象细节</h1><h2 id="bean-标签"><a href="#bean-标签" class="headerlink" title="bean 标签"></a>bean 标签</h2><p>作用：  用于配置对象让 Spring 来创建<code>bean</code>的。  </p>
+<p>默认情况下它调用的是类中的无参构造函数。如果没有无参构造函数则不能创建成功。 </p>
+<p>属性： </p>
+<p>id：给对象在容器中提供一个唯一标识。用于获取对象。一般取为对象的类名。  </p>
+<p>class：指定类的全限定类名。用于反射创建对象。默认情况下调用无参构造函数。 </p>
+<p>scope：指定对象的作用范围。  </p>
+<ul>
+<li><code>singleton</code>:默认值，单例的对象.  </li>
+<li><code>prototype</code>:多例的对象.  </li>
+<li><code>request</code> :WEB 项目中,Spring 创建一个 Bean 的对象,将对象存入到 request 域中.  </li>
+<li><code>session</code>:WEB 项目中,Spring 创建一个 Bean 的对象,将对象存入到 session 域中.   </li>
+<li><code>global session</code> :WEB 项目中,应用在<code>集群</code>环境.如果没有 <code>Portlet</code> 环境那么 globalSession 相当于 session. </li>
+</ul>
+<p>init-method：指定类中的初始化方法名称。</p>
+<p>destroy-method：指定类中销毁方法名称。 </p>
+<h2 id="bean-的作用范围和生命周期"><a href="#bean-的作用范围和生命周期" class="headerlink" title="bean 的作用范围和生命周期"></a>bean 的作用范围和生命周期</h2><p>单例对象：scope=”singleton”   一个应用只有一个对象的实例。</p>
+<blockquote>
+<p>它的作用范围就是整个引用。<br>生命周期：    </p>
+<ul>
+<li>对象出生：当应用加载，创建容器时，对象就被创建了。    </li>
+<li>对象活着：只要容器在，对象一直活着。   </li>
+<li>对象死亡：当应用卸载，销毁容器时，对象就被销毁了。<br>总结：单例对象生命周期和容器相同。</li>
+</ul>
+</blockquote>
+<p>多例对象：scope=”prototype”   每次访问对象时，都会重新创建对象实例。   </p>
+<blockquote>
+<p>生命周期：</p>
+<ul>
+<li>对象出生：当使用对象时，创建新的对象实例。</li>
+<li>对象活着：只要对象在使用中，就一直活着。    </li>
+<li>对象死亡：当对象长时间不用时，被 java 的垃圾回收器回收了。<br>即使容器销毁，对象也不会销毁，因为spring无法判断创建出的所有对象是否仍在使用中。</li>
+</ul>
+</blockquote>
+<h1 id="spring-的依赖注入"><a href="#spring-的依赖注入" class="headerlink" title="spring 的依赖注入"></a>spring 的依赖注入</h1><h2 id="依赖注入的概念"><a href="#依赖注入的概念" class="headerlink" title="依赖注入的概念"></a>依赖注入的概念</h2><p>依赖注入是Spring的灵魂所在。用new的话写着很简单，一行就完事了，但是后期维护怎么办，比如我们玩的LOL，今天无尽的暴击25%，明天我要改成20%，难道就回去修改源代码吗？并不是，而是打一个补丁包，用的就是这种依赖注入的方式。要牢牢把握依赖注入的概念。</p>
+<p>依赖注入：<code>Dependency Injection</code>。它是 spring 框架核心 ioc 的具体实现。 </p>
+<p>我们的程序在编写时，通过控制反转，把对象的创建交给了 spring，但是代码中不可能出现没有依赖的情况。 <em>Ioc</em> 解耦只是<code>降低</code>他们的依赖关系，但<code>不会消除</code>。例如：我们的业务层仍会调用持久层的方法。</p>
+<p>那这种业务层和持久层的依赖关系，<strong>在使用 spring 之后，就让 spring 来维护了</strong>。在当前类需要用到其他类的对象时，由spring为我们提供，我们只需要在配置文件中说明。那么这种<strong>依赖关系的维护，就称之为依赖注入</strong>。</p>
+<p>简单的说，<strong>就是坐等框架把持久层对象传入业务层，而不用我们自己去获取。</strong> 我们只需要编写配置文件即可。</p>
+<blockquote>
+<p>依赖注入</p>
+<ol>
+<li>能注入的数据，有三类</li>
+</ol>
+<ul>
+<li>基本类型和String</li>
+<li>其他bean类型（在配置文件中或者注解配置过的bean）</li>
+<li>复杂类型/集合类型</li>
+</ul>
+<ol start="2">
+<li>注入的方式，有三种</li>
+</ol>
+<ul>
+<li>使用构造函数提供</li>
+<li>使用set方法提供</li>
+<li>使用注解提供</li>
+</ul>
+</blockquote>
+<h3 id="构造函数注入"><a href="#构造函数注入" class="headerlink" title="构造函数注入"></a>构造函数注入</h3><p>当一个类和另一个类产生了依赖，那么可以将被依赖的类定义为被注入类的成员变量。spring通过使用构造函数提供的方法注入被依赖类。</p>
+<p>要求被注入类提供一个对应参数列表的构造函数。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 使用构造函数的方式，给 service 中的属性传值</span></span><br><span class="line"><span class="comment">要求：   类中需要提供一个对应参数列表的构造函数。 </span></span><br><span class="line"><span class="comment">涉及的标签：   constructor-arg   </span></span><br><span class="line"><span class="comment">属性：     </span></span><br><span class="line"><span class="comment">index:指定参数在构造函数参数列表的索引位置  从0开始</span></span><br><span class="line"><span class="comment">type:指定参数在构造函数中的数据类型 </span></span><br><span class="line"><span class="comment">name:指定参数在构造函数中的名称     常用的      </span></span><br><span class="line"><span class="comment">=======上面三个都是找给谁赋值，下面两个指的是赋什么值的============== </span></span><br><span class="line"><span class="comment">value:它能赋的值是基本数据类型和 String 类型     </span></span><br><span class="line"><span class="comment">ref:它能赋的值是其他 bean 类型，也就是说，必须得是在配置文件中配置过的bean   --&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountService"</span> <span class="attr">class</span>=<span class="string">"com.itheima.service.impl.AccountServiceImpl"</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">type</span>=<span class="string">"java.lang.String"</span> <span class="attr">value</span>=<span class="string">" 张三 "</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"age"</span> <span class="attr">value</span>=<span class="string">"18"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"birthday"</span> <span class="attr">ref</span>=<span class="string">"now"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"now"</span> <span class="attr">class</span>=<span class="string">"java.util.Date"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>构造函数注入</code>的方法<br>　　　　优点:在获取bean对象时，注入数据是必须的操作，否则对象无法创建成功。<br>　　　　弊端：改变了bean对象的实例化方式，使我们在创建对象时，如果用不到这些数据，也<strong>必须提供</strong>。如果写多个构造函数，会非常麻烦。当依赖对象比较多的时候，构造方法的参数会比较长。<br>　除非避无可避，否则我们一般不用这种方式。</p>
+</blockquote>
+<h3 id="set方法注入"><a href="#set方法注入" class="headerlink" title="set方法注入"></a>set方法注入</h3><p>顾名思义，就是在类中提供需要注入成员的<code>set</code>方法，即用set方法代替了构造函数。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 通过配置文件给bean中的属性传值：使用set方法的方式</span></span><br><span class="line"><span class="comment">涉及的标签：   property </span></span><br><span class="line"><span class="comment">属性：    </span></span><br><span class="line"><span class="comment">name：找的是类中set方法后面的部分    </span></span><br><span class="line"><span class="comment">ref：给属性赋值是其他bean类型的    </span></span><br><span class="line"><span class="comment">value：给属性赋值是基本数据类型和string类型的  </span></span><br><span class="line"><span class="comment">实际开发中，此种方式用的较多。 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountService"</span>  <span class="attr">class</span>=<span class="string">"com.itheima.service.impl.AccountServiceImpl"</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">value</span>=<span class="string">"test"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"age"</span> <span class="attr">value</span>=<span class="string">"21"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span>   </span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"birthday"</span> <span class="attr">ref</span>=<span class="string">"now"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span> <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"now"</span> <span class="attr">class</span>=<span class="string">"java.util.Date"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>set注入</code>的方法<br>　　　优点:创建对象没有明确的限制，可以直接使用默认构造函数<br>　　　弊端：如果有某个成员必须有值，但是获取对象时有可能set方法没有执行。</p>
+</blockquote>
+
       
     </div>
     
@@ -616,7 +694,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring中工厂类的结构图"><span class="nav-number">1.</span> <span class="nav-text">Spring中工厂类的结构图</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring中工厂类的结构图"><span class="nav-number">1.</span> <span class="nav-text">Spring中工厂类的结构图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例化-Bean-的三种方式"><span class="nav-number">2.</span> <span class="nav-text">实例化 Bean 的三种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一种方式：使用默认无参构造函数"><span class="nav-number">2.1.</span> <span class="nav-text">第一种方式：使用默认无参构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二种方式：spring管理实例工厂-使用实例工厂的方法创建对象"><span class="nav-number">2.2.</span> <span class="nav-text">第二种方式：spring管理实例工厂-使用实例工厂的方法创建对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三种方式：spring管理静态工厂-使用静态工厂的方法创建对象"><span class="nav-number">2.3.</span> <span class="nav-text">第三种方式：spring管理静态工厂-使用静态工厂的方法创建对象</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IOC-中-bean-标签和管理对象细节"><span class="nav-number">3.</span> <span class="nav-text">IOC 中 bean 标签和管理对象细节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bean-标签"><span class="nav-number">3.1.</span> <span class="nav-text">bean 标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bean-的作用范围和生命周期"><span class="nav-number">3.2.</span> <span class="nav-text">bean 的作用范围和生命周期</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spring-的依赖注入"><span class="nav-number">4.</span> <span class="nav-text">spring 的依赖注入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖注入的概念"><span class="nav-number">4.1.</span> <span class="nav-text">依赖注入的概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构造函数注入"><span class="nav-number">4.1.1.</span> <span class="nav-text">构造函数注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set方法注入"><span class="nav-number">4.1.2.</span> <span class="nav-text">set方法注入</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -659,7 +737,7 @@
     
       <span class="post-meta-item-text">站点字数总计&#58;</span>
     
-    <span title="站点字数总计">39.7k</span>
+    <span title="站点字数总计">41.8k</span>
   
 </div>
 
