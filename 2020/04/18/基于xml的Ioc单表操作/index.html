@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="Lehirt&#39;s Blog">
 <meta property="og:description" content="学习完spring基于xml和基于注解的配置，那么现在来看一个案例。">
 <meta property="article:published_time" content="2020-04-18T08:28:04.000Z">
-<meta property="article:modified_time" content="2020-04-18T11:43:39.455Z">
+<meta property="article:modified_time" content="2020-04-18T15:15:41.213Z">
 <meta property="article:author" content="lehirt">
 <meta property="article:tag" content="SSM">
 <meta name="twitter:card" content="summary">
@@ -377,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  866 字
+                  1.2k 字
                 </span>
               
 
@@ -393,7 +393,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4 分钟
+                  5 分钟
                 </span>
               
             </div>
@@ -430,11 +430,28 @@
 
 
 
+<hr>
 <p>现在再来看一下基于注解的Ioc配置。</p>
 <p>首先要导入<code>javax.annotation-api</code>jar包，在<code>bean.xml</code>中，基本配置不同。最重要的是要<strong>告知spring获取容器时的扫描对象。</strong>由于dbutils在jar包中，仍需要在bean.xml中配置。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/context/spring-context.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:annotation-config</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--告知spring获取容器时的扫描对象--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.lehirt"</span> &gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--配置Runner--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"runner"</span> <span class="attr">class</span>=<span class="string">"org.apache.commons.dbutils.QueryRunner"</span> <span class="attr">scope</span>=<span class="string">"prototype"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--注入数据源--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"ds"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--配置数据源--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">class</span>=<span class="string">"com.mchange.v2.c3p0.ComboPooledDataSource"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--注入连接数据库的基本信息--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClass"</span> <span class="attr">value</span>=<span class="string">"com.mysql.jdbc.Driver"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"jdbcUrl"</span> <span class="attr">value</span>=<span class="string">"jdbc:mysql:///myspring"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"user"</span> <span class="attr">value</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>业务层，持久层分别用注解<code>@Service</code>和<code>@Reposity</code>，类中的依赖可以使用自动依赖注入注释<code>@Autowired</code>。<strong>如果有依赖未被注入，则会产生空指针异常</strong>。</p>
+<p>现在存在一个问题，就是我们仍无法删除配置文件<code>bean.xml</code>，因为数据库对象<code>QueryRunner</code>类不是由我们自定义的bean，而是jar包中的字节流文件。所以需要其他的注解。</p>
+<p>为了删除<code>bean.xml</code>，我们需要在<code>com.config</code>包路径下创建一个配置类<code>SpringConfiguration</code>，该类就是注解的配置类。</p>
+<ul>
+<li><p>@Configuration：指明当前类是一个配置类</p>
+</li>
+<li><p>@ComponentScan：告知Spring扫描包读取注解。相当于在bean.xml中配置&lt;context:component-scan base-package=”com.lehirt” &gt;&lt;/context:component-scan&gt;</p>
+</li>
+<li><p>为了获取jar包中的类对象，需要创建工厂方法，而普通的工厂方法无法自动将创建的对象放入spring容器中，这是和bean.xml最大的区别，所以需要注解@Bean，将创建的对象放入spring容器中。</p>
+</li>
+<li><p>Bean：用于把当前方法的返回值存入spring容器中。name属性:用于指定bena在容器（map）中的key值。</p>
+</li>
+<li><p>容易知道此时QueryRunner是单例的，与我们的xml配置相悖。需要注解@scope。</p>
+</li>
+<li><p>如果不想扫描其他配置包，同时不想在创建AnnotationConfigApplicationContext时传入字节码文件，那么需要注解@Import，导入需要的字节码文件。</p>
+</li>
+</ul>
 
       
     </div>
@@ -484,10 +501,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/04/18/Ioc%E5%8D%95%E8%A1%A8%E6%93%8D%E4%BD%9C/" rel="prev" title="基于xml的Ioc单表操作">
-                基于xml的Ioc单表操作 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -559,7 +572,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -651,7 +664,7 @@
     
       <span class="post-meta-item-text">站点字数总计&#58;</span>
     
-    <span title="站点字数总计">48.2k</span>
+    <span title="站点字数总计">48k</span>
   
 </div>
 
