@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="ssm,maven," />
+  <meta name="keywords" content="SSM," />
 
 
 
@@ -86,26 +86,17 @@
 
 
 
-<meta name="description" content="本以为很简单的maven，没想到配置起来却问题重重，这里记载配置踩过的坑。">
+<meta name="description" content="AOP的实现方式是使用动态代理技术，那么需要深刻理解动态代理。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="maven在IDEA的配置与项目的创建">
-<meta property="og:url" content="https://lehirt.github.io/2020/04/10/maven%E5%9C%A8IDEA%E7%9A%84%E9%85%8D%E7%BD%AE%E4%B8%8E%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%88%9B%E5%BB%BA/index.html">
+<meta property="og:title" content="Spring基础学习-三-：AOP中的代理模式">
+<meta property="og:url" content="https://lehirt.github.io/2020/04/19/Spring%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E4%B8%89-%EF%BC%9AAOP%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Lehirt&#39;s Blog">
-<meta property="og:description" content="本以为很简单的maven，没想到配置起来却问题重重，这里记载配置踩过的坑。">
-<meta property="og:image" content="https://s1.ax1x.com/2020/04/10/G7AjDf.png">
-<meta property="og:image" content="https://s1.ax1x.com/2020/04/10/G7ESUg.png">
-<meta property="og:image" content="https://s1.ax1x.com/2020/04/10/G7AzVS.png">
-<meta property="og:image" content="https://s1.ax1x.com/2020/04/10/G7Avb8.png">
-<meta property="og:image" content="https://s1.ax1x.com/2020/04/10/G7AXKP.png">
-<meta property="og:image" content="https://s1.ax1x.com/2020/04/10/G7Ep5Q.png">
-<meta property="og:image" content="https://s1.ax1x.com/2020/04/10/G7ECCj.png">
-<meta property="article:published_time" content="2020-04-10T13:45:22.000Z">
-<meta property="article:modified_time" content="2020-04-10T14:04:59.102Z">
+<meta property="og:description" content="AOP的实现方式是使用动态代理技术，那么需要深刻理解动态代理。">
+<meta property="article:published_time" content="2020-04-19T07:11:20.000Z">
+<meta property="article:modified_time" content="2020-04-19T08:31:56.887Z">
 <meta property="article:author" content="lehirt">
-<meta property="article:tag" content="ssm">
-<meta property="article:tag" content="maven">
+<meta property="article:tag" content="SSM">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s1.ax1x.com/2020/04/10/G7AjDf.png">
 
 
 
@@ -135,7 +126,7 @@
 
 
 
-  <link rel="canonical" href="https://lehirt.github.io/2020/04/10/maven在IDEA的配置与项目的创建/"/>
+  <link rel="canonical" href="https://lehirt.github.io/2020/04/19/Spring基础学习-三-：AOP中的代理模式/"/>
 
 
 
@@ -144,7 +135,7 @@
 
 
 
-  <title>maven在IDEA的配置与项目的创建 | Lehirt's Blog</title>
+  <title>Spring基础学习-三-：AOP中的代理模式 | Lehirt's Blog</title>
   
 
 
@@ -291,7 +282,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://lehirt.github.io/2020/04/10/maven%E5%9C%A8IDEA%E7%9A%84%E9%85%8D%E7%BD%AE%E4%B8%8E%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%88%9B%E5%BB%BA/">
+    <link itemprop="mainEntityOfPage" href="https://lehirt.github.io/2020/04/19/Spring%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E4%B8%89-%EF%BC%9AAOP%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="lehirt">
@@ -308,7 +299,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">maven在IDEA的配置与项目的创建</h1>
+          <h1 class="post-title" itemprop="name headline">Spring基础学习-三-：AOP中的代理模式</h1>
         
 
         <div class="post-meta">
@@ -320,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-10T21:45:22+08:00">
-                2020-04-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-19T15:11:20+08:00">
+                2020-04-19
               </time>
             
 
@@ -343,8 +334,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
-                    <span itemprop="name">框架学习</span>
+                  <a href="/categories/SSM/" itemprop="url" rel="index">
+                    <span itemprop="name">SSM</span>
                   </a>
                 </span>
 
@@ -360,7 +351,7 @@
 
           
           
-             <span id="/2020/04/10/maven%E5%9C%A8IDEA%E7%9A%84%E9%85%8D%E7%BD%AE%E4%B8%8E%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%88%9B%E5%BB%BA/" class="leancloud_visitors" data-flag-title="maven在IDEA的配置与项目的创建">
+             <span id="/2020/04/19/Spring%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E4%B8%89-%EF%BC%9AAOP%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" class="leancloud_visitors" data-flag-title="Spring基础学习-三-：AOP中的代理模式">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -386,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  383 字
+                  952 字
                 </span>
               
 
@@ -402,7 +393,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  3 分钟
                 </span>
               
             </div>
@@ -423,33 +414,133 @@
       
 
       
-        <p>本以为很简单的maven，没想到配置起来却问题重重，这里记载配置踩过的坑。</p>
+        <blockquote class="blockquote-center"><p>AOP的实现方式是使用动态代理技术，那么需要深刻理解动态代理。</p>
+</blockquote>
+
 <a id="more"></a>
 
-<p>第一个是最基本也是最最重要的点，就是配置阿里云镜像仓库，以及忽略ssl证书的验证。</p>
-<p>在maven配置文件setting.xml中添加代码</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">id</span>&gt;</span>alimaven-new<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>aliyun maven<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">url</span>&gt;</span>https://maven.aliyun.com/repository/central/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h1><h2 id="动态代理的特点"><a href="#动态代理的特点" class="headerlink" title="动态代理的特点"></a>动态代理的特点</h2><p>不修改源码的基础上对<strong>方法</strong>增强，字节码随用随创建，随用随加载。它与静态代理的区别也在于此。因为静态代理是字节码一上来就创建好，并完成加载。装饰者模式就是静态代理的一种体现。</p>
+<h2 id="动态代理常用的两种方式"><a href="#动态代理常用的两种方式" class="headerlink" title="动态代理常用的两种方式"></a>动态代理常用的两种方式</h2><ol>
+<li>基于接口的动态代理<ul>
+<li>提供者：JDK官方的<code>Proxy</code>类`。不需要额外的jar包 </li>
+<li>要求：被代理类最少实现一个接口。</li>
+</ul>
+</li>
+<li>基于子类的动态代理<ul>
+<li>提供者：第三方的CGLib，如果报asmxxxx异常，需要导入asm.jar。</li>
+<li>要求：被代理类不能是用final修饰的类（即不能是最终类）。</li>
+</ul>
+</li>
+</ol>
+<h2 id="基于接口的动态代理"><a href="#基于接口的动态代理" class="headerlink" title="基于接口的动态代理"></a>基于接口的动态代理</h2><p>动态代理的实现：</p>
+<ul>
+<li><p>涉及的类：Proxy，JDK官方提供。</p>
+</li>
+<li><p>如何创建代理对象：<strong>使用Proxy类中的<code>newProxyInstance</code>方法</strong></p>
+</li>
+<li><p>创建代理对象的要求：至少实现一个接口，如果没有则无法使用</p>
+</li>
+<li><p><code>newProxyInstance</code>的参数：</p>
+<ul>
+<li>classloader:类加载器<ul>
+<li>用于加载该代理对象的字节码文件。和被代理对象使用相同的类加载器。</li>
+</ul>
+</li>
+<li>class[ ] :字节码数组<ul>
+<li>用于让该代理对象获得和被代理对象相同的方法。</li>
+</ul>
+</li>
+<li>InvocationHandler : 用于提供增强的方法<ul>
+<li>它是让我们写<strong>如何代理（如何增强）</strong>，一般写一个该接口的实现类，通常情况下是匿名内部类。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>关键在于如何增强。即<code>InvocationHandler</code>的编写。</p>
+<pre><code class="java"><span class="comment">//定义代理接口的一个实现类</span>
+ <span class="keyword">final</span> Producer producer = <span class="keyword">new</span> Producer();
 
-<p>在IDEA中的File–&gt;settings–&gt;Maven–&gt;Importing的VM Options添加</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Dmaven.wagon.http.ssl.insecure&#x3D;true -Dmaven.wagon.http.ssl.allowall&#x3D;true</span><br></pre></td></tr></table></figure>
+ IProducer proxyProducer = (IProducer) Proxy.newProxyInstance(
+           producer.getClass().getClassLoader(),
+           producer.getClass().getInterfaces(),
+           <span class="keyword">new</span> InvocationHandler() {
+                 <span class="comment">/**</span>
+<span class="comment">                  * 作用：执行被代理对象的任何接口方法都会经过该方法，实现增强，可以从方法，参数入手。</span>
+<span class="comment">                  * 方法参数的含义</span>
+<span class="comment">                  * <span class="doctag">@param</span> proxy   当前代理对象的引用</span>
+<span class="comment">                  * <span class="doctag">@param</span> method  当前执行的方法</span>
+<span class="comment">                  * <span class="doctag">@param</span> args    当前执行方法所需的参数</span>
+<span class="comment">                  * <span class="doctag">@return</span>        和被代理对象方法有相同的返回值</span>
+<span class="comment">                  * <span class="doctag">@throws</span> Throwable</span>
+<span class="comment">                  */</span>
+                 <span class="meta">@Override</span>
+                 <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>{
+                     <span class="comment">//提供增强的代码</span>
+                     Object returnValue = <span class="keyword">null</span>;
 
-<p>即可正常使用阿里云镜像仓库下载jar包和插件。</p>
-<p>第2就是如何创建项目</p>
-<p>到目前为止，还是不能使用Maven骨架直接创建web项目，需要手动添加文件，形成web项目。</p>
-<p>如图所示步骤，在简单的maven项目上手动形成。另外再说下pom.xml的配置。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">maven.compiler.encoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">maven.compiler.encoding</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>11<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">maven.compiler.source</span>&gt;</span>11<span class="tag">&lt;/<span class="name">maven.compiler.source</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">maven.compiler.target</span>&gt;</span>11<span class="tag">&lt;/<span class="name">maven.compiler.target</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">	</span><br><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.8.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">source</span>&gt;</span>11.0<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">target</span>&gt;</span>11.0<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line">//如不限制JDK版本，tomcat可能会报错。</span><br></pre></td></tr></table></figure>
+                     <span class="comment">//1.获取方法执行的参数</span>
+                     Float money = (Float)args[<span class="number">0</span>];
+                     <span class="comment">//2.判断当前方法是不是销售</span>
+                     <span class="keyword">if</span>(<span class="string">"saleProduct"</span>.equals(method.getName())) {
+                         returnValue = method.invoke(producer, money*<span class="number">0.8f</span>);
+                     }
+                     <span class="keyword">return</span> returnValue;
+                 }
+             });
+
+  <span class="comment">//使用动态代理增强后的方法</span>
+  proxyProducer.saleProduct(<span class="number">10000f</span>);</code></pre>
+<p>问题在于当接口不实现任何类的时候，无法使用。只能使用基于子类的代理</p>
+<h2 id="基于子类的动态代理"><a href="#基于子类的动态代理" class="headerlink" title="基于子类的动态代理"></a>基于子类的动态代理</h2><p>动态代理的实现：</p>
+<ul>
+<li><p>涉及的类：Enhancer ，第三方cglib库</p>
+</li>
+<li><p>如何创建代理对象：<strong>使用Enhancer类中的<code>create</code>方法</strong></p>
+</li>
+<li><p>创建代理对象的要求：被代理类不能是最终类</p>
+</li>
+<li><p>create方法的参数：</p>
+<ul>
+<li><p>Class：字节码它是用于指定被代理对象的字节码。从而可以得到该对象的所有内容（反射）。</p>
+</li>
+<li><p>Callback：它是让我们写<strong>如何代理（如何增强）</strong>，一般写一个该接口的实现类，通常情况下是匿名内部类。我们一般写的都是该接口的子接口实现类：<code>MethodInterceptor</code>。</p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code class="java"><span class="keyword">final</span> Producer producer = <span class="keyword">new</span> Producer();
+
+       Producer cglibProducer = (Producer)Enhancer.create(producer.getClass(), <span class="keyword">new</span> MethodInterceptor() {
+           <span class="comment">/**</span>
+<span class="comment">            * 执行子类对象的任何方法都会经过该方法</span>
+<span class="comment">            * <span class="doctag">@param</span> proxy</span>
+<span class="comment">            * <span class="doctag">@param</span> method</span>
+<span class="comment">            * <span class="doctag">@param</span> args</span>
+<span class="comment">            *    以上三个参数和基于接口的动态代理中invoke方法的参数是一样的</span>
+<span class="comment">            * <span class="doctag">@param</span> methodProxy ：当前执行方法的代理对象</span>
+<span class="comment">            * <span class="doctag">@return</span></span>
+<span class="comment">            * <span class="doctag">@throws</span> Throwable</span>
+<span class="comment">            */</span>
+           <span class="meta">@Override</span>
+           <span class="function"><span class="keyword">public</span> Object <span class="title">intercept</span><span class="params">(Object proxy, Method method, Object[] args, MethodProxy methodProxy)</span> <span class="keyword">throws</span> Throwable </span>{
+               <span class="comment">//提供增强的代码</span>
+               Object returnValue = <span class="keyword">null</span>;
+
+               <span class="comment">//1.获取方法执行的参数</span>
+               Float money = (Float)args[<span class="number">0</span>];
+               <span class="comment">//2.判断当前方法是不是销售</span>
+               <span class="keyword">if</span>(<span class="string">"saleProduct"</span>.equals(method.getName())) {
+                   returnValue = method.invoke(producer, money*<span class="number">0.8f</span>);
+               }
+               <span class="keyword">return</span> returnValue;
+           }
+       });
+
+       cglibProducer.saleProduct(<span class="number">12000f</span>);
 
 
-
-
-
-<p><img src="https://s1.ax1x.com/2020/04/10/G7AjDf.png" alt="1"></p>
-<p><img src="https://s1.ax1x.com/2020/04/10/G7ESUg.png" alt="2"></p>
-<p><img src="https://s1.ax1x.com/2020/04/10/G7AzVS.png" alt="3"></p>
-<p><img src="https://s1.ax1x.com/2020/04/10/G7Avb8.png" alt="4"></p>
-<p><img src="https://s1.ax1x.com/2020/04/10/G7AXKP.png" alt="5"></p>
-<p><img src="https://s1.ax1x.com/2020/04/10/G7Ep5Q.png" alt="6"></p>
-<p><img src="https://s1.ax1x.com/2020/04/10/G7ECCj.png" alt="7"></p>
+</code></pre>
 
       
     </div>
@@ -477,9 +568,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ssm/" rel="tag"><i class="fa fa-tag"></i>ssm</a>
-          
-            <a href="/tags/maven/" rel="tag"><i class="fa fa-tag"></i>maven</a>
+            <a href="/tags/SSM/" rel="tag"><i class="fa fa-tag"></i>SSM</a>
           
         </div>
       
@@ -492,8 +581,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/07/%E7%BD%91%E7%BB%9C%E5%B1%82%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/" rel="next" title="网络层之数据平面">
-                <i class="fa fa-chevron-left"></i> 网络层之数据平面
+              <a href="/2020/04/18/%E5%9F%BA%E4%BA%8Exml%E7%9A%84Ioc%E5%8D%95%E8%A1%A8%E6%93%8D%E4%BD%9C/" rel="next" title="基于xml的Ioc单表操作">
+                <i class="fa fa-chevron-left"></i> 基于xml的Ioc单表操作
               </a>
             
           </div>
@@ -501,10 +590,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/04/13/mybatis%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" rel="prev" title="mybatis基础学习">
-                mybatis基础学习 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -556,8 +641,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -631,6 +725,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#动态代理"><span class="nav-number">1.</span> <span class="nav-text">动态代理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#动态代理的特点"><span class="nav-number">1.1.</span> <span class="nav-text">动态代理的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态代理常用的两种方式"><span class="nav-number">1.2.</span> <span class="nav-text">动态代理常用的两种方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于接口的动态代理"><span class="nav-number">1.3.</span> <span class="nav-text">基于接口的动态代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于子类的动态代理"><span class="nav-number">1.4.</span> <span class="nav-text">基于子类的动态代理</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
