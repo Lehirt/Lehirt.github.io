@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="Lehirt&#39;s Blog">
 <meta property="og:description" content="Java在语法中虽然存在泛型的概念，但是在虚拟机中却没有泛型的概念，虚拟机中所有的类型都是普通类。无论何时定义一个泛型类型，编译后类型会被都被自动转换成一个相应的原始类型。原始类型的名字就是删去类型参数后的泛型类型名。擦除（erased）类型变M, 并替换为限定类型（无限定的变量用Object）。">
 <meta property="article:published_time" content="2020-05-05T13:09:06.000Z">
-<meta property="article:modified_time" content="2020-05-05T14:37:57.972Z">
+<meta property="article:modified_time" content="2020-05-05T16:46:03.045Z">
 <meta property="article:author" content="lehirt">
 <meta property="article:tag" content="javaSE">
 <meta name="twitter:card" content="summary">
@@ -377,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k 字
+                  2k 字
                 </span>
               
 
@@ -393,7 +393,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4 分钟
+                  7 分钟
                 </span>
               
             </div>
@@ -446,11 +446,14 @@
 <li>sayHello(String value) : 自己新增的方法，和超类毫无联系</li>
 <li>一些从Object类继承来的方法，这里忽略</li>
 </ol>
-<p>按理来说，这段测试代码应该不能通过编译，因为要实现多态的话，在子类中，根据 <strong>函数签名=方法名+参数</strong> 的原则,所调用的方法必须在子类中重写<code>函数签名</code>,返回值不能改变。于是在这里Child类并没有重写Parent类中的sayHello(Object value)方法，只是单纯的 <strong>继承</strong> 而已，并且新加了一个参数不同的同名方法。</p>
+<p>按理来说，这段测试代码应该不能通过编译，因为要实现多态的话，所调用的方法必须在子类中重写，但是在这里Child类并没有重写Parent类中的<code>sayHello(Object value)</code>方法，只是<strong>单纯的继承</strong>而已，并且新加了一个参数不同的同名方法。</p>
 <p>但是结果是可以正常运行。</p>
 <p>原因是编译器在Child类中自动生成了一个桥方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">(Object value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	sayHello((String) value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+
+<p>我们先来看一下多态的定义：</p>
+<p>程序运行时，会先进行<code>重载解析</code>，根据方法签名选择方法；选择过后，程序已经知道该调用哪一个方法，但是不知道调用哪个类中的该方法，所以进行<code>动态绑定</code>，虚拟机自动选择与引用对象的<strong>实际类型</strong>最合适的类的那个方法。</p>
 <p>可以看出，这个桥方法实际上就是对超类中<code>sayHello(Obejct)</code>的重写。这样做的原因是，当程序员在子类中写下以下这段代码的时候，本意是对超类中的同名方法进行重写，但因为超类发生了类型擦除，所以实际上并没有重写成功，因此加入了桥方法的机制来避免类型擦除与多态发生冲突。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span>&lt;<span class="title">String</span>&gt;</span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">(String value)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"This is Child class, value is "</span> + value);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>桥方法并不需要自己手动生成，一切都是编译器自动完成的。</p>
@@ -468,6 +471,32 @@
 <li>桥方法被合成来保持多态。 </li>
 <li>为保持类型安全性，必要时插入强制类型转换。</li>
 </ul>
+<h2 id="约束与局限性"><a href="#约束与局限性" class="headerlink" title="约束与局限性"></a>约束与局限性</h2><p>由于<strong>类型擦除</strong>的原因和影响，使用java泛型时有一些限制。</p>
+<h3 id="不能用基本类型实例化类型参数"><a href="#不能用基本类型实例化类型参数" class="headerlink" title="不能用基本类型实例化类型参数"></a>不能用基本类型实例化类型参数</h3><p>不能用类型参数代替基本类型。因此， 没有 <code>Pair&lt;double&gt;</code>, 只 有 <code>Pair&lt;Double&gt;</code>。 当然, 其原因是类型擦除。擦除之后， Pair 类含有 Object 类型的域， 而 Object 不能存储 double 值。</p>
+<h3 id="运行时类型查询只适用于原始类型"><a href="#运行时类型查询只适用于原始类型" class="headerlink" title="运行时类型查询只适用于原始类型"></a>运行时类型查询只适用于原始类型</h3><p>虚拟机中的对象<strong>总有一个特定的非泛型类型</strong>。也就是说，虚拟机中的对象都是非泛型化的类型。因此，所有的<strong>类型查询</strong>只产生原始类型。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a <span class="keyword">instanceof</span> Pair&lt;String&gt;) <span class="comment">// Error</span></span><br></pre></td></tr></table></figure>
+<p>实际上仅仅测试 a 是否是任意类型的一个 <code>Pair</code></p>
+<p>或者强制类型转换</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Pair&lt;String&gt; p = (Pair&lt;String&gt;) a; <span class="comment">// Warning-can only test that a is a Pair</span></span><br></pre></td></tr></table></figure>
+
+<p>试图查询一个对象是否属于某个泛型类型时，倘若使用 <code>instanceof</code> 会得到一个编译器错误， 如果使用强制类型转换会得到一个警告。 </p>
+<p>同样的道理，<code>getClass</code> 方法总是返回原始类型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Pair&lt;String&gt; stringPair = . .;</span><br><span class="line">Pair&lt;Employee&gt; employeePair = . .; </span><br><span class="line"><span class="keyword">if</span> (stringPair.getClass() == employeePair.getClass()) <span class="comment">// they are equal </span></span><br><span class="line"><span class="comment">//两次调用getClass()都返回Pair.class</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="不能创建参数化类型的数组"><a href="#不能创建参数化类型的数组" class="headerlink" title="不能创建参数化类型的数组"></a>不能创建参数化类型的数组</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Pair&lt;String&gt;[] table = <span class="keyword">new</span> Pair&lt;String&gt;[<span class="number">10</span>]; <span class="comment">// Error</span></span><br></pre></td></tr></table></figure>
+<p>这有什么问题呢？ 擦除之后， table 的类型是 Pair[ ]。可以把它转换为Object: </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object[] objarray = table;</span><br></pre></td></tr></table></figure>
+<p>数组会记住它的元素类型， 如果试图存储其他类型的元素， 就会抛出一个 ArrayStoreException 异常： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objarray[<span class="number">0</span>] = <span class="string">"Hello"</span>; <span class="comment">// Error component type is Pair</span></span><br></pre></td></tr></table></figure>
+
+<p>若采取以毒攻毒的方式，即对于泛型类型的赋值，擦除会使这种机制无效：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objarray[<span class="number">0</span>] = <span class="keyword">new</span> Pair&lt;Employee&gt;()；</span><br></pre></td></tr></table></figure>
+<p>能够通过数组存储检査，不过仍会导致一个类型错误。出于这个原因，<strong>不允许创建参数化类型的数组</strong>.</p>
+<p>需要说明的是， 只是不允许创建这些数组， 而声明类型为<code>Pair&lt;String&gt;[]</code>的变量仍是合法的。不过不能用<code>new Pair&lt;String&gt;[10]</code>初始化这个变量。如果需要收集参数化类型对象，只有一种安全而有效的方法:<strong>使用 ArrayList:ArrayList&lt;Pair<String>()</strong>.</p>
+<h3 id="Varargs-警告"><a href="#Varargs-警告" class="headerlink" title="Varargs 警告"></a>Varargs 警告</h3><p>向参数个数可变的方法传递一个泛型类型的实例。例如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">addAll</span><span class="params">(Collections coll, T... ts)</span> </span>&#123; </span><br><span class="line">	<span class="keyword">for</span> (t : ts) coll.add(t)； </span><br><span class="line">	&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">//应该记得，实际上参数 ts 是一个数组， 包含提供的所有实参。 现在考虑以下调用：</span></span><br><span class="line"></span><br><span class="line">Col1ection&lt;Pair&lt;String&gt; table = . . .; </span><br><span class="line">Pair&lt;String&gt; pairl = ...; </span><br><span class="line">Pair&lt;String&gt; pair2 = ...;</span><br><span class="line">addAll(table, pairl, pair2);</span><br></pre></td></tr></table></figure>
+<p>为了调用这个方法，Java 虚拟机必须建立一个 <code>Pair&lt;String&gt;</code>数组， 这就违反了前面的规则。不过，对于这种情况，规则有所放松，你只会得到一个警告，而不是错误。</p>
+<h3 id="另外还有"><a href="#另外还有" class="headerlink" title="另外还有"></a>另外还有</h3><p>.<br>    不能实例化类型变量<br>    不能构造泛型数组<br>    泛型类的静态上下文中类型变量无效<br>    不能抛出或捕获泛型类的实例<br>    可以消除对受查异常的检查<br>    注意擦除后的冲突 </p>
 
       
     </div>
@@ -662,7 +691,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类型擦除"><span class="nav-number">1.</span> <span class="nav-text">类型擦除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#桥方法"><span class="nav-number">2.</span> <span class="nav-text">桥方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#桥方法和getter"><span class="nav-number">3.</span> <span class="nav-text">桥方法和getter</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类型擦除"><span class="nav-number">1.</span> <span class="nav-text">类型擦除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#桥方法"><span class="nav-number">2.</span> <span class="nav-text">桥方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#桥方法和getter"><span class="nav-number">3.</span> <span class="nav-text">桥方法和getter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#约束与局限性"><span class="nav-number">4.</span> <span class="nav-text">约束与局限性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不能用基本类型实例化类型参数"><span class="nav-number">4.1.</span> <span class="nav-text">不能用基本类型实例化类型参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行时类型查询只适用于原始类型"><span class="nav-number">4.2.</span> <span class="nav-text">运行时类型查询只适用于原始类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不能创建参数化类型的数组"><span class="nav-number">4.3.</span> <span class="nav-text">不能创建参数化类型的数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Varargs-警告"><span class="nav-number">4.4.</span> <span class="nav-text">Varargs 警告</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#另外还有"><span class="nav-number">4.5.</span> <span class="nav-text">另外还有</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -705,7 +734,7 @@
     
       <span class="post-meta-item-text">站点字数总计&#58;</span>
     
-    <span title="站点字数总计">53.1k</span>
+    <span title="站点字数总计">53.9k</span>
   
 </div>
 

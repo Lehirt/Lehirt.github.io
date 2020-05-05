@@ -222,7 +222,7 @@ h6 {
   padding: 0;
   font-weight: bold;
   line-height: 1.5;
-  font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei', 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 h2,
 h3,
@@ -232,51 +232,51 @@ h6 {
   margin: 20px 0 15px;
 }
 h1 {
-  font-size: 22px;
-}
-@media (max-width: 767px) {
-  h1 {
-    font-size: 18px;
-  }
-}
-h2 {
-  font-size: 20px;
-}
-@media (max-width: 767px) {
-  h2 {
-    font-size: 16px;
-  }
-}
-h3 {
-  font-size: 18px;
-}
-@media (max-width: 767px) {
-  h3 {
-    font-size: 14px;
-  }
-}
-h4 {
-  font-size: 16px;
-}
-@media (max-width: 767px) {
-  h4 {
-    font-size: 12px;
-  }
-}
-h5 {
-  font-size: 14px;
-}
-@media (max-width: 767px) {
-  h5 {
-    font-size: 10px;
-  }
-}
-h6 {
   font-size: 12px;
 }
 @media (max-width: 767px) {
-  h6 {
+  h1 {
     font-size: 8px;
+  }
+}
+h2 {
+  font-size: 10px;
+}
+@media (max-width: 767px) {
+  h2 {
+    font-size: 6px;
+  }
+}
+h3 {
+  font-size: 8px;
+}
+@media (max-width: 767px) {
+  h3 {
+    font-size: 4px;
+  }
+}
+h4 {
+  font-size: 6px;
+}
+@media (max-width: 767px) {
+  h4 {
+    font-size: 2px;
+  }
+}
+h5 {
+  font-size: 4px;
+}
+@media (max-width: 767px) {
+  h5 {
+    font-size: 0px;
+  }
+}
+h6 {
+  font-size: 2px;
+}
+@media (max-width: 767px) {
+  h6 {
+    font-size: -2px;
   }
 }
 p {
@@ -492,14 +492,14 @@ pre,
   overflow: auto;
   margin: 20px 0;
   padding: 0;
-  font-size: 13px;
+  font-size: 16px;
   color: #4d4d4c;
   background: #f7f7f7;
   line-height: 1.6;
 }
 pre,
 code {
-  font-family: consolas, Menlo, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: 'Consolas', consolas, Menlo, "PingFang SC", "Microsoft YaHei", monospace;
 }
 code {
   padding: 2px 4px;
@@ -507,7 +507,7 @@ code {
   color: #555;
   background: #eee;
   border-radius: 3px;
-  font-size: 13px;
+  font-size: 16px;
 }
 pre {
   padding: 10px;
@@ -1162,7 +1162,7 @@ pre .javascript .function {
   opacity: 0;
 }
 .post-body {
-  font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei', 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 @media (max-width: 767px) {
   .post-body {
@@ -1440,7 +1440,7 @@ pre .javascript .function {
 .posts-expand .post-meta {
   margin: 3px 0 60px 0;
   color: #999;
-  font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei', 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 12px;
   text-align: center;
 }
@@ -1869,7 +1869,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #541694;
+  background: #ba53d7;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3189,7 +3189,7 @@ When blocks are siblings (homepage). .post-block,
   -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
 }
 .back-to-top .fa-arrow-up:before {
-  color: #fff;
+  color: #45ff3b;
 }
 .sidebar-toggle {
   left: 0px;
@@ -3206,6 +3206,16 @@ When blocks are siblings (homepage). .post-block,
   color: #fc6423;
   border-bottom: none;
   border-bottom: 1px solid #fc6423;
+}
+.post-button .btn {
+  color: #555 !important;
+  background-color: #fff;
+  border-radius: 3px;
+  font-size: 15px;
+  box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.35);
+  border: none !important;
+  transition-property: unset;
+  padding: 0px 15px;
 }
 .container {
   background-color: rgba(255,255,255,0.1);
