@@ -192,7 +192,7 @@ th {
 body {
   position: relative;
   font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 2;
   color: #555;
   background: #eee;
@@ -209,7 +209,7 @@ body {
 }
 @media (min-width: 1600px) {
   body {
-    font-size: 16px;
+    font-size: 18px;
   }
 }
 h1,
@@ -1180,7 +1180,7 @@ pre .javascript .function {
 .post-body .figure .caption {
   margin: -20px auto 15px;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   color: #999;
   font-weight: bold;
   line-height: 1;
@@ -1869,7 +1869,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ba53d7;
+  background: #b52aff;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3189,7 +3189,7 @@ When blocks are siblings (homepage). .post-block,
   -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
 }
 .back-to-top .fa-arrow-up:before {
-  color: #45ff3b;
+  color: #b640e2;
 }
 .sidebar-toggle {
   left: 0px;
@@ -3270,17 +3270,19 @@ h6 {
   padding: 0px;
 }
 code {
+  padding: 2px 4px;
+  word-wrap: break-word;
+  background: #fbf7f8;
+  border-radius: 3px;
+  font-size: 15px;
   margin: 3px 3px;
   border: 1px solid #b3b3b3;
 }
-.highlight figcaption {
-  margin: 0em;
-  padding: 0.5em;
-  background: #eee;
-  border-bottom: 1px solid #e9e9e9;
-}
-.highlight figcaption a {
-  color: #5073b8;
+.highlight {
+  border-radius: 1px;
+  background-color: #f6f8fa;
+  overflow: auto;
+  position: relative;
 }
 pre .addition {
   background: #e6ffed;
