@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+
+    
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="www.googlefonts.net/css?family=Microsoft YaHei:300,300italic,400,400italic,700,700italicMicrosoft YaHei:300,300italic,400,400italic,700,700italicConsolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javaSE," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Employee类是Manager类的超类，但是需要注意的是Pair和Pair并没有超类和子类的关系。那么用Pair变量去引用Pair对象就是不合法的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="泛型类型的继承规则和通配符类型的使用">
+<meta property="og:url" content="https://lehirt.github.io/2020/05/07/%E6%B3%9B%E5%9E%8B%E7%B1%BB%E5%9E%8B%E7%9A%84%E7%BB%A7%E6%89%BF%E8%A7%84%E5%88%99%E5%92%8C%E9%80%9A%E9%85%8D%E7%AC%A6%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="Lehirt&#39;s Blog">
+<meta property="og:description" content="Employee类是Manager类的超类，但是需要注意的是Pair和Pair并没有超类和子类的关系。那么用Pair变量去引用Pair对象就是不合法的。">
+<meta property="article:published_time" content="2020-05-06T16:10:14.000Z">
+<meta property="article:modified_time" content="2020-05-06T17:00:24.552Z">
+<meta property="article:author" content="lehirt">
+<meta property="article:tag" content="javaSE">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: false,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://lehirt.github.io/2020/05/07/泛型类型的继承规则和通配符类型的使用/"/>
+
+
+
+
+
+
+
+
+  <title>泛型类型的继承规则和通配符类型的使用 | Lehirt's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+<!-- 背景动画 -->
+<script type="text/javascript" src="/js/src/particle.js"></script>
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lehirt's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">认真的人才有资格开玩笑</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lehirt.github.io/2020/05/07/%E6%B3%9B%E5%9E%8B%E7%B1%BB%E5%9E%8B%E7%9A%84%E7%BB%A7%E6%89%BF%E8%A7%84%E5%88%99%E5%92%8C%E9%80%9A%E9%85%8D%E7%AC%A6%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lehirt">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lehirt's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">泛型类型的继承规则和通配符类型的使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-07T00:10:14+08:00">
+                2020-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/05/07/%E6%B3%9B%E5%9E%8B%E7%B1%BB%E5%9E%8B%E7%9A%84%E7%BB%A7%E6%89%BF%E8%A7%84%E5%88%99%E5%92%8C%E9%80%9A%E9%85%8D%E7%AC%A6%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8/" class="leancloud_visitors" data-flag-title="泛型类型的继承规则和通配符类型的使用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.3k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote class="blockquote-center"><p>Employee类是Manager类的超类，但是需要注意的是Pair<Employee>和Pair<Manager>并没有超类和子类的关系。那么用Pair<Employee>变量去引用Pair<Manager>对象就是不合法的。</p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="泛型类型的继承规则"><a href="#泛型类型的继承规则" class="headerlink" title="泛型类型的继承规则"></a>泛型类型的继承规则</h2><p>下面代码是不合法的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Manager[] topHonchos = ...;</span><br><span class="line">Pair&lt;Employee&gt; result = ArrayAlg.minmax(topHonchos);<span class="comment">//ERROR</span></span><br></pre></td></tr></table></figure>
+<p>minmax 方法返回 Pair<Manager>，而不是Pair<Employee>，并且这样的赋值是不合法的。<strong>无论S和T什么关系,Pair&lt;S&gt;和Pair&lt;T&gt;并没有什么关系</strong>。这样做对于类型安全非常必要。</p>
+<p>假设允许将 Pair<Manager> 转换为 Pair<Employee>。考虑下面代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Pair&lt;Manager&gt; managerBuddies = <span class="keyword">new</span> Pair&lt;&gt;(ceo, cfo);<span class="comment">//一个Pair对象 包含ceo cfo两个高级职员</span></span><br><span class="line">Pair&lt;Employee&gt; employeeBuddies = managerBuddies;<span class="comment">//error，如果我们假设这一句能正常编译</span></span><br><span class="line">employeeBuddies.setFirst(lowlyEmployee);</span><br></pre></td></tr></table></figure>
+
+<p>最后一句肯定是合法的，如果允许第二句成功引用，这里就把Pair<Manager>类型的managerBuddies的first域变成了Employee类型了，显然是有问题的，所以通过这样的反证，我们也明白了Java不允许这样的赋值。</p>
+<p>但是泛型和数组不同，一个Employee[]数组去引用一个Manager[]数组是完全合法的。</p>
+<p><strong>永远可以将参数化类型转换为一个原始类型</strong>。例如，Pair<Employee> 是原始类型 Pair 的一个子类型。在与遗留代码衔接时，这个转换非常必要。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Pair&lt;Manager&gt; managerBuddies = <span class="keyword">new</span> Pair&lt;&gt;(ceo, cfo);</span><br><span class="line">Pair rawBuddies = managerBuddies; <span class="comment">//It's OK.</span></span><br></pre></td></tr></table></figure>
+
+<p>遗憾的是，这样的引用是合法的，但是通过rawBuddies去调用setFirst方法依旧是编译错误，当使用getFirst获得对象赋值给Manager变量时，会抛出ClassCastException，就是Pair也并不是Pair<Manager>的超类，他只是允许了引用而已。</p>
+<p>最后， <strong>泛型类可以扩展或实现其他的泛型类</strong>。就这一点而言，与普通的类没有什么区别。例如，<strong>ArrayList<T> 类实现 List<T>接口</strong>。这意味着， 一个 ArrayList<Manager> 可以被转换为一个 List<Manager>。但是，如前面所见，一个 ArrayList<Manager> 不是一个 ArrayList <Employee> 或 List<Employee></p>
+<h2 id="通配符类型"><a href="#通配符类型" class="headerlink" title="通配符类型"></a>通配符类型</h2><p>泛型中使用通配符有两种形式：子类型限定<code>&lt;? extends xxx&gt;</code>和超类型限定<code>&lt;? super xxx&gt;</code>。还有一种无限定通配符 <code>&lt;?&gt;</code> 。</p>
+<h3 id="子类型限定"><a href="#子类型限定" class="headerlink" title="子类型限定"></a>子类型限定</h3><p>通配符类型中，允许类型参数变化：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Pair&lt;? extends Employee&gt;</span><br></pre></td></tr></table></figure>
+
+<p>表示任何泛型Pair类型，它的类型参数是Employee的子类，如Pair<Manager>。</p>
+<p>看这个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printBuddies</span><span class="params">(Pair&lt;Employee&gt; p)</span></span>&#123;</span><br><span class="line">    Employee first = p.getFirst();</span><br><span class="line">    Employee second = p.getSecond();</span><br><span class="line">    System.out.println(first.getName() + <span class="string">" and "</span> + second.getName() + <span class="string">" are buddies."</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>之前谈到过的泛型继承规则中，出于安全考虑，把Pair<Manager>传给这个方法是不合法的，<strong>而通配符就是Java设计者用来解决泛型的一些缺陷而设计的方案</strong>。</p>
+<p>只要更改成这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printBuddies</span><span class="params">(Pair&lt;? extends Employee&gt; p)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>corejava上说，Pair<Manager>是Pair&lt;? extends Employee&gt;的子类型，从这个传递参数来看，通过Pair&lt;? extends Employee&gt;引用Pair<Manager>是合法的，使用通配符会通过这个引用”破坏”Pair<Manager>吗？和Pair调用相关方法会编译错误类似的，通配符引用去调用setFirst(lowlyEmployee)也会编译错误：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Pair&lt;Manager&gt; managerBuddies = <span class="keyword">new</span> Pair&lt;&gt;(ceo, cto);</span><br><span class="line">Pair&lt;? extends Employee&gt; wiledcardBuddies = managerBuddies;<span class="comment">//it's ok</span></span><br><span class="line">wiledcardBuddies.setFirst(lowlyEmployee);<span class="comment">//compile-time error</span></span><br></pre></td></tr></table></figure>
+
+<p>调用setFirst会有一个类型错误，为什么呢？类型Pair&lt;? extends Employee&gt;的方法替换后里是这样的(并不是真正的Java语法，仅作分析)：</p>
+<p>`<br>    ? extends Employee getFirst()<br>    void setFirst(? extends Employee)</p>
+<p>编译器只知道setFirst<strong>需要某个Employee类的子类</strong>，然而并不知道具体类型，它会拒绝接受传递过来的任何<strong>特定的</strong>类型，毕竟？不能用来匹配。连Employee类也不放过。</p>
+<p>而getFirst不存在这样的问题，getFirst的返回值是Employee类型的子类，即便由于？的问题，不知道具体类型，但是<strong>它总是可以被赋值给一个Employee引用的</strong>，它是有”上界”的。</p>
+<p>简而言之，<strong>一个是安全的访问器方法，另一个是不安全的更改器方法</strong>。上述的通配符类型可以使用返回值，可以引用子类型的对象，但是为更改器方法提供参数则是不安全的。这就是引人有限定的通配符的关键之处。现在已经有办法区分安全的访问器方法和不安全的更改器方法了。</p>
+<h3 id="超类型限定"><a href="#超类型限定" class="headerlink" title="超类型限定"></a>超类型限定</h3><p>通配符限定与类型变量限定有一定的类似之处，而通配符还可以指定一个超类型限定（supertype bound）:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">? <span class="keyword">super</span> Manager</span><br><span class="line">这个通配符限制为Manager的超类型，比较欣慰的是，这块的<span class="keyword">super</span>和我们之前理解的<span class="keyword">super</span>语义上是一致的，不像extends。。。</span><br></pre></td></tr></table></figure>
+<p>我们用和上一节同样的分析方法来看一下访问器和更改器的安全性问题：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">? <span class="function"><span class="keyword">super</span> Manager <span class="title">getFirst</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setFirst</span><span class="params">(? <span class="keyword">super</span> Manager)</span></span></span><br></pre></td></tr></table></figure>
+<p>先看第一个返回的，由于返回的类型是Manager的超类，所以Object类呀Employee呀都有可能，那么你用什么类型的引用去接收这个返回值？编译器无法知道getFirst返回值的真正类型，只有通过Object引用去接收才是合法的。</p>
+<p>再看第二个setFirst参数中的通配符，编译器同样无法知道参数的具体类型，但是这个类型是有“下界”的，就是说传来的参数只要是Manager类或者它的子类，那么这样的传参都是可以接受的，编译器由于知道下界，这些传参就是安全的。</p>
+<p>总结：</p>
+<p>通配符Pair&lt;? extends Employee&gt;和 Pair&lt;? super Employee&gt;表示某种特定类型 ，但是并不关心这个实际的类型到底是什么，反正是Employee的子类型或超类型，Employee是上界或下界。那么对这样的一个 Pair 我们能做什么呢？其实如果我们不知道这个 Pair 到底持有什么类型，用Pair&lt;? extends Employee&gt;变量去引用Pair&lt;Employee的某个子类&gt;是合法的，用Pair&lt;? super Employee&gt;变量去引用Pair&lt;Employee的某个超类&gt;是合法的。在使用方法时需要注意一些点，下面以setFirst和getFirst为例讲解。</p>
+<p>对于setFirst方法参数类型，如果是Pair&lt;? extends Employee&gt;，我们只清楚方法参数的上界是什么，那它的下面有各种可能，怎么可能用setFirst方法安全的添加一个对象呢？相反，由于Pair&lt;? super Employee&gt;有下界，我们不用管它到底是什么，只要传递过来的参数是Employee的子类就可以了，这是安全的。</p>
+<p>同理对于getFirst方法返回类型，如果是Pair&lt;? super Employee&gt;,我们只知道它的下界，它的上面依旧是可能性无限，除了Object外，怎么可能安全的用Employee的某个特定的超类变量去接受这个getFirst返回值呢？相反，由于Pair&lt;? extends Employee&gt;有上界，我们很清楚只要使用Employee类型或其超类变量就可以引用这个返回值。</p>
+<p>我们也常常把前面两节讲到的通配符分别称为上边界限定通配符和下边界限定通配符，分别可以安全的读泛型对象读取（如接受返回值）和向泛型对象写入（如传递参数）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">minmaxBonus</span><span class="params">(Manager[] a, Pair&lt;? <span class="keyword">super</span> Manager&gt; result)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(a.length == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">    Manager min = a[<span class="number">0</span>];</span><br><span class="line">    Manager max = a[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(min.getBonus() &gt; a[i].getBonus()) min = a[i];</span><br><span class="line">        <span class="keyword">if</span>(max.getBonus() &lt; a[i].getBonus()) max = a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    result.setFirst(min);</span><br><span class="line">    result.setSecond(max);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是一个示例。想把奖金最高和最低的经理放在一个Pair中，第二个通配符类型的参数可以接受合理的Pair，如Pair&lt;Employee&gt; ,Pair&lt;Object&gt;，Pair&lt;Manager&gt;等。</p>
+<p>有上界下界限定的通配符，那么也必然有无界通配符。</p>
+<h3 id="无限定通配符"><a href="#无限定通配符" class="headerlink" title="无限定通配符"></a>无限定通配符</h3><p>无限定通配符是指没有extends和super而只有？的通配符。例如Pair<?>，这和原始的Pair类型是不一样的。我们还是用上面一样的分析方法，看一下Pair<?>中有哪些方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">? getFirst()</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setFirst</span><span class="params">(?)</span></span></span><br></pre></td></tr></table></figure>
+<p>没有上界也没有下界，我们唯一能确定的就是第一个getFirst方法返回的可以赋给一个Object类型的变量，而setFirst方法干脆就不能以任何形式调用。</p>
+<p>但是可以调用setFirst(null),但好像没有什么意义。。</p>
+<p>这中通配符类型很”脆弱”，为什么要有这种类型呢？corejava解释它对于很多简单的操作非常有用，如这个方法用来测试一个Pair是否包含一个null引用，它不需要实际的类型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">hasNulls</span><span class="params">(Pair&lt;?&gt; p)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> p.getFirst() == <span class="keyword">null</span> || p.getSecond() == <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就可以完成检测null。当然也可以使用泛型方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">boolean</span> <span class="title">hasNulls</span><span class="params">(Pair&lt;T&gt; p)</span></span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+    
+
+    
+
+    
+
+<div>
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
+    
+
+  
+</div>
+
+
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javaSE/" rel="tag"><i class="fa fa-tag"></i>javaSE</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/06/%E6%B3%9B%E5%9E%8B%E7%9A%84%E7%BA%A6%E6%9D%9F%E4%B8%8E%E5%B1%80%E9%99%90%E6%80%A7/" rel="next" title="泛型的约束与局限性">
+                <i class="fa fa-chevron-left"></i> 泛型的约束与局限性
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="lehirt" />
+            
+              <p class="site-author-name" itemprop="name">lehirt</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Lehirt" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#泛型类型的继承规则"><span class="nav-number">1.</span> <span class="nav-text">泛型类型的继承规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通配符类型"><span class="nav-number">2.</span> <span class="nav-text">通配符类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#子类型限定"><span class="nav-number">2.1.</span> <span class="nav-text">子类型限定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超类型限定"><span class="nav-number">2.2.</span> <span class="nav-text">超类型限定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无限定通配符"><span class="nav-number">2.3.</span> <span class="nav-text">无限定通配符</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-adjust"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lehirt</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点字数总计&#58;</span>
+    
+    <span title="站点字数总计">61.5k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("", "");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+</body>
+</html>
