@@ -1869,7 +1869,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #26ffc1;
+  background: #ff7f53;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3181,6 +3181,14 @@ When blocks are siblings (homepage). .post-block,
   color: #0477ab;
   text-decoration: underline;
 }
+::selection {
+  background: rgba(34,146,221,0.2);
+  color: #333;
+}
+::-moz-selection {
+  background: #00c4b6;
+  color: #333;
+}
 .post {
   margin-top: 60px;
   margin-bottom: 60px;
@@ -3189,7 +3197,7 @@ When blocks are siblings (homepage). .post-block,
   -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
 }
 .back-to-top .fa-arrow-up:before {
-  color: #2f3373;
+  color: #6fffff;
 }
 .sidebar-toggle {
   left: 0px;

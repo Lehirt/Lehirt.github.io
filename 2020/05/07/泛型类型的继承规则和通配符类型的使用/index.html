@@ -128,7 +128,7 @@
 <meta property="og:site_name" content="Lehirt&#39;s Blog">
 <meta property="og:description" content="Employee类是Manager类的超类，但是需要注意的是Pair和Pair并没有超类和子类的关系。那么用Pair变量去引用Pair对象就是不合法的。">
 <meta property="article:published_time" content="2020-05-06T16:10:14.000Z">
-<meta property="article:modified_time" content="2020-05-06T17:00:24.552Z">
+<meta property="article:modified_time" content="2020-05-07T01:03:04.754Z">
 <meta property="article:author" content="lehirt">
 <meta property="article:tag" content="javaSE">
 <meta name="twitter:card" content="summary">
@@ -493,7 +493,7 @@
 <p>再看第二个setFirst参数中的通配符，编译器同样无法知道参数的具体类型，但是这个类型是有“下界”的，就是说传来的参数只要是Manager类或者它的子类，那么这样的传参都是可以接受的，编译器由于知道下界，这些传参就是安全的。</p>
 <p>总结：</p>
 <p>通配符Pair&lt;? extends Employee&gt;和 Pair&lt;? super Employee&gt;表示某种特定类型 ，但是并不关心这个实际的类型到底是什么，反正是Employee的子类型或超类型，Employee是上界或下界。那么对这样的一个 Pair 我们能做什么呢？其实如果我们不知道这个 Pair 到底持有什么类型，用Pair&lt;? extends Employee&gt;变量去引用Pair&lt;Employee的某个子类&gt;是合法的，用Pair&lt;? super Employee&gt;变量去引用Pair&lt;Employee的某个超类&gt;是合法的。在使用方法时需要注意一些点，下面以setFirst和getFirst为例讲解。</p>
-<p>对于setFirst方法参数类型，如果是Pair&lt;? extends Employee&gt;，我们只清楚方法参数的上界是什么，那它的下面有各种可能，怎么可能用setFirst方法安全的添加一个对象呢？相反，由于Pair&lt;? super Employee&gt;有下界，我们不用管它到底是什么，只要传递过来的参数是Employee的子类就可以了，这是安全的。</p>
+<p>对于setFirst方法参数类型，如果是Pair&lt;? extends Employee&gt;，我们只清楚方法参数的上界是什么，那它的下面有各种可能，怎么可能用setFirst方法安全的添加一个对象呢？相反，由于Pair&lt;? super Employee&gt;有下界，我们不用管它到底是什么，只要传递过来的参数是Employee的超类就可以了，这是安全的。</p>
 <p>同理对于getFirst方法返回类型，如果是Pair&lt;? super Employee&gt;,我们只知道它的下界，它的上面依旧是可能性无限，除了Object外，怎么可能安全的用Employee的某个特定的超类变量去接受这个getFirst返回值呢？相反，由于Pair&lt;? extends Employee&gt;有上界，我们很清楚只要使用Employee类型或其超类变量就可以引用这个返回值。</p>
 <p>我们也常常把前面两节讲到的通配符分别称为上边界限定通配符和下边界限定通配符，分别可以安全的读泛型对象读取（如接受返回值）和向泛型对象写入（如传递参数）。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">minmaxBonus</span><span class="params">(Manager[] a, Pair&lt;? <span class="keyword">super</span> Manager&gt; result)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(a.length == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">    Manager min = a[<span class="number">0</span>];</span><br><span class="line">    Manager max = a[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(min.getBonus() &gt; a[i].getBonus()) min = a[i];</span><br><span class="line">        <span class="keyword">if</span>(max.getBonus() &lt; a[i].getBonus()) max = a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    result.setFirst(min);</span><br><span class="line">    result.setSecond(max);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -555,6 +555,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/07/Java%E5%8F%8D%E5%B0%84%E6%8C%87%E5%8D%97/" rel="prev" title="Java反射指南">
+                Java反射指南 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -635,7 +639,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -743,7 +747,7 @@
     
       <span class="post-meta-item-text">站点字数总计&#58;</span>
     
-    <span title="站点字数总计">61.5k</span>
+    <span title="站点字数总计">69.5k</span>
   
 </div>
 
