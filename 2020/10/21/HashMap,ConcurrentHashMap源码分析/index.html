@@ -22,30 +22,33 @@
     var CONFIG = {"hostname":"lehirt.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Stay Hungry,Stay Foolish">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Lehirt&#39;s Blog">
-<meta property="og:url" content="https://lehirt.github.io/index.html">
+  <meta name="description" content="HashMap和ConcurrentHashMap源码分析！jdk8中的HashMap1234567891011121314151617181920212223242526272829303132333435363738public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt;    implements Map&lt;K,V&amp;gt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javaSE之集合">
+<meta property="og:url" content="https://lehirt.github.io/2020/10/21/HashMap,ConcurrentHashMap%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="Lehirt&#39;s Blog">
-<meta property="og:description" content="Stay Hungry,Stay Foolish">
+<meta property="og:description" content="HashMap和ConcurrentHashMap源码分析！jdk8中的HashMap1234567891011121314151617181920212223242526272829303132333435363738public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt;    implements Map&lt;K,V&amp;gt">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-10-20T16:36:21.000Z">
+<meta property="article:modified_time" content="2020-10-20T16:36:09.085Z">
 <meta property="article:author" content="lehirt">
+<meta property="article:tag" content="javaSE">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://lehirt.github.io/">
+<link rel="canonical" href="https://lehirt.github.io/2020/10/21/HashMap,ConcurrentHashMap%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>Lehirt's Blog</title>
+  <title>javaSE之集合 | Lehirt's Blog</title>
   
 
 
@@ -189,9 +192,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -207,10 +211,9 @@
       <meta itemprop="name" content="Lehirt's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/21/HashMap,ConcurrentHashMap%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">javaSE之集合</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          javaSE之集合
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -233,6 +236,13 @@
             </span>
 
           
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
 
         </div>
       </header>
@@ -243,7 +253,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="HashMap和ConcurrentHashMap源码分析！"><a href="#HashMap和ConcurrentHashMap源码分析！" class="headerlink" title="HashMap和ConcurrentHashMap源码分析！"></a>HashMap和ConcurrentHashMap源码分析！</h1><h3 id="jdk8中的HashMap"><a href="#jdk8中的HashMap" class="headerlink" title="jdk8中的HashMap"></a>jdk8中的HashMap</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;, <span class="title">Cloneable</span>, <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="comment">//The default initial 默认值</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">362498820763181265L</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_INITIAL_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">4</span>; <span class="comment">// aka 16</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAXIMUM_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">30</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">float</span> DEFAULT_LOAD_FACTOR = <span class="number">0.75f</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TREEIFY_THRESHOLD = <span class="number">8</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> UNTREEIFY_THRESHOLD = <span class="number">6</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MIN_TREEIFY_CAPACITY = <span class="number">64</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">transient</span> Node&lt;K,V&gt;[] table;</span><br><span class="line">    <span class="keyword">transient</span> Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;</span><br><span class="line">    <span class="keyword">transient</span> <span class="keyword">int</span> size;</span><br><span class="line">    <span class="keyword">transient</span> <span class="keyword">int</span> modCount;</span><br><span class="line">    <span class="keyword">int</span> threshold;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">float</span> loadFactor;</span><br><span class="line">    <span class="keyword">transient</span> <span class="keyword">int</span> modCount;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">//构造函数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HashMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.loadFactor = DEFAULT_LOAD_FACTOR; <span class="comment">// all other fields defaulted</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(initialCapacity, DEFAULT_LOAD_FACTOR);</span><br><span class="line">    &#125;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="title">HashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity, <span class="keyword">float</span> loadFactor)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (initialCapacity &lt; <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Illegal initial capacity: "</span> +</span><br><span class="line">                                               initialCapacity);</span><br><span class="line">        <span class="keyword">if</span> (initialCapacity &gt; MAXIMUM_CAPACITY)</span><br><span class="line">            initialCapacity = MAXIMUM_CAPACITY;</span><br><span class="line">        <span class="keyword">if</span> (loadFactor &lt;= <span class="number">0</span> || Float.isNaN(loadFactor))</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Illegal load factor: "</span> +</span><br><span class="line">                                               loadFactor);</span><br><span class="line">        <span class="keyword">this</span>.loadFactor = loadFactor;</span><br><span class="line">        <span class="keyword">this</span>.threshold = tableSizeFor(initialCapacity);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="HashMap和ConcurrentHashMap源码分析！"><a href="#HashMap和ConcurrentHashMap源码分析！" class="headerlink" title="HashMap和ConcurrentHashMap源码分析！"></a>HashMap和ConcurrentHashMap源码分析！</h1><h3 id="jdk8中的HashMap"><a href="#jdk8中的HashMap" class="headerlink" title="jdk8中的HashMap"></a>jdk8中的HashMap</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;, <span class="title">Cloneable</span>, <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="comment">//The default initial 默认值</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">362498820763181265L</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_INITIAL_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">4</span>; <span class="comment">// aka 16</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAXIMUM_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">30</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">float</span> DEFAULT_LOAD_FACTOR = <span class="number">0.75f</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TREEIFY_THRESHOLD = <span class="number">8</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> UNTREEIFY_THRESHOLD = <span class="number">6</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MIN_TREEIFY_CAPACITY = <span class="number">64</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">transient</span> Node&lt;K,V&gt;[] table;</span><br><span class="line">    <span class="keyword">transient</span> Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;</span><br><span class="line">    <span class="keyword">transient</span> <span class="keyword">int</span> size;</span><br><span class="line">    <span class="keyword">transient</span> <span class="keyword">int</span> modCount;</span><br><span class="line">    <span class="keyword">int</span> threshold;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">float</span> loadFactor;</span><br><span class="line">    <span class="keyword">transient</span> <span class="keyword">int</span> modCount;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">//构造函数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HashMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.loadFactor = DEFAULT_LOAD_FACTOR; <span class="comment">// all other fields defaulted</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(initialCapacity, DEFAULT_LOAD_FACTOR);</span><br><span class="line">    &#125;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="title">HashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity, <span class="keyword">float</span> loadFactor)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (initialCapacity &lt; <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Illegal initial capacity: "</span> +</span><br><span class="line">                                               initialCapacity);</span><br><span class="line">        <span class="keyword">if</span> (initialCapacity &gt; MAXIMUM_CAPACITY)</span><br><span class="line">            initialCapacity = MAXIMUM_CAPACITY;</span><br><span class="line">        <span class="keyword">if</span> (loadFactor &lt;= <span class="number">0</span> || Float.isNaN(loadFactor))</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Illegal load factor: "</span> +</span><br><span class="line">                                               loadFactor);</span><br><span class="line">        <span class="keyword">this</span>.loadFactor = loadFactor;</span><br><span class="line">        <span class="keyword">this</span>.threshold = tableSizeFor(initialCapacity);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="jdk7中的ConcurrentHashMap"><a href="#jdk7中的ConcurrentHashMap" class="headerlink" title="jdk7中的ConcurrentHashMap"></a>jdk7中的ConcurrentHashMap</h3><h4 id="ConcurrentHashMap的构造"><a href="#ConcurrentHashMap的构造" class="headerlink" title="ConcurrentHashMap的构造"></a>ConcurrentHashMap的构造</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcurrentHashMap</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractMap</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt;</span></span><br><span class="line"><span class="class">        <span class="keyword">implements</span> <span class="title">ConcurrentMap</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt;, <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="comment">//The default initial capacity for this table,</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_INITIAL_CAPACITY = <span class="number">16</span>;<span class="comment">//默认初始化容量16表示的是HashEntry[]数组的大小</span></span><br><span class="line">    <span class="comment">//The default load factor for this table</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">float</span> DEFAULT_LOAD_FACTOR = <span class="number">0.75f</span>;<span class="comment">//默认加载因子，0.75</span></span><br><span class="line">    <span class="comment">//The default concurrency level for this table</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_CONCURRENCY_LEVEL = <span class="number">16</span>;<span class="comment">//并发级别，为Segment数组大小，即默认Segment[]数组大小默认为16个，与初始化容量区分开。</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//无参的默认构造函数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcurrentHashMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR, DEFAULT_CONCURRENCY_LEVEL);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//构造函数的实现</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcurrentHashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity,</span></span></span><br><span class="line"><span class="function"><span class="params">                             <span class="keyword">float</span> loadFactor, <span class="keyword">int</span> concurrencyLevel)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!(loadFactor &gt; <span class="number">0</span>) || initialCapacity &lt; <span class="number">0</span> || concurrencyLevel &lt;= <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">        <span class="keyword">if</span> (concurrencyLevel &gt; MAX_SEGMENTS)</span><br><span class="line">            concurrencyLevel = MAX_SEGMENTS;</span><br><span class="line">        <span class="comment">// Find power-of-two sizes best matching arguments</span></span><br><span class="line">        <span class="comment">//查找最适合参数的2的幂</span></span><br><span class="line">        <span class="keyword">int</span> sshift = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> ssize = <span class="number">1</span>;<span class="comment">//Segment&lt;K,V&gt;[]初始化的容量参数,只能是2的倍数,用于(key,value)定位Segment定位Segment</span></span><br><span class="line">        <span class="keyword">while</span> (ssize &lt; concurrencyLevel) &#123;</span><br><span class="line">            ++sshift;</span><br><span class="line">            ssize &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.segmentShift = <span class="number">32</span> - sshift;</span><br><span class="line">        <span class="keyword">this</span>.segmentMask = ssize - <span class="number">1</span>;<span class="comment">//用于(key,value)定位Segment</span></span><br><span class="line">        <span class="keyword">if</span> (initialCapacity &gt; MAXIMUM_CAPACITY)</span><br><span class="line">            initialCapacity = MAXIMUM_CAPACITY;</span><br><span class="line">        <span class="keyword">int</span> c = initialCapacity / ssize;</span><br><span class="line">        <span class="keyword">if</span> (c * ssize &lt; initialCapacity)</span><br><span class="line">            ++c;</span><br><span class="line">        <span class="comment">//计算segment中HashEntry数组的容量(长度).</span></span><br><span class="line">        <span class="keyword">int</span> cap = MIN_SEGMENT_TABLE_CAPACITY;<span class="comment">//默认cap == 2,即使上一步的c==1,segment中的HashEntry数组容量最少是2.</span></span><br><span class="line">        <span class="keyword">while</span> (cap &lt; c)</span><br><span class="line">            cap &lt;&lt;= <span class="number">1</span>;<span class="comment">//cap只能是2的倍数,用于在segment中通过&amp;找到指定的HashEntry</span></span><br><span class="line">        <span class="comment">// create segments and segments[0]</span></span><br><span class="line">        <span class="comment">//创建segments并且只初始化segments[0]节点.</span></span><br><span class="line">        <span class="comment">//只初始化segments[0]的目的就是在之后进行put操作时，不用重复计算新的Segment中HashEntry的大小</span></span><br><span class="line">        Segment&lt;K,V&gt; s0 =</span><br><span class="line">            <span class="keyword">new</span> Segment&lt;K,V&gt;(loadFactor, (<span class="keyword">int</span>)(cap * loadFactor),</span><br><span class="line">                             (HashEntry&lt;K,V&gt;[])<span class="keyword">new</span> HashEntry[cap]);</span><br><span class="line">        Segment&lt;K,V&gt;[] ss = (Segment&lt;K,V&gt;[])<span class="keyword">new</span> Segment[ssize];<span class="comment">//初始化Segment&lt;K,V&gt;[]后,不会再改变,扩容只在segment内部进行HashEntry的扩容,不再增加Segment节点.</span></span><br><span class="line">        <span class="comment">//通过CAS放入ss(Segment数组)的S[0]位置.</span></span><br><span class="line">        UNSAFE.putOrderedObject(ss, SBASE, s0); <span class="comment">// ordered write of segments[0]</span></span><br><span class="line">        <span class="keyword">this</span>.segments = ss;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -255,754 +265,35 @@
 
 
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lehirt.github.io/2020/05/07/Java%E5%8F%8D%E5%B0%84%E6%8C%87%E5%8D%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="lehirt">
-      <meta itemprop="description" content="Stay Hungry,Stay Foolish">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lehirt's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/05/07/Java%E5%8F%8D%E5%B0%84%E6%8C%87%E5%8D%97/" class="post-title-link" itemprop="url">Java反射指南</a>
-        </h2>
+          <div class="post-tags">
+              <a href="/tags/javaSE/" rel="tag"><i class="fa fa-tag"></i> javaSE</a>
+          </div>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-05-07 09:26:43" itemprop="dateCreated datePublished" datetime="2020-05-07T09:26:43+08:00">2020-05-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-08 10:22:08" itemprop="dateModified" datetime="2020-05-08T10:22:08+08:00">2020-05-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Java反射机制可以让我们在编译期(Compile Time)之外的运行期(Runtime)检查类，接口，变量以及方法的信息。反射还可以让我们在运行期实例化对象，调用方法，通过调用get/set方法获取变量的值。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/07/Java%E5%8F%8D%E5%B0%84%E6%8C%87%E5%8D%97/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lehirt.github.io/2020/05/07/%E6%B3%9B%E5%9E%8B%E7%B1%BB%E5%9E%8B%E7%9A%84%E7%BB%A7%E6%89%BF%E8%A7%84%E5%88%99%E5%92%8C%E9%80%9A%E9%85%8D%E7%AC%A6%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="lehirt">
-      <meta itemprop="description" content="Stay Hungry,Stay Foolish">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lehirt's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/07/%E6%B3%9B%E5%9E%8B%E7%B1%BB%E5%9E%8B%E7%9A%84%E7%BB%A7%E6%89%BF%E8%A7%84%E5%88%99%E5%92%8C%E9%80%9A%E9%85%8D%E7%AC%A6%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">泛型类型的继承规则和通配符类型的使用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-05-07 00:10:14" itemprop="dateCreated datePublished" datetime="2020-05-07T00:10:14+08:00">2020-05-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-08 10:22:11" itemprop="dateModified" datetime="2020-05-08T10:22:11+08:00">2020-05-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Employee类是Manager类的超类，但是需要注意的是Pair<Employee>和Pair<Manager>并没有超类和子类的关系。那么用Pair<Employee>变量去引用Pair<Manager>对象就是不合法的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/07/%E6%B3%9B%E5%9E%8B%E7%B1%BB%E5%9E%8B%E7%9A%84%E7%BB%A7%E6%89%BF%E8%A7%84%E5%88%99%E5%92%8C%E9%80%9A%E9%85%8D%E7%AC%A6%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/07/Java%E5%8F%8D%E5%B0%84%E6%8C%87%E5%8D%97/" rel="prev" title="Java反射指南">
+      <i class="fa fa-chevron-left"></i> Java反射指南
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
   
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lehirt.github.io/2020/05/06/%E6%B3%9B%E5%9E%8B%E7%9A%84%E7%BA%A6%E6%9D%9F%E4%B8%8E%E5%B1%80%E9%99%90%E6%80%A7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="lehirt">
-      <meta itemprop="description" content="Stay Hungry,Stay Foolish">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lehirt's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/06/%E6%B3%9B%E5%9E%8B%E7%9A%84%E7%BA%A6%E6%9D%9F%E4%B8%8E%E5%B1%80%E9%99%90%E6%80%A7/" class="post-title-link" itemprop="url">泛型的约束与局限性</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-05-06 21:56:39" itemprop="dateCreated datePublished" datetime="2020-05-06T21:56:39+08:00">2020-05-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-08 10:22:09" itemprop="dateModified" datetime="2020-05-08T10:22:09+08:00">2020-05-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>由于<strong>类型擦除</strong>的原因和影响，使用java泛型时有一些限制。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/06/%E6%B3%9B%E5%9E%8B%E7%9A%84%E7%BA%A6%E6%9D%9F%E4%B8%8E%E5%B1%80%E9%99%90%E6%80%A7/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lehirt.github.io/2020/05/05/java%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%93%A6%E9%99%A4%E5%92%8C%E6%A1%A5%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="lehirt">
-      <meta itemprop="description" content="Stay Hungry,Stay Foolish">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lehirt's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/05/java%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%93%A6%E9%99%A4%E5%92%8C%E6%A1%A5%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">java中的类型擦除和桥方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-05-05 21:09:06" itemprop="dateCreated datePublished" datetime="2020-05-05T21:09:06+08:00">2020-05-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-08 10:22:07" itemprop="dateModified" datetime="2020-05-08T10:22:07+08:00">2020-05-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Java在语法中虽然存在泛型的概念，但是在虚拟机中却没有泛型的概念，虚拟机中所有的类型都是普通类。无论何时定义一个泛型类型，编译后类型会被都被自动转换成一个相应的原始类型。原始类型的名字就是删去类型参数后的泛型类型名。擦除（erased）类型, 并替换为限定类型（无限定的变量用Object）。 </p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/05/java%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%93%A6%E9%99%A4%E5%92%8C%E6%A1%A5%E6%96%B9%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lehirt.github.io/2020/04/26/ssm%E6%95%B4%E5%90%88%E8%BF%87%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="lehirt">
-      <meta itemprop="description" content="Stay Hungry,Stay Foolish">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lehirt's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/26/ssm%E6%95%B4%E5%90%88%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">ssm整合过程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-26 00:12:57" itemprop="dateCreated datePublished" datetime="2020-04-26T00:12:57+08:00">2020-04-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-08 10:21:43" itemprop="dateModified" datetime="2020-05-08T10:21:43+08:00">2020-05-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ssm/" itemprop="url" rel="index"><span itemprop="name">ssm</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>做了一个简单的留言板demo，主要为了熟悉ssm的整合过程。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/26/ssm%E6%95%B4%E5%90%88%E8%BF%87%E7%A8%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lehirt.github.io/2020/04/21/springMVC%E6%9E%84%E5%BB%BAweb%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%9D%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="lehirt">
-      <meta itemprop="description" content="Stay Hungry,Stay Foolish">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lehirt's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/21/springMVC%E6%9E%84%E5%BB%BAweb%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%9D%91/" class="post-title-link" itemprop="url">springMVC构建web项目的坑</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-21 15:07:01" itemprop="dateCreated datePublished" datetime="2020-04-21T15:07:01+08:00">2020-04-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-08 10:21:44" itemprop="dateModified" datetime="2020-05-08T10:21:44+08:00">2020-05-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/springMVC/" itemprop="url" rel="index"><span itemprop="name">springMVC</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>一生之敌Maven骨架构建项目。盘点构建maven web项目中的404坑</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/21/springMVC%E6%9E%84%E5%BB%BAweb%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%9D%91/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lehirt.github.io/2020/04/21/Spring%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E4%B8%89-%EF%BC%9AAOP%E9%9D%A2%E5%90%91%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="lehirt">
-      <meta itemprop="description" content="Stay Hungry,Stay Foolish">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lehirt's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/21/Spring%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E4%B8%89-%EF%BC%9AAOP%E9%9D%A2%E5%90%91%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B/" class="post-title-link" itemprop="url">Spring基础学习（三）：AOP面向切面编程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-21 08:35:30" itemprop="dateCreated datePublished" datetime="2020-04-21T08:35:30+08:00">2020-04-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-08 10:21:52" itemprop="dateModified" datetime="2020-05-08T10:21:52+08:00">2020-05-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SSM/" itemprop="url" rel="index"><span itemprop="name">SSM</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>AOP：全称是 Aspect Oriented Programming 即：面向切面编程。简单的说它就是把我们程序重复的代码抽取出来，在需要执行的时候，使用动态代理的技术，在不修改源码的基础上，对我们的已有方法进行增强。 </p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/21/Spring%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E4%B8%89-%EF%BC%9AAOP%E9%9D%A2%E5%90%91%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lehirt.github.io/2020/04/19/Spring%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E4%B8%89-%EF%BC%9AAOP%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="lehirt">
-      <meta itemprop="description" content="Stay Hungry,Stay Foolish">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lehirt's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/19/Spring%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E4%B8%89-%EF%BC%9AAOP%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">Spring基础学习-三-：AOP中的代理模式</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-19 15:11:20" itemprop="dateCreated datePublished" datetime="2020-04-19T15:11:20+08:00">2020-04-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-08 10:21:46" itemprop="dateModified" datetime="2020-05-08T10:21:46+08:00">2020-05-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SSM/" itemprop="url" rel="index"><span itemprop="name">SSM</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>AOP的实现方式是使用动态代理技术，那么需要深刻理解动态代理。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/19/Spring%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E4%B8%89-%EF%BC%9AAOP%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lehirt.github.io/2020/04/18/%E5%9F%BA%E4%BA%8Exml%E7%9A%84Ioc%E5%8D%95%E8%A1%A8%E6%93%8D%E4%BD%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="lehirt">
-      <meta itemprop="description" content="Stay Hungry,Stay Foolish">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lehirt's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/18/%E5%9F%BA%E4%BA%8Exml%E7%9A%84Ioc%E5%8D%95%E8%A1%A8%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">基于xml的Ioc单表操作</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-18 16:28:04" itemprop="dateCreated datePublished" datetime="2020-04-18T16:28:04+08:00">2020-04-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-08 10:22:10" itemprop="dateModified" datetime="2020-05-08T10:22:10+08:00">2020-05-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SSM/" itemprop="url" rel="index"><span itemprop="name">SSM</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>学习完spring基于xml和基于注解的配置，那么现在来看一个案例。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/18/%E5%9F%BA%E4%BA%8Exml%E7%9A%84Ioc%E5%8D%95%E8%A1%A8%E6%93%8D%E4%BD%9C/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
 
 
 
@@ -1054,6 +345,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HashMap和ConcurrentHashMap源码分析！"><span class="nav-number">1.</span> <span class="nav-text">HashMap和ConcurrentHashMap源码分析！</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jdk8中的HashMap"><span class="nav-number">1.0.1.</span> <span class="nav-text">jdk8中的HashMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jdk7中的ConcurrentHashMap"><span class="nav-number">1.0.2.</span> <span class="nav-text">jdk7中的ConcurrentHashMap</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcurrentHashMap的构造"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">ConcurrentHashMap的构造</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcurrentHashMap的put-方法"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">ConcurrentHashMap的put()方法</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
